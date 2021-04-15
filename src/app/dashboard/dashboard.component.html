@@ -1,0 +1,16 @@
+<app-menu></app-menu>
+
+<div class="align-items-center justify-content-center vw-100">
+    <div class="text-center my-4">
+        <h1 class="display-4">Bem vindo {{ usuario.nome | uppercase }}!</h1>
+        <h6 class="block font-weight-normal">{{ hoje | date: 'dd/MM/yyyy' }}</h6>
+    </div>
+
+    <div class="cards text-center mt-5">
+        <app-card header="HEADER" body="BODY"></app-card>
+        <app-card header="HEADER" body="BODY"></app-card>
+        <app-card header="HEADER" body="BODY"></app-card>
+        <app-card header="HEADER" body="BODY"></app-card>
+    </div>
+
+</div>

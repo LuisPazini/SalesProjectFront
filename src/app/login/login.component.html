@@ -1,10 +1,15 @@
-<h1 class="text-center my-3">ZP Metais</h1>
 
-<form class="container form-col w-25">
-    <input class="form-control" type="text" placeholder="Usuário">
-    <input class="form-control" type="password" placeholder="Senha">
-    <button class="btn btn-primary w-100 mt-3" type="submit">Login</button>
+<div id="login" class="row align-items-center justify-content-center vh-100 vw-100">
+    <div class="col">
+        <h1 class="block text-center my-3">ZP Metais</h1>
 
-    <a class="d-block text-center mt-3" href="#">Esqueci minha senha</a>
-    <a class="d-block text-center mt-1" href="#">Ajuda</a>
-</form>
+        <form class="container form-col w-25">
+            <input class="form-control" type="text" placeholder="Usuário">
+            <input class="form-control" type="password" placeholder="Senha">
+            <button class="btn btn-primary w-100 mt-3" type="submit" (click)="realizarLogin()" >Login</button>
+
+            <div class="mt-3 text-center"><a href="#">Esqueci minha senha</a></div>
+            <div class="mt-1 text-center"><a href="#">Ajuda</a></div>
+        </form>
+    </div>
+</div>
