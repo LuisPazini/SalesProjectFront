@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-menu',
@@ -7,7 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  public static toggleExibirMenu: Subject<boolean> = new Subject<boolean>();
+  exibirMenu: boolean = false;
+
+  constructor() { 
+    MenuComponent.toggleExibirMenu.subscribe(value => this.exibirMenu = value);
+  }
 
   ngOnInit(): void {
   }

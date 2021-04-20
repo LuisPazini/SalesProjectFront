@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AppComponent } from '../app.component';
+import { MenuComponent } from '../menu/menu.component';
 import { Usuario } from '../model/usuario';
 
 @Component({
@@ -14,7 +16,9 @@ export class DashboardComponent implements OnInit {
 
   hoje: Date = new Date();
 
-  constructor() { }
+  constructor() { 
+    MenuComponent.toggleExibirMenu.next(true);
+  }
 
   ngOnInit(): void {
   }

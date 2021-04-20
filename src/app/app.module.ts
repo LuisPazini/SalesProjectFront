@@ -8,6 +8,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MenuComponent } from './menu/menu.component';
 import { CardComponent } from './dashboard/card/card.component';
+import { CadastroClientesComponent } from './cadastro-clientes/cadastro-clientes.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { CardComponent } from './dashboard/card/card.component';
     DashboardComponent,
     MenuComponent,
     CardComponent,
+    CadastroClientesComponent,
   ],
   imports: [
     BrowserModule,
