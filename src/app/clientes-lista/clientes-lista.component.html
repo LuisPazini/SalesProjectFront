@@ -1,0 +1,14 @@
+<form class="needs-validation" [formGroup]="cliente" (ngSubmit)="onSubmit()" novalidate>
+    
+    <div class="form-group">
+        <label for="nome">Nome Cliente:</label>
+        <input class="form-control" name="nome" type="text" formControlName="companyName">
+    </div>
+    <div>
+        <label for="cnpj">CNPJ: </label>
+        <input name="cnpj" type="text" formControlName="cnpj">
+    </div>
+
+    <button type="reset" (click)="adicionarCliente()" >Listar Clientes</button>
+    <button type="submit">Clica em Mim</button>
+</form>

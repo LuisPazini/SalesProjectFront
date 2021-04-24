@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,7 +9,9 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MenuComponent } from './menu/menu.component';
 import { CardComponent } from './dashboard/card/card.component';
-import { CadastroClientesComponent } from './cadastro-clientes/cadastro-clientes.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ClientesListaComponent } from './clientes-lista/clientes-lista.component';
 
 @NgModule({
   declarations: [
@@ -18,11 +21,15 @@ import { CadastroClientesComponent } from './cadastro-clientes/cadastro-clientes
     DashboardComponent,
     MenuComponent,
     CardComponent,
-    CadastroClientesComponent,
+    ClientesListaComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
