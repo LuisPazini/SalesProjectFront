@@ -1,0 +1,20 @@
+<ng-template #formulario let-modal>
+    <form class="needs-validation px-3 py-2" [formGroup]="cliente" (ngSubmit)="onSubmit()" novalidate>
+    
+        <div class="form-group">
+            <label class="col-form-label" for="nome">Nome Cliente:</label>
+            <input class="form-control" name="nome" type="text" formControlName="companyName">
+        </div>
+        <div>
+            <label class="col-form-label" for="cnpj">CNPJ: </label>
+            <input class="form-control" name="cnpj" type="text" formControlName="cnpj">
+        </div>
+    
+        <div class="mb-2 mt-3 text-center">
+            <button class="btn btn-success" type="submit" >Salvar</button>
+            <button class="btn btn-danger" type="submit" >Remover</button>
+            <button class="btn btn-warning" type="reset" >Limpar</button>
+            <button class="btn btn-secondary" type="reset" >Cancelar</button>
+        </div>
+    </form>
+</ng-template>

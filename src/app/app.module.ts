@@ -12,6 +12,7 @@ import { CardComponent } from './dashboard/card/card.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ClientesListaComponent } from './clientes-lista/clientes-lista.component';
+import { CadastroComponent } from './clientes-lista/cadastro/cadastro.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ClientesListaComponent } from './clientes-lista/clientes-lista.componen
     MenuComponent,
     CardComponent,
     ClientesListaComponent,
+    CadastroComponent,
   ],
   imports: [
     BrowserModule,

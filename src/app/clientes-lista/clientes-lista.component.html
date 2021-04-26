@@ -1,14 +1,39 @@
-<form class="needs-validation" [formGroup]="cliente" (ngSubmit)="onSubmit()" novalidate>
-    
-    <div class="form-group">
-        <label for="nome">Nome Cliente:</label>
-        <input class="form-control" name="nome" type="text" formControlName="companyName">
-    </div>
-    <div>
-        <label for="cnpj">CNPJ: </label>
-        <input name="cnpj" type="text" formControlName="cnpj">
-    </div>
+<div class="form-row justify-content-center mx-4 my-5">
+    <input #inpNomeCliente class="form-control col-md-7 mx-3" name="pesquisa-cliente" type="text"
+    placeholder="Pesquisar Cliente" 
+    (input)="filtrarClientes(inpNomeCliente.value)" >
+    <button class="btn btn-secondary" (click)="filtrarClientes(inpNomeCliente.value)" >Pesquisar</button>
+    <button class="btn btn-primary ml-1" (click)="formulario.open()" ><span>+</span> Novo </button>
+</div>
 
-    <button type="reset" (click)="adicionarCliente()" >Listar Clientes</button>
-    <button type="submit">Clica em Mim</button>
-</form>
+<app-cadastro #formulario ></app-cadastro>
+
+<table class="table table-hover">
+    <thead class="thead-cinza">
+        <tr>
+            <th>CNPJ</th>
+            <th>Nome</th>
+            <th>Data Abertura</th>
+            <th>Telefone</th>
+            <th>Registro Municipal</th>
+            <th>Registro Estadual</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody *ngIf="clientesFiltrados">
+        <tr *ngFor="let cliente of clientesFiltrados | slice: (page-1) * pageSize : page * pageSize">
+            <td>{{ cliente.cnpj }}</td>
+            <td>{{ cliente.companyName }}</td>
+            <td>{{ cliente.opening | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ cliente.phone }}</td>
+            <td>{{ cliente.municipalRegistration }}</td>
+            <td>{{ cliente.stateRegistration }}</td>
+            <td><button class="btn btn-info" (click)="formulario.open(cliente)" >Visualizar</button>
+            <button class="btn btn-warning" (click)="formulario.open(cliente)" >Editar</button></td>
+        </tr>
+        <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="clientesFiltrados.length">
+        </ngb-pagination>
+    </tbody>
+</table>
+
+<p *ngIf="!clientesFiltrados.length" class="text-center mt-5">{{ notFoundText }}</p>

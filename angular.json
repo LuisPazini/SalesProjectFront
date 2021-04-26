@@ -47,7 +47,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass"
+              "src/styles.sass",
+              "src/global.styles.sass"
             ],
             "scripts": []
           },
