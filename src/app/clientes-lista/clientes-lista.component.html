@@ -29,7 +29,7 @@
             <td>{{ cliente.municipalRegistration }}</td>
             <td>{{ cliente.stateRegistration }}</td>
             <td><button class="btn btn-info" (click)="formulario.open(cliente)" >Visualizar</button>
-            <button class="btn btn-warning" (click)="formulario.open(cliente)" >Editar</button></td>
+            <button class="btn btn-warning" (click)="formulario.open(cliente); formulario.edicao = true" >Editar</button></td>
         </tr>
         <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="clientesFiltrados.length">
         </ngb-pagination>

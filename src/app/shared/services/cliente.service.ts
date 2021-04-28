@@ -16,7 +16,14 @@ export class ClienteService {
     return this.httpClient.get<Customer[]>(this.clienteUrl).toPromise();
   }
 
-  adicionar(cliente: Customer): Promise<Customer> { 
+  salvar(cliente: Customer): Promise<Customer> {
+    if(cliente.id) {
+      return this.httpClient.patch<Customer>(`${this.clienteUrl}/${cliente.id}`, cliente).toPromise();
+    }
     return this.httpClient.post<Customer>(this.clienteUrl, cliente).toPromise();
+  }
+
+  remover(cliente: Customer): Promise<void> {
+    return this.httpClient.delete<void>(`${this.clienteUrl}/${cliente.id}`).toPromise();
   }
 }

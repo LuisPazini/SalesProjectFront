@@ -1,4 +1,5 @@
 export interface Customer {
+    id: string,
     cnpj: string,
     companyName: string,
     opening: string,

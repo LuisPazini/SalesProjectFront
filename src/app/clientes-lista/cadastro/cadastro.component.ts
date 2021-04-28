@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MenuComponent } from 'src/app/menu/menu.component';
 import { Customer } from 'src/app/shared/models/customer';
@@ -13,21 +13,24 @@ import { ClienteService } from 'src/app/shared/services/cliente.service';
 export class CadastroComponent implements OnInit {
 
   @ViewChild('formulario') form: any;
-  
+
+  edicao: boolean = false;
+
   cliente = this.formBuilder.group({
-    cnpj: ['',
-      [Validators.required,
-      Validators.pattern(/^\d{2}(.\d{3}){2}$/),
-      /* Validators.minLength(14), 
-      Validators.maxLength(14) */]
-    ],
-    companyName: ['', Validators.required],
+    id: [''],
+    cnpj: [''],
+    companyName: [''],
     opening: [''],
     phone: [''],
     stateRegistration: [''],
     municipalRegistration: [''],
+    clientSince: [''],
+    adresses: [''],
+    contacts: [''],
+    products: [''],
+    valid: [''],
+    notifications: ['']
   });
-  clientes = this.clienteService.getAll();
 
   constructor(
     private clienteService: ClienteService,
@@ -38,23 +41,33 @@ export class CadastroComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
   }
 
-  onSubmit(): void {
-    this.cliente.valid ?
-    console.log(this.cliente.value) :
-    console.log('nope')
+  salvar(cliente: Customer): void {
+    console.log(cliente);
+    this.clienteService.salvar(cliente);
   }
 
-  adicionarCliente(): void {
-    this.clienteService.getAll().then(clientes => 
-      console.log(clientes)
-    ).catch(error => console.log(error.message));
+  remover(cliente: Customer): void {
+    console.log("Removeu");
+    this.clienteService.remover(cliente);
   }
 
   open(cliente?: Customer): void {
-
+    if(cliente) {
+      this.cliente.setValue(cliente);
+    }
     this.modalService.open(this.form);
+    this.desabilitarCampos();
+  }
+
+  private desabilitarCampos(): void {
+    if(this.cliente.get('id')?.value) {
+      this.cliente.get('cnpj')?.disable();
+      this.cliente.get('companyName')?.disable();
+      this.cliente.get('opening')?.disable();
+    }
   }
 
 }
