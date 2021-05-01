@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Customer } from 'src/app/shared/models/customer';
-import { ClienteService } from 'src/app/shared/services/cliente.service';
+import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
+import { Product } from 'src/app/shared/models/product';
+import { ProdutoService } from 'src/app/shared/services/produto.service';
 
 @Component({
   selector: 'app-cadastro',
@@ -14,7 +15,7 @@ export class CadastroComponent implements OnInit {
   @ViewChild('formulario') form: any;
   edicao: boolean = false;
 
-  cliente = this.formBuilder.group({
+  produto = this.formBuilder.group({
     id: [''],
     cnpj: [''],
     companyName: [''],
@@ -31,7 +32,7 @@ export class CadastroComponent implements OnInit {
   });
 
   constructor(
-    private clienteService: ClienteService,
+    private produtoService: ProdutoService,
     private formBuilder: FormBuilder,
     private modalService: NgbModal
   ) { }
@@ -39,13 +40,13 @@ export class CadastroComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  salvar(cliente: Customer): void {
-    this.clienteService.salvar(cliente).then(
+  salvar(produto: Product): void {
+    this.produtoService.salvar(produto).then(
       res => {
         alert("Cliente cadastrado com sucesso!");
       },
       error => {
-        console.error("Erro ao criar cadastro de cliente:\n"
+        console.error("Erro ao criar cadastro de produto:\n"
         + `Status: ${error.error.status}\n` 
         + `Erro: ${error.error.title} \n`
         + `${JSON.stringify(error.error, null, 2)}`);
@@ -53,29 +54,29 @@ export class CadastroComponent implements OnInit {
     );
   }
 
-  remover(cliente: Customer): void {
-    this.clienteService.remover(cliente);
+  remover(produto: Product): void {
+    this.produtoService.remover(produto);
   }
 
-  open(cliente?: Customer, edicao: boolean = false): void {
+  open(produto?: Product, edicao: boolean = false): void {
     this.edicao = edicao;
-    if(cliente) {
-      this.cliente.setValue(cliente);
+    if(produto) {
+      this.produto.setValue(produto);
     }
     this.modalService.open(this.form);
     this.desabilitarCampos();
   }
 
   private desabilitarCampos(): void {
-    if(this.cliente.get('id')?.value) {
-      this.cliente.disable();
+    if(this.produto.get('id')?.value) {
+      this.produto.disable();
       if(this.edicao) {
-        this.cliente.get('phone')?.enable();
-        this.cliente.get('stateRegistration')?.enable();
-        this.cliente.get('municipalRegistration')?.enable();
+        this.produto.get('phone')?.enable();
+        this.produto.get('stateRegistration')?.enable();
+        this.produto.get('municipalRegistration')?.enable();
       }
     } else {
-      this.cliente.enable();
+      this.produto.enable();
     }
   }
 

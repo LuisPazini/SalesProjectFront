@@ -5,6 +5,9 @@
     </button>
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav d-flex">
+            <li class="nav-item ml-auto">
+                <a class="nav-link" routerLink="/dashboard">Dashboard</a>
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" routerLink="/clientes">Clientes</a>
                 <div class="dropdown-menu">
@@ -12,7 +15,13 @@
                 </div>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#">Produtos</a>
+                <a class="nav-link dropdown-toggle" href="/produtos">Produtos</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item">Produto</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#">Pedidos</a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item">Produto</a>
                 </div>
