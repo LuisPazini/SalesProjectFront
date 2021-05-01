@@ -10,7 +10,7 @@
             <div class="form-row">
                 <div class="form-group col-md-5">
                     <label class="col-form-label" for="cnpj">CNPJ: </label>
-                    <input class="form-control" name="cnpj" type="number" formControlName="cnpj">
+                    <input class="form-control" name="cnpj" type="text" formControlName="cnpj" mask="00.000.000/0000-00">
                 </div>
                 <div class="form-group col">
                     <label class="col-form-label" for="nome">Nome Cliente:</label>
@@ -24,26 +24,35 @@
                 </div>
                 <div class="form-group col">
                     <label class="col-form-label" for="telefone">Telefone: </label>
-                    <input class="form-control" name="telefone" type="tel" formControlName="phone">
+                    <input class="form-control" name="telefone" type="tel" formControlName="phone" mask="(00) 0000-0000 || (00) 0 0000-0000">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label class="col-form-label" for="registro-estadual">Registro Estadual: </label>
-                    <input class="form-control" name="registro-estadual" type="number"
-                    formControlName="stateRegistration">
+                    <label class="col-form-label" for="registro-estadual">Inscrição Estadual: </label>
+                    <input class="form-control" name="registro-estadual" type="text"
+                    formControlName="stateRegistration" >
                 </div>
                 <div class="form-group col-md-6">
-                    <label class="col-form-label" for="registro-municipal">Registro Municipal: </label>
-                    <input class="form-control" name="registro-municipal" type="number"
+                    <label class="col-form-label" for="registro-municipal">Inscrição Municipal: </label>
+                    <input class="form-control" name="registro-municipal" type="text"
                     formControlName="municipalRegistration">
                 </div>
             </div>
 
             <div class="modal-footer mt-2 justify-content-center">
-                <button class="btn btn-success" type="submit">Salvar</button>
-                <button class="btn btn-danger" type="reset" (click)="remover(cliente.value)">Remover</button>
-                <button class="btn btn-warning" type="reset">Limpar</button>
+                <button class="btn btn-success" type="submit"
+                [disabled]="!edicao">
+                    Salvar
+                </button>
+                <button class="btn btn-danger" type="reset" (click)="remover(cliente.value)"
+                [disabled]="!edicao || !cliente.get('id')?.value">
+                    Remover
+                </button>
+                <button class="btn btn-warning" type="reset"
+                [disabled]="!cliente.dirty || cliente.get('cnpj')?.disabled">
+                    Limpar
+                </button>
                 <button class="btn btn-secondary" type="reset" (click)="modal.dismiss()">Cancelar</button>
             </div>
         </form>

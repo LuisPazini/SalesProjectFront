@@ -3,7 +3,7 @@
     placeholder="Pesquisar Cliente" 
     (input)="filtrarClientes(inpNomeCliente.value)" >
     <button class="btn btn-secondary" (click)="filtrarClientes(inpNomeCliente.value)" >Pesquisar</button>
-    <button class="btn btn-primary ml-1" (click)="formulario.open()" ><span>+</span> Novo </button>
+    <button class="btn btn-primary ml-1" (click)="formulario.open(undefined, true)" ><span>+</span> Novo </button>
 </div>
 
 <app-cadastro #formulario ></app-cadastro>
@@ -20,18 +20,18 @@
             <th></th>
         </tr>
     </thead>
-    <tbody *ngIf="clientesFiltrados">
+    <tbody *ngIf="clientesFiltrados.length">
         <tr *ngFor="let cliente of clientesFiltrados | slice: (page-1) * pageSize : page * pageSize">
-            <td>{{ cliente.cnpj }}</td>
+            <td>{{ cliente.cnpj | mask: 'CPF_CNPJ' }}</td>
             <td>{{ cliente.companyName }}</td>
             <td>{{ cliente.opening | date: 'dd/MM/yyyy' }}</td>
-            <td>{{ cliente.phone }}</td>
+            <td>{{ cliente.phone | mask: '(00) 0 0000-0000 || (00) 0000-0000' }}</td>
             <td>{{ cliente.municipalRegistration }}</td>
             <td>{{ cliente.stateRegistration }}</td>
             <td><button class="btn btn-info" (click)="formulario.open(cliente)" >Visualizar</button>
-            <button class="btn btn-warning" (click)="formulario.open(cliente); formulario.edicao = true" >Editar</button></td>
+            <button class="btn btn-warning" (click)="formulario.open(cliente, true); formulario.edicao = true" >Editar</button></td>
         </tr>
-        <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="clientesFiltrados.length">
+        <ngb-pagination *ngIf="clientesFiltrados.length" [(page)]="page" [pageSize]="pageSize" [collectionSize]="clientesFiltrados.length">
         </ngb-pagination>
     </tbody>
 </table>

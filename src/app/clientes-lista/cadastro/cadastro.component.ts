@@ -13,7 +13,6 @@ import { ClienteService } from 'src/app/shared/services/cliente.service';
 export class CadastroComponent implements OnInit {
 
   @ViewChild('formulario') form: any;
-
   edicao: boolean = false;
 
   cliente = this.formBuilder.group({
@@ -41,20 +40,28 @@ export class CadastroComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
   }
 
   salvar(cliente: Customer): void {
-    console.log(cliente);
-    this.clienteService.salvar(cliente);
+    this.clienteService.salvar(cliente).then(
+      res => {
+        alert("Cliente cadastrado com sucesso!");
+      },
+      error => {
+        console.error("Erro ao criar cadastro de cliente:\n"
+        + `Status: ${error.error.status}\n` 
+        + `Erro: ${error.error.title} \n`
+        + `${JSON.stringify(error.error, null, 2)}`);
+      }
+    );
   }
 
   remover(cliente: Customer): void {
-    console.log("Removeu");
     this.clienteService.remover(cliente);
   }
 
-  open(cliente?: Customer): void {
+  open(cliente?: Customer, edicao: boolean = false): void {
+    this.edicao = edicao;
     if(cliente) {
       this.cliente.setValue(cliente);
     }
@@ -64,9 +71,14 @@ export class CadastroComponent implements OnInit {
 
   private desabilitarCampos(): void {
     if(this.cliente.get('id')?.value) {
-      this.cliente.get('cnpj')?.disable();
-      this.cliente.get('companyName')?.disable();
-      this.cliente.get('opening')?.disable();
+      this.cliente.disable();
+      if(this.edicao) {
+        this.cliente.get('phone')?.enable();
+        this.cliente.get('stateRegistration')?.enable();
+        this.cliente.get('municipalRegistration')?.enable();
+      }
+    } else {
+      this.cliente.enable();
     }
   }
 

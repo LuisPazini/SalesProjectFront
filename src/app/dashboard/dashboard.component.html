@@ -1,14 +1,15 @@
-<div class="align-items-center justify-content-center">
+<div class="align-items-center justify-content-center w-100">
     <div class="text-center my-4">
         <h1 class="display-4">Bem vindo {{ usuario.nome | uppercase }}!</h1>
         <h6 class="block font-weight-normal">Hoje: {{ hoje | date: 'dd/MM/yyyy' }}</h6>
     </div>
 
-    <div class="cards text-center mt-5">
+    <div class="d-flex flex-wrap w-25 mx-auto mt-5">
+        <app-card header="HEADER" body="BODY"></app-card>
+        <app-card header="HEADER" body="BODY"></app-card>
         <app-card header="HEADER" body="BODY"></app-card>
         <app-card header="HEADER" body="BODY"></app-card>
         <app-card header="HEADER" body="BODY"></app-card>
         <app-card header="HEADER" body="BODY"></app-card>
     </div>
-
 </div>

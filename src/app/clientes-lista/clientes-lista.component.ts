@@ -14,7 +14,7 @@ export class ClientesListaComponent implements OnInit {
   clientesFiltrados: Customer[] = [] as Customer[];
 
   page: number = 1;
-  pageSize: number = 10;
+  pageSize: number = 7;
 
   notFoundText: string = 'Digite ao menos 3 caracteres do nome de cliente';
 
