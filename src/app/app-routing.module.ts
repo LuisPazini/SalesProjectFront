@@ -5,6 +5,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './shared/components/login/login.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { ProdutosComponent } from './produtos/produtos.component';
+import { PedidosComponent } from './pedidos/pedidos.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, pathMatch: 'full' },
   { path: 'clientes', component: ClientesListaComponent, pathMatch: 'full' },
   { path: 'produtos', component: ProdutosComponent, pathMatch: 'full' },
+  { path: 'pedidos', component: PedidosComponent, pathMatch: 'full' },
   { path: '**', component: NotFoundComponent, pathMatch: 'full' }
 ];
 
