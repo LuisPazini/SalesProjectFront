@@ -5,8 +5,7 @@ import { CadastroComponent } from './cadastro/cadastro.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskModule } from 'ngx-mask';
-
-
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -18,7 +17,8 @@ import { NgxMaskModule } from 'ngx-mask';
     NgbModule,
     ReactiveFormsModule,
     NgbModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    NgSelectModule
   ]
 })
 export class ProdutosModule { }

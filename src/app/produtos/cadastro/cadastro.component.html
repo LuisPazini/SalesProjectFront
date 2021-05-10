@@ -9,34 +9,46 @@
             
             <div class="form-row">
                 <div class="form-group col-md-5">
-                    <label class="col-form-label" for="cnpj">CNPJ: </label>
-                    <input class="form-control" name="cnpj" type="text" formControlName="cnpj" mask="00.000.000/0000-00">
+                    <label class="col-form-label" for="codigo">Código: </label>
+                    <input class="form-control" name="codigo" type="text" formControlName="ncmCode" mask="00.0000-0">
                 </div>
                 <div class="form-group col">
-                    <label class="col-form-label" for="nome">Nome Cliente:</label>
-                    <input class="form-control" name="nome" type="text" formControlName="companyName">
+                    <label class="col-form-label" for="nome">Nome Produto:</label>
+                    <input class="form-control" name="nome" type="text" formControlName="name">
                 </div>
             </div>
             <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label class="col-form-label" for="data-abertura">Data Abertura: </label>
-                    <input class="form-control" name="data-abertura" type="date" formControlName="opening">
+                <div class="form-group col">
+                    <label class="col-form-label" for="cliente">Cliente: </label>
+                    <ng-select class="form-control" name="cliente" formControlName="customerId">
+                        <ng-option *ngFor="let cliente of clientes" [value]="cliente.id">
+                            {{ cliente.companyName }}
+                        </ng-option>
+                    </ng-select>
                 </div>
                 <div class="form-group col">
-                    <label class="col-form-label" for="telefone">Telefone: </label>
-                    <input class="form-control" name="telefone" type="tel" formControlName="phone" mask="(00) 0000-0000 || (00) 0 0000-0000">
+                    <label class="col-form-label" for="consumo-mensal">Consumo Mensal: </label>
+                    <input class="form-control" name="consumo-mensal" type="text" formControlName="combinedQuantity"
+                    mask="separator.0" thousandSeparator="." suffix=" unidades">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label class="col-form-label" for="registro-estadual">Inscrição Estadual: </label>
-                    <input class="form-control" name="registro-estadual" type="text"
-                    formControlName="stateRegistration" >
+                    <label class="col-form-label" for="valor">Valor: </label>
+                    <input class="form-control" name="valor" type="text"
+                    formControlName="combinedPrice" prefix="R$ " mask="separator,4" thousandSeparator="." >
                 </div>
                 <div class="form-group col-md-6">
-                    <label class="col-form-label" for="registro-municipal">Inscrição Municipal: </label>
-                    <input class="form-control" name="registro-municipal" type="text"
-                    formControlName="municipalRegistration">
+                    <label class="col-form-label" for="custos-adicionais">Custos Adicionais: </label>
+                    <input class="form-control" name="custos-adicionais" type="text"
+                    formControlName="additionalCosts" prefix="R$ " mask="separator,4" thousandSeparator="." >
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+                    <label class="col-form-label" for="detalhes">Detalhes: </label>
+                    <input class="form-control" name="detalhes" type="text"
+                    formControlName="details">
                 </div>
             </div>
 

@@ -9,25 +9,24 @@
 <app-cadastro #formulario ></app-cadastro>
     
 <table class="table table-hover">
-    <thead class="thead-cinza">
+    <thead class="text-center thead-cinza">
         <tr>
-            <th>CNPJ</th>
-            <th>Nome</th>
-            <th>Data Abertura</th>
-            <th>Telefone</th>
-            <th>Registro Municipal</th>
-            <th>Registro Estadual</th>
-            <th></th>
+            <th>Código</th>
+            <th>Produto</th>
+            <th>Cliente</th>
+            <th>Consumo Mensal</th>
+            <th>Valor</th>
+            <th>Detalhes</th>
         </tr>
     </thead>
     <tbody *ngIf="produtosFiltrados.length">
         <tr *ngFor="let produto of produtosFiltrados | slice: (page-1) * pageSize : page * pageSize">
-            <td>{{ produto }}</td>
-            <td>{{ produto }}</td>
-            <td>{{ produto }}</td>
-            <td>{{ produto }}</td>
-            <td>{{ produto }}</td>
-            <td>{{ produto }}</td>
+            <td>{{ produto.ncmCode }}</td>
+            <td>{{ produto.name }}</td>
+            <td>{{ produto.customerId }}</td>
+            <td>{{ produto.combinedQuantity }}</td>
+            <td>{{ produto.combinedPrice }}</td>
+            <td>{{ produto.details }}</td>
             <td><button class="btn btn-info" (click)="formulario.open(produto)" >Visualizar</button>
             <button class="btn btn-warning" (click)="formulario.open(produto, true); formulario.edicao = true" >Editar</button></td>
         </tr>

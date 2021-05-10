@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
+import { Customer } from 'src/app/shared/models/customer';
 import { Product } from 'src/app/shared/models/product';
+import { ClienteService } from 'src/app/shared/services/cliente.service';
 import { ProdutoService } from 'src/app/shared/services/produto.service';
 
 @Component({
@@ -13,34 +14,34 @@ import { ProdutoService } from 'src/app/shared/services/produto.service';
 export class CadastroComponent implements OnInit {
 
   @ViewChild('formulario') form: any;
+
+  clientes: Customer[] = [] as Customer[];
   edicao: boolean = false;
 
   produto = this.formBuilder.group({
     id: [''],
-    cnpj: [''],
-    companyName: [''],
-    opening: [''],
-    phone: [''],
-    stateRegistration: [''],
-    municipalRegistration: [''],
-    clientSince: [''],
-    adresses: [''],
-    contacts: [''],
-    products: [''],
-    valid: [''],
-    notifications: ['']
+    name: [''],
+    ncmCode: [''],
+    combinedPrice: [''],
+    additionalCosts: [''],
+    combinedQuantity: [''],
+    details: [''],
+    customerId: [''],
   });
 
   constructor(
     private produtoService: ProdutoService,
+    private clienteService: ClienteService,
     private formBuilder: FormBuilder,
     private modalService: NgbModal
   ) { }
 
   ngOnInit(): void {
+    this.listarClientes();
   }
 
   salvar(produto: Product): void {
+    console.log(`Produto a salvar: ${JSON.stringify(produto, null, 2)}`);
     this.produtoService.salvar(produto).then(
       res => {
         alert("Cliente cadastrado com sucesso!");
@@ -71,13 +72,22 @@ export class CadastroComponent implements OnInit {
     if(this.produto.get('id')?.value) {
       this.produto.disable();
       if(this.edicao) {
-        this.produto.get('phone')?.enable();
-        this.produto.get('stateRegistration')?.enable();
-        this.produto.get('municipalRegistration')?.enable();
+        this.habilitarCamposEdicao();
       }
     } else {
       this.produto.enable();
     }
+  }
+
+  private habilitarCamposEdicao(): void {
+    this.produto.get('combinedQuantity')?.enable();
+    this.produto.get('combinedPrice')?.enable();
+    this.produto.get('additionalCosts')?.enable();
+    this.produto.get('details')?.enable();
+  }
+
+  private listarClientes(): void {
+    this.clienteService.getAll().then(clientes => this.clientes = clientes);
   }
 
 }
