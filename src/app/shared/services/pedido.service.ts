@@ -23,7 +23,7 @@ export class PedidoService {
     return this.httpClient.post<Order>(this.pedidoUrl, pedido).toPromise();
   }
 
-  remover(pedido: Order): Promise<void> {
+  cancelar(pedido: Order): Promise<void> {
     return this.httpClient.delete<void>(`${this.pedidoUrl}/${pedido.id}`).toPromise();
   }
 }

@@ -16,6 +16,7 @@ import { CardComponent } from './dashboard/card/card.component';
 import { ClientesModule } from './clientes-lista/clientes.module';
 import { ProdutosModule } from './produtos/produtos.module';
 import { PedidosModule } from './pedidos/pedidos.module';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { PedidosModule } from './pedidos/pedidos.module';
     ReactiveFormsModule,
     FormsModule,
     NgbModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    NgSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]
