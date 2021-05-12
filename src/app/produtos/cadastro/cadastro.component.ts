@@ -41,16 +41,18 @@ export class CadastroComponent implements OnInit {
   }
 
   salvar(produto: Product): void {
-    console.log(`Produto a salvar: ${JSON.stringify(produto, null, 2)}`);
+    this.converterCamposNumber(produto);
     this.produtoService.salvar(produto).then(
       res => {
-        alert("Cliente cadastrado com sucesso!");
+        alert("Produto cadastrado com sucesso!");
+        this.modalService.dismissAll();
       },
       error => {
         console.error("Erro ao criar cadastro de produto:\n"
         + `Status: ${error.error.status}\n` 
         + `Erro: ${error.error.title} \n`
         + `${JSON.stringify(error.error, null, 2)}`);
+        alert("Ocorreu um erro ao cadastrar produto");
       }
     );
   }
@@ -88,6 +90,12 @@ export class CadastroComponent implements OnInit {
 
   private listarClientes(): void {
     this.clienteService.getAll().then(clientes => this.clientes = clientes);
+  }
+
+  private converterCamposNumber(produto: Product): void {
+    produto.combinedPrice = Number.parseFloat(produto.combinedPrice.toString());
+    produto.additionalCosts = Number.parseFloat(produto.additionalCosts.toString());
+    produto.combinedQuantity = Number.parseFloat(produto.combinedQuantity.toString());
   }
 
 }
