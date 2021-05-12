@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AppComponent } from '../app.component';
-import { MenuComponent } from '../menu/menu.component';
+import { MenuComponent } from '../shared/components/menu/menu.component';
 import { Usuario } from '../shared/models/usuario';
 
 @Component({

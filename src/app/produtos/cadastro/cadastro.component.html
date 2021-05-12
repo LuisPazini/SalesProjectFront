@@ -1,0 +1,72 @@
+<ng-template #formulario let-modal class="vw-50">
+
+    <div class="moda-header">
+        <h1 class="modal-title display-4 text-muted text-center">Cadastro de Produto</h1>
+    </div>
+
+    <div class="modal-body w-100">
+        <form class="needs-validation" [formGroup]="produto" (ngSubmit)="salvar(produto.value)" novalidate>
+            
+            <div class="form-row">
+                <div class="form-group col-md-5">
+                    <label class="col-form-label" for="codigo">Código: </label>
+                    <input class="form-control" name="codigo" type="text" formControlName="ncmCode" mask="00.0000-0">
+                </div>
+                <div class="form-group col">
+                    <label class="col-form-label" for="nome">Nome Produto:</label>
+                    <input class="form-control" name="nome" type="text" formControlName="name">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+                    <label class="col-form-label" for="cliente">Cliente: </label>
+                    <ng-select class="form-control" name="cliente" formControlName="customerId">
+                        <ng-option *ngFor="let cliente of clientes" [value]="cliente.id">
+                            {{ cliente.companyName }}
+                        </ng-option>
+                    </ng-select>
+                </div>
+                <div class="form-group col">
+                    <label class="col-form-label" for="consumo-mensal">Consumo Mensal: </label>
+                    <input class="form-control" name="consumo-mensal" type="text" formControlName="combinedQuantity"
+                    mask="separator.0" thousandSeparator="." suffix=" unidades">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label class="col-form-label" for="valor">Valor: </label>
+                    <input class="form-control" name="valor" type="text"
+                    formControlName="combinedPrice" prefix="R$ " mask="separator,4" thousandSeparator="." >
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="col-form-label" for="custos-adicionais">Custos Adicionais: </label>
+                    <input class="form-control" name="custos-adicionais" type="text"
+                    formControlName="additionalCosts" prefix="R$ " mask="separator,4" thousandSeparator="." >
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+                    <label class="col-form-label" for="detalhes">Detalhes: </label>
+                    <input class="form-control" name="detalhes" type="text"
+                    formControlName="details">
+                </div>
+            </div>
+
+            <div class="modal-footer mt-2 justify-content-center">
+                <button class="btn btn-success" type="submit"
+                [disabled]="!edicao">
+                    Salvar
+                </button>
+                <button class="btn btn-danger" type="reset" (click)="remover(produto.value)"
+                [disabled]="!edicao || !produto.get('id')?.value">
+                    Remover
+                </button>
+                <button class="btn btn-warning" type="reset"
+                [disabled]="!produto.dirty || produto.get('cnpj')?.disabled">
+                    Limpar
+                </button>
+                <button class="btn btn-secondary" type="reset" (click)="modal.dismiss()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</ng-template>

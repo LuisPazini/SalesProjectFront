@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuComponent } from '../menu/menu.component';
+import { MenuComponent } from '../shared/components/menu/menu.component';
 import { Customer } from '../shared/models/customer';
 import { ClienteService } from '../shared/services/cliente.service';
 

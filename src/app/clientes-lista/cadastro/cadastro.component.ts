@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { MenuComponent } from 'src/app/menu/menu.component';
 import { Customer } from 'src/app/shared/models/customer';
 import { ClienteService } from 'src/app/shared/services/cliente.service';
 
@@ -35,9 +34,7 @@ export class CadastroComponent implements OnInit {
     private clienteService: ClienteService,
     private formBuilder: FormBuilder,
     private modalService: NgbModal
-  ) { 
-    MenuComponent.toggleExibirMenu.next(true);
-  }
+  ) { }
 
   ngOnInit(): void {
   }
