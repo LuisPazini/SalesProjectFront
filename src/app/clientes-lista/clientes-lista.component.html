@@ -28,6 +28,7 @@
             <td>{{ cliente.phone | mask: '(00) 0 0000-0000 || (00) 0000-0000' }}</td>
             <td>{{ cliente.municipalRegistration }}</td>
             <td>{{ cliente.stateRegistration }}</td>
+            <td>{{ cliente.id }}</td>
             <td><button class="btn btn-info" (click)="formulario.open(cliente)" >Visualizar</button>
             <button class="btn btn-warning" (click)="formulario.open(cliente, true); formulario.edicao = true" >Editar</button></td>
         </tr>

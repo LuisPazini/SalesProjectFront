@@ -100,7 +100,7 @@ export class CadastroComponent implements OnInit {
   }
 
   private popularListaProdutos(): void {
-    this.produtoService.getAll().then(produtos => this.produtos = produtos);
+    this.produtoService.getByCliente({id: "bdf7b85d-b045-4c32-f401-08d914238f47"} as Customer).then(produtos => this.produtos = produtos);
   }
 
 }

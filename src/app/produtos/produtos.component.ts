@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuComponent } from '../shared/components/menu/menu.component';
+import { Customer } from '../shared/models/customer';
 import { Product } from '../shared/models/product';
 import { ProdutoService } from '../shared/services/produto.service';
 
@@ -43,7 +44,7 @@ export class ProdutosComponent implements OnInit {
   }
 
   private async popularListaProdutos(): Promise<void> {
-    this.produtos = await this.produtoService.getAll();
+    this.produtos = await this.produtoService.getByCliente({id: "bdf7b85d-b045-4c32-f401-08d914238f47"} as Customer);
   }
 
   private popularListaProdutosFiltrados(termo: string): void {
