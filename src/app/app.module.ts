@@ -15,6 +15,7 @@ import { MenuComponent } from './shared/components/menu/menu.component';
 import { CardComponent } from './dashboard/card/card.component';
 import { ClientesModule } from './clientes-lista/clientes.module';
 import { ProdutosModule } from './produtos/produtos.module';
+import { PedidosModule } from './pedidos/pedidos.module';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ProdutosModule } from './produtos/produtos.module';
   imports: [
     ClientesModule,
     ProdutosModule,
+    PedidosModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
