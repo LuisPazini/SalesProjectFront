@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import jwt_decode, { JwtPayload } from 'jwt-decode';
 import { Usuario } from 'src/app/shared/models/usuario';
 import { AccountService } from 'src/app/shared/services/account.service';
 
@@ -23,9 +24,15 @@ export class AuthService {
     sessionStorage.removeItem(this.key);
   }
 
+  isUserAuthenticated(): boolean {
+    let token = sessionStorage.getItem(this.key);
+    return token? true : false;
+  }
+
   getUserRole(): string {
     let token = sessionStorage.getItem(this.key);
-    return 'Administrator';
+    let decoded: any = jwt_decode(token);
+    return decoded.role;
   }
 
   getUserName(): string {
@@ -38,4 +45,5 @@ export class AuthService {
     sessionStorage.setItem(this.key, token);
     return token;
   }
+
 }
