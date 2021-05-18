@@ -5,21 +5,21 @@ import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
-  
+export class AuthorizationGuard implements CanActivate {
+
   constructor(
     private authService: AuthService,
-    private router: Router,
+    private router: Router
   ) { }
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    if(this.authService.isUserAuthenticated()) {
+    if(this.authService.getUserRole() == 'Administrator') {
       return true;
     } else {
-      this.router.navigateByUrl('login');
+      this.router.navigateByUrl('not-found')
       return false;
     }
   }

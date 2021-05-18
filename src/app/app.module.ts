@@ -15,6 +15,7 @@ import { MenuComponent } from './shared/components/menu/menu.component';
 import { CardComponent } from './dashboard/card/card.component';
 import { ClientesModule } from './clientes-lista/clientes.module';
 import { ProdutosModule } from './produtos/produtos.module';
+import { httpInterceptorProviders } from './core/http-interceptors';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,9 @@ import { ProdutosModule } from './produtos/produtos.module';
     NgbModule,
     NgxMaskModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    httpInterceptorProviders
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
