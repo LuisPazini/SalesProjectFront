@@ -66,7 +66,7 @@ export class CadastroComponent implements OnInit {
     if(produto) {
       this.produto.setValue(produto);
     }
-    this.modalService.open(this.form);
+    this.modalService.open(this.form, { size: 'lg' });
     this.desabilitarCampos();
   }
 

@@ -13,8 +13,8 @@ export class ProdutoService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getAll(): Promise<Product[]> {
-    return this.httpClient.get<Product[]>(`${this.produtoUrl}`).toPromise();
+  getByName(name: string): Promise<Product[]> {
+    return this.httpClient.get<Product[]>(`${this.produtoUrl}/name/${name}`).toPromise();
   }
 
   getByCliente(cliente: Customer): Promise<Product[]> {

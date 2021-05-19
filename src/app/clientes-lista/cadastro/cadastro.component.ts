@@ -62,7 +62,7 @@ export class CadastroComponent implements OnInit {
     if(cliente) {
       this.cliente.setValue(cliente);
     }
-    this.modalService.open(this.form);
+    this.modalService.open(this.form, { size: 'lg' });
     this.desabilitarCampos();
   }
 

@@ -30,9 +30,7 @@ export class CadastroComponent implements OnInit {
     private produtoService: ProdutoService,
     private formBuilder: FormBuilder,
     private modalService: NgbModal
-  ) { }
-
-  ngOnInit(): void {
+  ) { 
     this.pedido = this.formBuilder.group({
       id: [''],
       postingDate: [''],
@@ -41,7 +39,9 @@ export class CadastroComponent implements OnInit {
       orderLines: this.formBuilder.array([ this.novoItem() ]),
       customerId: [''],
     });
+  }
 
+  ngOnInit(): void {
     this.popularListaClientes();
     this.popularListaProdutos();
   }
@@ -69,7 +69,7 @@ export class CadastroComponent implements OnInit {
     if(pedido) {
       this.pedido.setValue(pedido);
     }
-    this.modalService.open(this.form);
+    this.modalService.open(this.form, { size: 'lg' });
     this.desabilitarCampos();
   }
 

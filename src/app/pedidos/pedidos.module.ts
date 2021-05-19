@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxMaskModule } from 'ngx-mask';
@@ -17,9 +17,10 @@ import { CadastroComponent } from './cadastro/cadastro.component';
   imports: [
     CommonModule,
     NgbModule,
+    FormsModule,
     ReactiveFormsModule,
     NgxMaskModule.forRoot(),
-    NgSelectModule
+    NgSelectModule,
   ]
 })
 export class PedidosModule { }
