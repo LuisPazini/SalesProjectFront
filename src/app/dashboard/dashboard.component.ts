@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
 import { AuthService } from '../core/services/auth.service';
 import { MenuComponent } from '../shared/components/menu/menu.component';
 import { Usuario } from '../shared/models/usuario';
@@ -14,7 +15,9 @@ export class DashboardComponent implements OnInit {
     nome: this.authService.getUserName()
   } as Usuario;
 
-  hoje: Date = new Date();
+  hoje: string = moment().format('L');
+  mesAnterior: string = moment(this.hoje).subtract(30, 'days').format('L');
+
 
   constructor(
     private authService: AuthService

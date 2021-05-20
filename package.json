@@ -24,6 +24,7 @@
     "@ng-select/ng-select": "^6.1.0",
     "bootstrap": "^4.6.0",
     "jwt-decode": "^3.1.2",
+    "moment": "^2.29.1",
     "ngx-mask": "^11.1.5",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",

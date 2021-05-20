@@ -4,7 +4,17 @@
         <h6 class="block font-weight-normal">Hoje: {{ hoje | date: 'dd/MM/yyyy' }}</h6>
     </div>
 
-    <div class="container-fluid d-flex flex-wrap mx-auto mt-5 w-75 justify-content-center">
+    <div class="form-row align-items-center justify-content-center mt-5">
+        <div class="form-group col-sm-2">
+            <input class="form-control" name="de" type="date" [value]="mesAnterior | date: 'yyyy-MM-dd'">
+        </div>
+        <label class="mx-2" for="a">até</label>
+        <div class="form-group col-sm-2">
+            <input class="form-control" name="a" type="date" [value]="hoje | date: 'yyyy-MM-dd'">
+        </div>
+    </div>
+
+    <div class="container-fluid d-flex flex-wrap mx-auto mt-1 w-75 justify-content-center">
         <app-card header="HEADER" body="BODY"></app-card>
         <app-card header="HEADER" body="BODY"></app-card>
         <app-card header="HEADER" body="BODY"></app-card>
