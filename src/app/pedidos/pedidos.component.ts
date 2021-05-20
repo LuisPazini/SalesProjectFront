@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
 import { MenuComponent } from '../shared/components/menu/menu.component';
 import { Order } from '../shared/models/order';
 import { PedidoService } from '../shared/services/pedido.service';
@@ -12,6 +13,11 @@ export class PedidosComponent implements OnInit {
 
   pedidos: Order[] = [] as Order[];
   pedidosFiltrados: Order[] = [] as Order[];
+
+  hoje: string = moment().format('L');
+
+  dataInicial: string = moment(this.hoje).subtract(30, 'days').format('L');
+  dataFinal: string = moment().format('L');
 
   page: number = 1;
   pageSize: number = 7;

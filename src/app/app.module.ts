@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { DEFAULT_CURRENCY_CODE, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -40,7 +40,8 @@ import { httpInterceptorProviders } from './core/http-interceptors';
     NgxMaskModule.forRoot()
   ],
   providers: [
-    httpInterceptorProviders
+    httpInterceptorProviders,
+    { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' }
   ],
   bootstrap: [AppComponent]
 })
