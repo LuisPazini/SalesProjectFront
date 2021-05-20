@@ -6,20 +6,22 @@
 
     <div class="form-row align-items-center justify-content-center mt-5">
         <div class="form-group col-sm-2">
-            <input class="form-control" name="de" type="date" [value]="mesAnterior | date: 'yyyy-MM-dd'">
+            <input class="form-control" name="de" type="date" [value]="dataInicial | date: 'yyyy-MM-dd'">
         </div>
         <label class="mx-2" for="a">até</label>
         <div class="form-group col-sm-2">
-            <input class="form-control" name="a" type="date" [value]="hoje | date: 'yyyy-MM-dd'">
+            <input class="form-control" name="a" type="date" [value]="dataFinal | date: 'yyyy-MM-dd'">
         </div>
     </div>
 
     <div class="container-fluid d-flex flex-wrap mx-auto mt-1 w-75 justify-content-center">
-        <app-card header="HEADER" body="BODY"></app-card>
-        <app-card header="HEADER" body="BODY"></app-card>
-        <app-card header="HEADER" body="BODY"></app-card>
-        <app-card header="HEADER" body="BODY"></app-card>
-        <app-card header="HEADER" body="BODY"></app-card>
-        <app-card header="HEADER" body="BODY"></app-card>
+        <app-card header="Pedidos em Aberto" [body]="dashboard.openOrders"></app-card>
+        <app-card header="Pedidos Aprovados" [body]="dashboard.approvedOrders"></app-card>
+        <app-card header="Pedidos Cancelados" [body]="dashboard.canceledOrders"></app-card>
+        <app-card header="Pedidos Faturados" [body]="dashboard.billedOrders"></app-card>
+        <app-card header="Maior Pedido" [body]="dashboard.biggestOrder"></app-card>
+        <app-card header="Menor Pedido" [body]="dashboard.lowestOrder"></app-card>
+        <app-card header="Pedido Médio" [body]="dashboard.averageOrders"></app-card>
+        <app-card header="Vendas Totais" [body]="dashboard.totalSales"></app-card>
     </div>
 </div>
