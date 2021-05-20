@@ -33,7 +33,7 @@ export class ProdutosComponent implements OnInit {
       this.notFoundText = "Digite ao menos 3 caracteres do nome de produto";
     } else {
       if(termo.length == 3) {
-        this.popularListaProdutos().then(() => 
+        this.popularListaProdutos(termo).then(() => 
           this.popularListaProdutosFiltrados(termo)
         );
       }
@@ -42,8 +42,8 @@ export class ProdutosComponent implements OnInit {
     }
   }
 
-  private async popularListaProdutos(): Promise<void> {
-    this.produtos = await this.produtoService.getAll();
+  private async popularListaProdutos(name: string): Promise<void> {
+    this.produtos = await this.produtoService.getByName(name);
   }
 
   private popularListaProdutosFiltrados(termo: string): void {

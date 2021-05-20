@@ -1,0 +1,37 @@
+<div class="form-row justify-content-center mx-4 my-5">
+    <input #inpNomePedido class="form-control col-md-7 mx-3" name="pesquisa-pedido" type="text"
+    placeholder="Pesquisar Pedido" 
+    (input)="filtrarPedidos(inpNomePedido.value)" >
+    <button class="btn btn-secondary" (click)="filtrarPedidos(inpNomePedido.value)" >Pesquisar</button>
+    <button class="btn btn-primary ml-1" (click)="formulario.open(undefined, true)"><span>+</span> Novo </button>
+</div>
+
+<app-cadastro #formulario></app-cadastro>
+    
+<table class="table table-hover">
+    <thead class="text-center thead-cinza">
+        <tr>
+            <th>Data de Emissão</th>
+            <th>Data de Envio</th>
+            <th>Cliente</th>
+            <th>Qtde Itens</th>
+            <th>Observação</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody *ngIf="pedidosFiltrados.length">
+        <tr *ngFor="let pedido of pedidosFiltrados | slice: (page-1) * pageSize : page * pageSize">
+            <td>{{ pedido.postingDate | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ pedido.deliveryDate | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ pedido.customerId }}</td>
+            <td>{{ pedido.orderLines }}</td>
+            <td>{{ pedido.observation }}</td>
+            <td><button class="btn btn-info" (click)="formulario.open(pedido)" >Visualizar</button>
+            <button class="btn btn-warning" (click)="formulario.open(pedido, true); formulario.edicao = true" >Editar</button></td>
+        </tr>
+        <ngb-pagination *ngIf="pedidosFiltrados.length" [(page)]="page" [pageSize]="pageSize" [collectionSize]="pedidosFiltrados.length">
+        </ngb-pagination>
+    </tbody>
+</table>
+
+<p *ngIf="!pedidosFiltrados.length" class="text-center mt-5">{{ notFoundText }}</p>

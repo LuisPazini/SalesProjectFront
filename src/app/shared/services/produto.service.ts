@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Customer } from '../models/customer';
 import { Product } from '../models/product';
 
 @Injectable({
@@ -12,8 +13,12 @@ export class ProdutoService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getAll(): Promise<Product[]> {
-    return this.httpClient.get<Product[]>(this.produtoUrl).toPromise();
+  getByName(name: string): Promise<Product[]> {
+    return this.httpClient.get<Product[]>(`${this.produtoUrl}/name/${name}`).toPromise();
+  }
+
+  getByCliente(cliente: Customer): Promise<Product[]> {
+    return this.httpClient.get<Product[]>(`${this.produtoUrl}/customer/${cliente.id}`).toPromise();
   }
 
   salvar(produto: Product): Promise<Product> {
