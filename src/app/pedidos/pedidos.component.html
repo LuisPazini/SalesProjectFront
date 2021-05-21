@@ -1,21 +1,33 @@
 <div class="form-row justify-content-center align-items-center mx-4 mt-5 mb-4">
-    <!-- <input #inpNomePedido class="form-control col-md-7 mx-3 mb-3" name="pesquisa-pedido" type="text"
-    placeholder="Pesquisar Pedido" 
-    (input)="filtrarPedidos(inpNomePedido.value)" > -->
-
-    <div class="form-row col-md-8 align-items-center justify-content-center mt-5">
+    <div class="form-row col-md-8 align-items-center justify-content-center mt-3 text-center">
         <label class="mx-2" for="de">Período: </label>
-        <div class="form-group col-sm-2">
-            <input class="form-control" name="de" type="date" [value]="dataInicial | date: 'yyyy-MM-dd'">
+        <div class="form-group col-sm-3">
+            <input class="form-control text-center" name="de" type="date" [value]="dataInicial | date: 'yyyy-MM-dd'">
         </div>
         <label class="mx-2" for="a">até</label>
-        <div class="form-group col-sm-2">
-            <input class="form-control" name="a" type="date" [value]="dataFinal | date: 'yyyy-MM-dd'">
+        <div class="form-group col-sm-3">
+            <input class="form-control text-center" name="a" type="date" [value]="dataFinal | date: 'yyyy-MM-dd'">
+        </div>
+
+        <div class="form-group col-md-8 mt-2">
+            <ng-select class="text-center" [(ngModel)]="status" placeholder="Selecione um Status...">
+                <ng-option *ngFor="let status of statuses" [value]="status.id">
+                    {{ status.nome }}
+                </ng-option>
+            </ng-select>
+        </div>
+    
+        <div class="form-group col-md-8 mt-2">
+            <ng-select class="text-center" [(ngModel)]="cliente" placeholder="Selecione um Cliente...">
+                <ng-option *ngFor="let cliente of clientes" [value]="cliente">
+                    {{ cliente.companyName }}
+                </ng-option>
+            </ng-select>
         </div>
     </div>
 
-    <div class="form-row col-md-3 justify-content-center">
-        <button class="btn btn-secondary"  >Pesquisar</button>
+    <div class="col-md-3 justify-content-center">
+        <button class="btn btn-secondary" (click)="popularListaPedidos()" >Pesquisar</button>
         <button class="btn btn-primary ml-1" (click)="formulario.open(undefined, true)"><span>+</span> Novo </button>
     </div>
 </div>
@@ -33,19 +45,19 @@
             <th></th>
         </tr>
     </thead>
-    <tbody *ngIf="pedidosFiltrados.length">
-        <tr *ngFor="let pedido of pedidosFiltrados | slice: (page-1) * pageSize : page * pageSize">
+    <tbody *ngIf="pedidos.length" class="text-center">
+        <tr *ngFor="let pedido of pedidos | slice: (page-1) * pageSize : page * pageSize">
             <td>{{ pedido.postingDate | date: 'dd/MM/yyyy' }}</td>
             <td>{{ pedido.deliveryDate | date: 'dd/MM/yyyy' }}</td>
-            <td>{{ pedido.customerId }}</td>
-            <td>{{ pedido.orderLines }}</td>
+            <td>{{ pedido.customerId | cliente: clientes }}</td>
+            <td>{{ pedido.orderLines.length }}</td>
             <td>{{ pedido.observation }}</td>
             <td><button class="btn btn-info" (click)="formulario.open(pedido)" >Visualizar</button>
             <button class="btn btn-warning" (click)="formulario.open(pedido, true); formulario.edicao = true" >Editar</button></td>
         </tr>
-        <ngb-pagination *ngIf="pedidosFiltrados.length" [(page)]="page" [pageSize]="pageSize" [collectionSize]="pedidosFiltrados.length">
+        <ngb-pagination *ngIf="pedidos.length" [(page)]="page" [pageSize]="pageSize" [collectionSize]="pedidos.length">
         </ngb-pagination>
     </tbody>
 </table>
 
-<p *ngIf="!pedidosFiltrados.length" class="text-center mt-5">{{ notFoundText }}</p>
+<p *ngIf="!pedidos.length" class="text-center mt-5">{{ notFoundText }}</p>

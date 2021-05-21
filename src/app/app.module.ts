@@ -17,6 +17,7 @@ import { ClientesModule } from './clientes-lista/clientes.module';
 import { ProdutosModule } from './produtos/produtos.module';
 import { PedidosModule } from './pedidos/pedidos.module';
 import { httpInterceptorProviders } from './core/http-interceptors';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { httpInterceptorProviders } from './core/http-interceptors';
     ReactiveFormsModule,
     FormsModule,
     NgbModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    NgSelectModule
   ],
   providers: [
     httpInterceptorProviders,

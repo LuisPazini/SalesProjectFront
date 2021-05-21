@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxMaskModule } from 'ngx-mask';
 
-import { NgSelectModule } from '@ng-select/ng-select';
 import { PedidosComponent } from './pedidos.component';
 import { CadastroComponent } from './cadastro/cadastro.component';
+import { PipesModule } from '../shared/pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { CadastroComponent } from './cadastro/cadastro.component';
     ReactiveFormsModule,
     NgxMaskModule.forRoot(),
     NgSelectModule,
+    PipesModule
   ]
 })
 export class PedidosModule { }
