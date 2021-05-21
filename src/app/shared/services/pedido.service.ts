@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { environment } from 'src/environments/environment';
 import { Order } from '../models/order';
 
@@ -10,9 +11,15 @@ export class PedidoService {
 
   private pedidoUrl: string = environment.URL + '/product'
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private httpClient: HttpClient,
+    private authService: AuthService
+  ) { }
 
   getAll(): Promise<Order[]> {
+    if(this.authService.isUserCustomer()) {
+      return this.httpClient.get<Order[]>(this.pedidoUrl).toPromise();
+    }
     return this.httpClient.get<Order[]>(this.pedidoUrl).toPromise();
   }
 

@@ -16,10 +16,10 @@ export class AccountService {
 
   login(usuario: Usuario): Promise<{user: Usuario, token: string}> {
     let credenciais = {
-      username: usuario.usuario, 
+      username: usuario.username, 
       visiblePassword: usuario.senha
     };
-
+    
     return this.httpClient.post<{user: Usuario, token: string}>(`${this.accountUrl}/login`, credenciais).toPromise();
   }
 

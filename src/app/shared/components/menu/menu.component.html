@@ -1,26 +1,31 @@
 <nav *ngIf="exibirMenu" id="menu" class="navbar navbar-expand-lg navbar-dark bg-primary d-flex">
     <a class="navbar-brand text-uppercase text-bold" routerLink="/dashboard" >ZP Metais</a>
-    <button class="navbar-toggler" type="button">
+    <button class="navbar-toggler" (click)="isMenuCollapsed = !isMenuCollapsed" type="button">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse">
+    <div class="collapse navbar-collapse" [ngbCollapse]="isMenuCollapsed">
         <ul class="navbar-nav d-flex">
             <li class="nav-item ml-auto">
-                <a class="nav-link" routerLink="/dashboard">Dashboard</a>
+                <a class="nav-link" routerLink="/dashboard" *ngIf="isAdministrator()" 
+                (click)="isMenuCollapsed = true">Dashboard</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" routerLink="/clientes">Clientes</a>
+                <a class="nav-link" routerLink="/clientes" *ngIf="isSellerOrHigher() && isNotIT()"
+                (click)="isMenuCollapsed = true">Clientes</a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link" routerLink="/produtos">Produtos</a>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/produtos" *ngIf="isNotIT()"
+                (click)="isMenuCollapsed = true">Produtos</a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link" routerLink="/pedidos">Pedidos</a>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/pedidos" *ngIf="isNotIT()"
+                (click)="isMenuCollapsed = true">Pedidos</a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link" routerLink="#">Usuário</a>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="#" *ngIf="isITOrHigher()"
+                (click)="isMenuCollapsed = true">Usuário</a>
             </li>
-            <li class="nav-item ml-auto">
+            <li class="nav-item">
                 <a class="nav-link" routerLink="/login">Logoff</a>
             </li>
         </ul>

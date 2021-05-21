@@ -16,12 +16,19 @@ export class AuthorizationGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    if(this.authService.getUserRole() == 'Administrator') {
+    let path = route.routeConfig.path;
+
+    if(path == 'dashboard' && this.authService.isUserAdministrator()) {
       return true;
-    } else {
-      this.router.navigateByUrl('not-found')
-      return false;
     }
+    if(path == 'usuarios' && this.authService.isUserITOrHigher()) {
+      return true;
+    } 
+    if(path == 'clientes' && this.authService.isUserSellerOrHigher()) {
+      return true;
+    }
+    this.router.navigate(['not-found'])
+    return false;
   }
   
 }

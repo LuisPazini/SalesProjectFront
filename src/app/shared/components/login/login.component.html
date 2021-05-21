@@ -5,7 +5,7 @@
 
         <form class="container form-col w-25" [formGroup]="usuario" (ngSubmit)="realizarLogin()" novalidate>
             <div class="mr-3">
-                <input class="form-control ml-3" type="text" placeholder="Usuário" formControlName="usuario">
+                <input class="form-control ml-3" type="text" placeholder="Usuário" formControlName="username">
                 <input class="form-control ml-3" type="password" placeholder="Senha" formControlName="senha">
                 <button class="btn btn-primary w-100 mt-3" type="submit" (click)="realizarLogin()" >Login</button>
             </div>

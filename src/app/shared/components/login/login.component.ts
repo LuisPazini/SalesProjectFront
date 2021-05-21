@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { Role } from '../../enums/role.enum';
 import { MenuComponent } from '../menu/menu.component';
 
 @Component({
@@ -12,7 +13,7 @@ import { MenuComponent } from '../menu/menu.component';
 export class LoginComponent implements OnInit {
 
   usuario = this.formBuilder.group({
-    usuario: [''],
+    username: [''],
     senha: ['']
   })
 
@@ -31,7 +32,13 @@ export class LoginComponent implements OnInit {
   async realizarLogin(): Promise<void> {
     this.authService.canLogin(this.usuario.value).then(canLogin => {
       if(canLogin) {
-        this.router.navigateByUrl('/dashboard');
+        if(this.authService.isUserAdministrator()) {
+          this.router.navigate(['dashboard']);
+        } else if(this.authService.isUserIT()) {
+          this.router.navigate(['usuarios']);
+        } else {
+          this.router.navigate(['pedidos']);
+        }
       }
     }).catch(error => {
       if(error.status == 400) {

@@ -12,8 +12,8 @@ import { AuthorizationGuard } from './core/guards/authorization.guard';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent, pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent, pathMatch: 'full', canActivate: [AuthGuard] },
-  { path: 'clientes', component: ClientesListaComponent, pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: 'dashboard', component: DashboardComponent, pathMatch: 'full', canActivate: [AuthGuard, AuthorizationGuard] },
+  { path: 'clientes', component: ClientesListaComponent, pathMatch: 'full', canActivate: [AuthGuard, AuthorizationGuard] },
   { path: 'produtos', component: ProdutosComponent, pathMatch: 'full', canActivate: [AuthGuard] },
   { path: 'pedidos', component: PedidosComponent, pathMatch: 'full', canActivate: [AuthGuard] },
   { path: '**', component: NotFoundComponent, pathMatch: 'full' }

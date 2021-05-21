@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import jwt_decode, { JwtPayload } from 'jwt-decode';
 import { Subject } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { Role } from 'src/app/shared/enums/role.enum';
 import { Usuario } from 'src/app/shared/models/usuario';
 import { AccountService } from 'src/app/shared/services/account.service';
 
@@ -12,6 +13,8 @@ import { AccountService } from 'src/app/shared/services/account.service';
 export class AuthService {
 
   key = 'Authorization';
+
+  user: Usuario = {} as Usuario;
 
   sessaoExpiradaSubject: Subject<void> = new Subject<void>();
 
@@ -31,6 +34,10 @@ export class AuthService {
     return false;
   }
 
+  getToken(): string | null {
+    return sessionStorage.getItem(this.key);
+  }
+
   removerToken(): void {
     sessionStorage.removeItem(this.key);
   }
@@ -40,20 +47,32 @@ export class AuthService {
     return _token? true : false;
   }
 
-  getUserRole(): string {
-    let _token = this.getToken();
-    let _decoded: any = jwt_decode(_token);
-    return _decoded.role;
+  isUserAdministrator(): boolean {
+    return this.user.role == Role.ADMINISTRADOR;
   }
 
-  getUserName(): string {
-    let _token = this.getToken();
-    let _decoded: any = jwt_decode(_token);
-    return 'Augusto';
+  isUserITOrHigher(): boolean {
+    return this.user.role >= Role.TI;
+  }
+
+  isUserSellerOrHigher(): boolean {
+    return this.user.role >= Role.VENDEDOR;
+  }
+
+  isUserCustomer(): boolean {
+    return this.user.role == Role.CLIENTE;
+  }
+
+  isUserIT(): boolean {
+    return this.user.role == Role.TI;
   }
 
   private async login(usuario: Usuario): Promise<string> {
-    let _token = (await this.contaService.login(usuario)).token;
+    let _token: string;
+    await this.contaService.login(usuario).then((response) => {
+      _token = response.token;
+      this.user = response.user;
+    });
     sessionStorage.setItem(this.key, _token);
     return _token;
   }
@@ -64,10 +83,6 @@ export class AuthService {
     let _expiracao = new Date(_tempo * 1000);
     
     return _expiracao;
-  }
-
-  getToken(): string | null {
-    return sessionStorage.getItem(this.key);
   }
 
   private tokenCountdownInit(): void {
