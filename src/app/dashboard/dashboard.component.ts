@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit {
     nome: this.authService.user.username
   } as Usuario;
   
-  dashboard: Dashboard;
+  dashboard: Dashboard = {} as Dashboard;
 
   hoje: string = moment().format('L');
 
