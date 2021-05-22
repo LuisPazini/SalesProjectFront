@@ -32,12 +32,14 @@ export class CadastroComponent implements OnInit {
     private modalService: NgbModal
   ) { 
     this.pedido = this.formBuilder.group({
-      id: [''],
       postingDate: [''],
       deliveryDate: [''],
+      status: [''],
+      totalOrder: [''],
       observation: [''],
-      orderLines: this.formBuilder.array([ this.novoItem() ]),
+      orderLines: [this.formBuilder.array([ this.novoItem() ])],
       customerId: [''],
+      id: [''],
     });
   }
 

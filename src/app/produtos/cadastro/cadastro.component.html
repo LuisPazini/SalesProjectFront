@@ -20,7 +20,7 @@
             <div class="form-row">
                 <div class="form-group col">
                     <label class="col-form-label" for="cliente">Cliente: </label>
-                    <ng-select class="form-control" name="cliente" formControlName="customerId">
+                    <ng-select name="cliente" formControlName="customerId">
                         <ng-option *ngFor="let cliente of clientes" [value]="cliente.id">
                             {{ cliente.companyName }}
                         </ng-option>

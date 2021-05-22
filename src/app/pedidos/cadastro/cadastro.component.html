@@ -8,9 +8,9 @@
         <form class="needs-validation" [formGroup]="pedido" (ngSubmit)="salvar(pedido.value)" novalidate>
             
             <div class="form-row">
-                <div class="form-group">
+                <div class="form-group col-md-6">
                     <label class="col-form-label" for="cliente">Cliente:</label>
-                    <ng-select class="form-control" name="cliente" formControlName="customerId">
+                    <ng-select name="cliente" formControlName="customerId">
                         <ng-option *ngFor="let cliente of clientes" [value]="cliente.id">
                             {{ cliente.companyName }}
                         </ng-option>
@@ -29,38 +29,41 @@
             </div>
 
             <div class="form-group">
-                <label class="col-form-label" for="itens">Itens: </label>
-                <div class="form-row" formArrayName="orderLines" 
-                *ngFor="let item of pedido.get('orderLines')['controls']; let i = index;">
-                    <div [formGroupName]="i"]>
-                        <div class="form-group">
-                            <label for="produto">Produto</label>
-                            <ng-select class="form-control" name="produto" formControlName="productId">
+                <label class="col-form-label justify-content-center" for="itens">Itens: </label>
+
+                    <div class="form-row" formArrayName="orderLines"
+                    *ngFor="let item of pedido.get('orderLines')['controls']; let i = index;">
+                        <div [formGroupName]="i"]>
+                            <ng-select name="produto" formControlName="productId">
                                 <ng-option *ngFor="let produto of produtos" [value]="produto.id">
                                     {{ produto.name }}
                                 </ng-option>
                             </ng-select>
+                            <!-- <div class="form-group">
+                                <label for="produto">Produto</label>
+                                
+                            </div>
+                            <div class="form-group">
+                                <label for="qtde">Qtde</label>
+                                <input name="qtde" type="text" thousandSeparator="." mask="separador,0" suffix=" unidades"
+                                formControlName="quantity">
+                            </div>
+                            <div class="form-group">
+                                <label for="valor-unitario">Valor Unitário</label>
+                                <input name="valor-unitario" type="text" prefix="R$ " thousandSeparator="." mask="separator,2"
+                                formControlName="unitaryPrice">
+                            </div>
+                            <div class="form-group">
+                                <label for="custos-adicionais">Custos Adicionais</label>
+                                <input name="custos-adicionais" type="text" prefix="R$ " thousandSeparator="." mask="separator,2"
+                                formControlName="additionalCosts">
+                            </div> -->
                         </div>
-                        <div class="form-group">
-                            <label for="qtde">Qtde</label>
-                            <input name="qtde" type="text" thousandSeparator="." mask="separador,0" suffix=" unidades"
-                            formControlName="quantity">
-                        </div>
-                        <div class="form-group">
-                            <label for="valor-unitario">Valor Unitário</label>
-                            <input name="valor-unitario" type="text" prefix="R$ " thousandSeparator="." mask="separator,2"
-                            formControlName="unitaryPrice">
-                        </div>
-                        <div class="form-group">
-                            <label for="custos-adicionais">Custos Adicionais</label>
-                            <input name="custos-adicionais" type="text" prefix="R$ " thousandSeparator="." mask="separator,2"
-                            formControlName="additionalCosts">
-                        </div>
+                        <button type="reset"><span>-</span></button>
+                        <button type="submit"><span>+</span></button>
                     </div>
-                    <button type="reset"><span>-</span></button>
-                    <button type="submit"><span>+</span></button>
-                </div>
-                <div class="form-row">
+
+                <div class="form-row justify-content-center">
                     <button class="btn btn-primary" type="menu" (click)="adicionarItem()" ><span>+ </span>Novo Item</button>
                 </div>
             </div>
