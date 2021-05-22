@@ -6,6 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { PipesModule } from '../shared/pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ReactiveFormsModule,
     NgbModule,
     NgxMaskModule.forRoot(),
-    NgSelectModule
+    NgSelectModule,
+    PipesModule
   ]
 })
 export class ProdutosModule { }

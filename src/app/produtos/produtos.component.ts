@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuComponent } from '../shared/components/menu/menu.component';
+import { Customer } from '../shared/models/customer';
 import { Product } from '../shared/models/product';
+import { ClienteService } from '../shared/services/cliente.service';
 import { ProdutoService } from '../shared/services/produto.service';
 
 @Component({
@@ -13,6 +15,8 @@ export class ProdutosComponent implements OnInit {
   produtos: Product[] = [] as Product[];
   produtosFiltrados: Product[] = [] as Product[];
 
+  clientes: Customer[] = [] as Customer[];
+
   page: number = 1;
   pageSize: number = 7;
 
@@ -20,11 +24,13 @@ export class ProdutosComponent implements OnInit {
 
   constructor(
     private produtoService: ProdutoService,
+    private clienteService: ClienteService
   ) { 
     MenuComponent.toggleExibirMenu.next(true);
   }
 
   ngOnInit(): void {
+    this.popularListaClientes();
   }
 
   filtrarProdutos(termo: string): void {
@@ -55,5 +61,11 @@ export class ProdutosComponent implements OnInit {
   private limparListaProdutos(): void {
     this.produtos = [] as Product[];
     this.produtosFiltrados = [] as Product[];
+  }
+
+  private popularListaClientes(): void {
+    this.clienteService.getAll().then((clientes) => {
+      this.clientes = clientes;
+    })
   }
 }

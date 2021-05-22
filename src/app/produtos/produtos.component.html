@@ -23,7 +23,7 @@
         <tr *ngFor="let produto of produtosFiltrados | slice: (page-1) * pageSize : page * pageSize">
             <td>{{ produto.ncmCode }}</td>
             <td>{{ produto.name }}</td>
-            <td>{{ produto.customerId }}</td>
+            <td>{{ produto.customerId | cliente: clientes }}</td>
             <td>{{ produto.combinedQuantity }}</td>
             <td>{{ produto.combinedPrice }}</td>
             <td>{{ produto.details }}</td>
