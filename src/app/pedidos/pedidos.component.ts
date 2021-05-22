@@ -33,7 +33,7 @@ export class PedidosComponent implements OnInit {
   status: StatusPedido;
 
   page: number = 1;
-  pageSize: number = 7;
+  pageSize: number = 5;
 
   notFoundText: string = 'Não foram encontrados pedidos com os parâmetros informados...';
 

@@ -98,11 +98,15 @@ export class CadastroComponent implements OnInit {
   }
 
   private popularListaClientes(): void {
-    this.clienteService.getAll().then(clientes => this.clientes = clientes);
+    this.clienteService.getAll().then(clientes => 
+      this.clientes = clientes
+    );
   }
 
   private popularListaProdutos(): void {
-    this.produtoService.getByCliente({id: "bdf7b85d-b045-4c32-f401-08d914238f47"} as Customer).then(produtos => this.produtos = produtos);
+    this.produtoService.getByCliente(this.pedido.get('customerId').value).then(produtos => 
+      this.produtos = produtos
+    );
   }
 
 }

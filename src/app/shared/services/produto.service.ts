@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { environment } from 'src/environments/environment';
 import { Customer } from '../models/customer';
 import { Product } from '../models/product';
@@ -11,14 +12,21 @@ export class ProdutoService {
 
   private produtoUrl: string = environment.URL + '/product'
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private httpClient: HttpClient,
+    private authService: AuthService
+  ) { }
 
   getByName(name: string): Promise<Product[]> {
+    if(this.authService.isUserCustomer()) {
+      let clienteId = this.authService.user.customerId;
+      return this.httpClient.get<Product[]>(`${this.produtoUrl}/customer/${clienteId}`).toPromise();
+    }
     return this.httpClient.get<Product[]>(`${this.produtoUrl}/name/${name}`).toPromise();
   }
 
-  getByCliente(cliente: Customer): Promise<Product[]> {
-    return this.httpClient.get<Product[]>(`${this.produtoUrl}/customer/${cliente.id}`).toPromise();
+  getByCliente(clienteId: string): Promise<Product[]> {
+    return this.httpClient.get<Product[]>(`${this.produtoUrl}/customer/${clienteId}`).toPromise();
   }
 
   salvar(produto: Product): Promise<Product> {
