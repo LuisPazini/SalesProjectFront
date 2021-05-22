@@ -10,7 +10,7 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label class="col-form-label" for="cliente">Cliente:</label>
-                    <ng-select name="cliente" formControlName="customerId">
+                    <ng-select name="cliente" (change)="popularListaProdutos()" formControlName="customerId">
                         <ng-option *ngFor="let cliente of clientes" [value]="cliente.id">
                             {{ cliente.companyName }}
                         </ng-option>
@@ -83,13 +83,13 @@
                 </button>
                 <button class="btn btn-danger" type="reset" (click)="cancelar(pedido.value)"
                 [disabled]="!edicao || !pedido.get('id')?.value">
-                    Remover
+                    Cancelamento
                 </button>
                 <button class="btn btn-warning" type="reset"
                 [disabled]="!pedido.dirty || pedido.get('cnpj')?.disabled">
                     Limpar
                 </button>
-                <button class="btn btn-secondary" type="reset" (click)="modal.dismiss()">Cancelar</button>
+                <button class="btn btn-secondary" type="reset" (click)="modal.dismiss()">Sair</button>
             </div>
         </form>
     </div>

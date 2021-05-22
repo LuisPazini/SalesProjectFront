@@ -38,14 +38,16 @@ export class CadastroComponent implements OnInit {
       totalOrder: [''],
       observation: [''],
       orderLines: [this.formBuilder.array([ this.novoItem() ])],
+      customer: [''],
       customerId: [''],
+      valid: [''],
+      notifications: [''],
       id: [''],
     });
   }
 
   ngOnInit(): void {
     this.popularListaClientes();
-    this.popularListaProdutos();
   }
 
   salvar(pedido: Order): void {
@@ -75,6 +77,16 @@ export class CadastroComponent implements OnInit {
     this.desabilitarCampos();
   }
 
+  popularListaProdutos(): void {
+    this.produtoService.getByCliente(this.pedido.get('customerId').value).then(produtos => 
+      this.produtos = produtos
+    ).catch((error) => {
+      if(error.status == 404) {
+        this.limparListaProdutos();
+      }
+    });
+  }
+
   adicionarItem(): void {
     this.itens = this.pedido.get('orderLines') as FormArray;
     this.itens.push(this.novoItem());
@@ -92,6 +104,10 @@ export class CadastroComponent implements OnInit {
   private desabilitarCampos(): void {
     if(this.pedido.get('id')?.value) {
       this.pedido.disable();
+      if(this.edicao) {
+        this.pedido.get('deliveryDate').enable();
+        this.pedido.get('observation').enable();
+      }
     } else {
       this.pedido.enable();
     }
@@ -103,10 +119,8 @@ export class CadastroComponent implements OnInit {
     );
   }
 
-  private popularListaProdutos(): void {
-    this.produtoService.getByCliente(this.pedido.get('customerId').value).then(produtos => 
-      this.produtos = produtos
-    );
+  private limparListaProdutos(): void {
+    this.produtos = [] as Product[];
   }
 
 }
