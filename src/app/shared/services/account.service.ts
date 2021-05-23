@@ -23,4 +23,8 @@ export class AccountService {
     return this.httpClient.post<{user: Usuario, token: string}>(`${this.accountUrl}/login`, credenciais).toPromise();
   }
 
+  cadastrar(usuario: Usuario): Promise<{user: Usuario, token: string}> {
+    return this.httpClient.post<{user: Usuario, token: string}>(`${this.accountUrl}/register`, usuario).toPromise();
+  }
+
 }

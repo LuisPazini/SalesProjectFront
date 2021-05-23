@@ -1,6 +1,9 @@
 export interface Lines {
+    orderId: string,
     quantity: number,
     unitaryPrice: number,
     additionalCosts: number,
-    productId: string
+    totalPrice: number,
+    productId: string,
+    id: string,
 }

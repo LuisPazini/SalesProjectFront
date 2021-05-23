@@ -14,7 +14,7 @@ import { DashboardService } from '../shared/services/dashboard.service';
 export class DashboardComponent implements OnInit {
 
   usuario: Usuario = {
-    nome: this.authService.user.username
+    name: this.authService.user.name
   } as Usuario;
   
   dashboard: Dashboard = {} as Dashboard;

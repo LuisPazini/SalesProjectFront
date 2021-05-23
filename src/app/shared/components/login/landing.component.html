@@ -1,0 +1,9 @@
+
+<div id="login" class="row align-items-center justify-content-center vh-100 vw-100">
+    <div class="col">
+        <h1 class="block text-center my-3 ml-3">ZP Metais</h1>
+
+        <app-login *ngIf="!cadastro" (cadastrar)="cadastro = $event" ></app-login>
+        <app-cadastro *ngIf="cadastro" (cadastrar)="cadastro = $event"  ></app-cadastro>
+    </div>
+</div>

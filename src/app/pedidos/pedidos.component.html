@@ -16,7 +16,7 @@
                 </ng-option>
             </ng-select>
         </div>
-    
+
         <div class="form-group col-md-8 mt-2">
             <ng-select class="text-center" [(ngModel)]="cliente" placeholder="Selecione um Cliente...">
                 <ng-option *ngFor="let cliente of clientes" [value]="cliente">
@@ -27,13 +27,13 @@
     </div>
 
     <div class="col-md-3 justify-content-center text-center">
-        <button class="btn btn-secondary" (click)="popularListaPedidos()" >Pesquisar</button>
-        <button class="btn btn-primary ml-1" (click)="formulario.open(undefined, true)"><span>+</span> Novo </button>
+        <button class="btn btn-secondary" (click)="popularListaPedidos()">Pesquisar</button>
+        <button class="btn btn-primary ml-1" (click)="formulario.open(null, true)"><span>+</span> Novo </button>
     </div>
 </div>
 
 <app-cadastro #formulario></app-cadastro>
-    
+
 <table class="table table-hover">
     <thead class="text-center thead-cinza">
         <tr>
@@ -52,8 +52,10 @@
             <td>{{ pedido.customerId | cliente: clientes }}</td>
             <td>{{ pedido.orderLines.length }}</td>
             <td>{{ pedido.observation }}</td>
-            <td><button class="btn btn-info" (click)="formulario.open(pedido)" >Visualizar</button>
-            <button class="btn btn-warning" (click)="formulario.open(pedido, true); formulario.edicao = true" >Editar</button></td>
+            <td><button class="btn btn-info" (click)="formulario.open(pedido)">Visualizar</button>
+                <button class="btn btn-warning"
+                    (click)="formulario.open(pedido, true); formulario.edicao = true">Editar</button>
+            </td>
         </tr>
         <ngb-pagination *ngIf="pedidos.length" [(page)]="page" [pageSize]="pageSize" [collectionSize]="pedidos.length">
         </ngb-pagination>

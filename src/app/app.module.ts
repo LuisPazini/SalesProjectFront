@@ -4,11 +4,11 @@ import { HttpClientModule } from '@angular/common/http'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxMaskModule } from 'ngx-mask';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './shared/components/login/login.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MenuComponent } from './shared/components/menu/menu.component';
@@ -17,18 +17,18 @@ import { ClientesModule } from './clientes-lista/clientes.module';
 import { ProdutosModule } from './produtos/produtos.module';
 import { PedidosModule } from './pedidos/pedidos.module';
 import { httpInterceptorProviders } from './core/http-interceptors';
-import { NgSelectModule } from '@ng-select/ng-select';
+import { LandingModule } from './shared/components/login/landing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     NotFoundComponent,
     DashboardComponent,
     MenuComponent,
-    CardComponent,
+    CardComponent
   ],
   imports: [
+    LandingModule,
     ClientesModule,
     ProdutosModule,
     PedidosModule,

@@ -1,0 +1,12 @@
+<form class="container form-col w-25" [formGroup]="usuario" (ngSubmit)="cadastrar(usuario.value)" novalidate>
+    <div class="mr-3">
+        <input class="form-control ml-3" type="text" placeholder="Nome Completo" formControlName="name">
+        <input class="form-control ml-3" type="email" placeholder="E-mail" formControlName="email">
+        <input class="form-control ml-3" type="text" placeholder="Usuário" formControlName="username">
+        <input class="form-control ml-3" type="password" placeholder="Senha" formControlName="password">
+        <input class="form-control ml-3" type="password" placeholder="Redigite a Senha" formControlName="confirmPassword">
+        <button class="btn btn-primary w-100 mt-3" type="submit">Cadastrar</button>
+    </div>
+
+    <div class="mt-1 text-center ml-3"><a href="#">Ajuda</a></div>
+</form>
