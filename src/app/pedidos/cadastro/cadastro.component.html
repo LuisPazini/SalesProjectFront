@@ -34,34 +34,43 @@
                 
                 <div formArrayName="orderLines"
                 *ngFor="let item of orderLines.controls; let i=index" name="itens">
-                    <div [formGroupName]="i" class="form-row align-items-end justify-content-center">
-                        <div class="form-group col-md-4">
-                            <label for="produto">Produto</label>
-                            <ng-select name="produto" formControlName="productId" (change)="exibirPrecosDeItem">
-                                <ng-option *ngFor="let produto of produtos" [value]="produto.id">
-                                    {{ produto.name }}
-                                </ng-option>
-                            </ng-select>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label class="col-form-label" for="qtde">Qtde</label>
-                            <input class="form-control" name="qtde" type="text" thousandSeparator="." mask="separador.0" 
-                            suffix=" unidades" formControlName="quantity">
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label class="col-form-label" for="valor-unitario">Valor Unitário</label>
-                            <input class="form-control" name="valor-unitario" type="text" prefix="R$ " thousandSeparator="." 
-                            mask="separator.2" formControlName="unitaryPrice">
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label class="col-form-label" for="custos-adicionais">Custos Adicionais</label>
-                            <input class="form-control" name="custos-adicionais" type="text" prefix="R$ " thousandSeparator="." 
-                            mask="separator.2" formControlName="additionalCosts" >
-                        </div>
-
-                        <div class="col-md-1 text-center mb-3">
-                            <button class="btn btn-danger" type="button" 
-                            *ngIf="isNovoPedido()" (click)="removerItem(i)" ><span>x</span></button>
+                    <div [formGroupName]="i" 
+                    class="border border-secondary rounded-top px-2 my-2 align-items-end justify-content-center">
+                        <label class="col text-center" for="endereco">
+                            <span class="badge badge-warning">Item {{ i+1 }}:</span>
+                        </label>
+                        <div class="form-row align-items-baseline">
+                            <div class="col-md-11">
+                                <div class="form-row align-items-baseline">
+                                    <div class="form-group col-md-5">
+                                        <label for="produto">Produto</label>
+                                        <ng-select name="produto" formControlName="productId" (change)="exibirPrecosDeItem">
+                                            <ng-option *ngFor="let produto of produtos" [value]="produto.id">
+                                                {{ produto.name }}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label class="col-form-label" for="qtde">Qtde</label>
+                                        <input class="form-control" name="qtde" type="text" thousandSeparator="." mask="separador.0"
+                                        suffix=" unidades" formControlName="quantity">
+                                    </div>
+                                    <div class="form-group col">
+                                        <label class="col-form-label" for="valor-unitario">Valor Unitário</label>
+                                        <input class="form-control" name="valor-unitario" type="text" prefix="R$ " thousandSeparator="."
+                                        mask="separator.2" formControlName="unitaryPrice">
+                                    </div>
+                                    <div class="form-group col">
+                                        <label class="col-form-label" for="custos-adicionais">Custos Adicionais</label>
+                                        <input class="form-control" name="custos-adicionais" type="text" prefix="R$ " thousandSeparator="."
+                                        mask="separator.2" formControlName="additionalCosts" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1 align-self-center mt-4">
+                                <button class="btn btn-danger" type="button" 
+                                *ngIf="isNovoPedido()" (click)="removerItem(i)" ><span>x</span></button>
+                            </div>
                         </div>
                     </div>
                 </div>
