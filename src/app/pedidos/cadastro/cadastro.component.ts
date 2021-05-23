@@ -21,10 +21,23 @@ export class CadastroComponent implements OnInit {
   clientes: Customer[] = [] as Customer[];
   produtos: Product[] = [] as Product[];
   
-  pedido: FormGroup;
-  itens: FormArray; 
-  
   hoje: string = moment().format('YYYY-MM-DD');
+
+  pedido = this.formBuilder.group({
+    postingDate: [this.hoje],
+    deliveryDate: [''],
+    status: [''],
+    totalOrder: [''],
+    observation: [''],
+    orderLines: this.formBuilder.array([ this.novoItem() ]),
+    customer: [''],
+    customerId: [''],
+    valid: [''],
+    notifications: [''],
+    id: [''],
+  });
+
+  itens = this.pedido.get('orderLines') as FormArray; 
 
   edicao: boolean = false;
 
@@ -37,22 +50,6 @@ export class CadastroComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.pedido = this.formBuilder.group({
-      postingDate: [this.hoje],
-      deliveryDate: [''],
-      status: [''],
-      totalOrder: [''],
-      observation: [''],
-      orderLines: this.formBuilder.array([ this.novoItem() ]),
-      customer: [''],
-      customerId: [''],
-      valid: [''],
-      notifications: [''],
-      id: [''],
-    });
-
-    this.itens = this.pedido.get('orderLines') as FormArray;
-
     this.popularListaClientes();
     if(!this.isNovoPedido()) {
       this.popularListaProdutos();
