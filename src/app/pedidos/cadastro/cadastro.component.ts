@@ -61,7 +61,6 @@ export class CadastroComponent implements OnInit {
   }
 
   salvar(pedido: Order): void {
-    console.log(pedido);
     if(this.isNovoPedido()) {
       this.pedidoService.salvar(pedido).then(
         res => {
@@ -96,16 +95,6 @@ export class CadastroComponent implements OnInit {
     this.desabilitarCampos();
   }
 
-  popularListaProdutos(): void {
-    this.produtoService.getByCliente(this.pedido.get('customerId').value).then(produtos => 
-      this.produtos = produtos
-    ).catch((error) => {
-      if(error.status == 404) {
-        this.limparListaProdutos();
-      }
-    });
-  }
-
   adicionarItem(): void {
     this.itens.push(this.novoItem());
   }
@@ -125,6 +114,16 @@ export class CadastroComponent implements OnInit {
     return !this.pedido.get('id')?.value;
   }
 
+  popularListaProdutos(): void {
+    this.produtoService.getByCliente(this.pedido.get('customerId').value).then(produtos => 
+      this.produtos = produtos
+    ).catch((error) => {
+      if(error.status == 404) {
+        this.limparListaProdutos();
+      }
+    });
+  }
+
   private novoItem(): FormGroup {
     return this.formBuilder.group({
       orderId: [''],
@@ -140,6 +139,12 @@ export class CadastroComponent implements OnInit {
     });
   }
 
+  private popularListaClientes(): void {
+    this.clienteService.getAll().then(clientes => 
+      this.clientes = clientes
+    );
+  }
+
   private desabilitarCampos(): void {
     if(this.pedido.get('id')?.value) {
       this.pedido.disable();
@@ -152,12 +157,6 @@ export class CadastroComponent implements OnInit {
       this.pedido.get('postingDate').disable();
       this.pedido.get('deliveryDate').disable();
     }
-  }
-
-  private popularListaClientes(): void {
-    this.clienteService.getAll().then(clientes => 
-      this.clientes = clientes
-    );
   }
 
   private limparListaProdutos(): void {

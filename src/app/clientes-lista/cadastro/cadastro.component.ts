@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Customer } from 'src/app/shared/models/customer';
 import { ClienteService } from 'src/app/shared/services/cliente.service';
+import { EnderecoService } from 'src/app/shared/services/endereco.service';
 
 @Component({
   selector: 'app-cadastro',
@@ -18,20 +19,22 @@ export class CadastroComponent implements OnInit {
     id: [''],
     cnpj: [''],
     companyName: [''],
+    stateRegistration: [''],
     opening: [''],
     phone: [''],
-    stateRegistration: [''],
-    municipalRegistration: [''],
     clientSince: [''],
-    adresses: [''],
-    contacts: [''],
-    products: [''],
+    municipalRegistration: [''],
+    addresses: this.formBuilder.array([ this.novoEndereco() ]),
+    contacts: this.formBuilder.array([ this.novoContato() ]),
+    products: [this.formBuilder.array([])],
+    user: [''],
     valid: [''],
     notifications: ['']
   });
 
   constructor(
     private clienteService: ClienteService,
+    private enderecoService: EnderecoService,
     private formBuilder: FormBuilder,
     private modalService: NgbModal
   ) { }
@@ -39,16 +42,23 @@ export class CadastroComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  get addresses() {
+    return this.cliente.get('addresses') as FormArray;
+  }
+
+  get contacts() {
+    return this.cliente.get('contacts') as FormArray;
+  }
+
   salvar(cliente: Customer): void {
     this.clienteService.salvar(cliente).then(
       res => {
+
         alert("Cliente cadastrado com sucesso!");
+        console.log(res.id);
       },
       error => {
-        console.error("Erro ao criar cadastro de cliente:\n"
-        + `Status: ${error.error.status}\n` 
-        + `Erro: ${error.error.title} \n`
-        + `${JSON.stringify(error.error, null, 2)}`);
+        this.exibirErro(error);
       }
     );
   }
@@ -66,6 +76,57 @@ export class CadastroComponent implements OnInit {
     this.desabilitarCampos();
   }
 
+  adicionarEndereco(): void {
+    this.addresses.push(this.novoEndereco());
+  }
+
+  adicionarContato(): void {
+    this.contacts.push(this.novoContato());
+  }
+
+  removerEndereco(index: number): void {
+    this.addresses.removeAt(index);
+  }
+
+  removerContato(index: number): void {
+    this.contacts.removeAt(index);
+  }
+
+  pesquisarEndereco(index: number): void {
+    let endereco = this.addresses.at(index);
+    this.enderecoService.getEnderecoCompleto(endereco.get('zipCode').value).then(zip => {
+      endereco.get('neighborhood').setValue(zip.district);
+      endereco.get('street').setValue(zip.address);
+      endereco.get('city').setValue(zip.city);
+      endereco.get('state').setValue(zip.state);
+    });
+  }
+
+  private novoEndereco(): FormGroup {
+    return this.formBuilder.group({
+      id: [''],
+      description: [''],
+      zipCode: [''],
+      type: [''],
+      street: [''],
+      number: [''],
+      neighborhood: [''],
+      city: [''],
+      state: ['']
+    })
+  }
+
+  private novoContato(): FormGroup {
+    return this.formBuilder.group({
+      id: [''],
+      firstName: [''],
+      lastName: [''],
+      email: [''],
+      whatsApp: [''],
+      phone: ['']
+    })
+  }
+
   private desabilitarCampos(): void {
     if(this.cliente.get('id')?.value) {
       this.cliente.disable();
@@ -79,4 +140,11 @@ export class CadastroComponent implements OnInit {
     }
   }
 
+  private exibirErro(error: any): void {
+    console.error("Erro ao criar cadastro de cliente:\n"
+        + `Status: ${error.error.status}\n` 
+        + `Erro: ${error.error.title} \n`
+        + `${JSON.stringify(error.error, null, 2)}`
+      );
+  }
 }

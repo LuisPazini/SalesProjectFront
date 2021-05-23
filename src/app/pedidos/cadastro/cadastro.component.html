@@ -31,7 +31,7 @@
 
             <div class="form-group">
                 <label class="col-form-label justify-content-center" for="itens">Itens: </label>
-
+                
                 <div formArrayName="orderLines"
                 *ngFor="let item of orderLines.controls; let i=index" name="itens">
                     <div [formGroupName]="i" class="form-row align-items-end justify-content-center">
@@ -58,6 +58,7 @@
                             <input class="form-control" name="custos-adicionais" type="text" prefix="R$ " thousandSeparator="." 
                             mask="separator.2" formControlName="additionalCosts" >
                         </div>
+
                         <div class="col-md-1 text-center mb-3">
                             <button class="btn btn-danger" type="button" 
                             *ngIf="isNovoPedido()" (click)="removerItem(i)" ><span>x</span></button>
