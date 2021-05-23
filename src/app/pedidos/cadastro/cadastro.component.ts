@@ -19,10 +19,11 @@ export class CadastroComponent implements OnInit {
 
   clientes: Customer[] = [] as Customer[];
   produtos: Product[] = [] as Product[];
-  edicao: boolean = false;
-
+  
   pedido: FormGroup;
-  itens: FormArray;
+  itens: FormArray; 
+  
+  edicao: boolean = false;
 
   constructor(
     private pedidoService: PedidoService,
@@ -30,23 +31,25 @@ export class CadastroComponent implements OnInit {
     private produtoService: ProdutoService,
     private formBuilder: FormBuilder,
     private modalService: NgbModal
-  ) { 
+  ) { }
+
+  ngOnInit(): void {
     this.pedido = this.formBuilder.group({
       postingDate: [''],
       deliveryDate: [''],
       status: [''],
       totalOrder: [''],
       observation: [''],
-      orderLines: [this.formBuilder.array([ this.novoItem() ])],
+      orderLines: this.formBuilder.array([ this.novoItem() ]),
       customer: [''],
       customerId: [''],
       valid: [''],
       notifications: [''],
       id: [''],
     });
-  }
 
-  ngOnInit(): void {
+    this.itens = this.pedido.get('orderLines') as FormArray;
+
     this.popularListaClientes();
   }
 
@@ -88,16 +91,40 @@ export class CadastroComponent implements OnInit {
   }
 
   adicionarItem(): void {
-    this.itens = this.pedido.get('orderLines') as FormArray;
     this.itens.push(this.novoItem());
+  }
+
+  removerItem(index: number): void {
+    if(this.itens.length == 1) {
+      alert('Não é possível ter 0 itens no pedido'); return;
+    }
+    this.itens.removeAt(index);
+  }
+
+  exibirPrecosDeItem(produto: any): void {
+    console.log(produto);
+  }
+
+  isNovoPedido(): boolean {
+    return !this.pedido.get('id')?.value;
+  }
+
+  get orderLines() {
+    return this.pedido.get('orderLines') as FormArray;
   }
 
   private novoItem(): FormGroup {
     return this.formBuilder.group({
-      productId: [''],
+      orderId: [''],
       quantity: [''],
       unitaryPrice: [''],
-      additionalCosts: ['']
+      additionalCosts: [''],
+      totalPrice: [''],
+      productId: [''],
+      product: [''],
+      valid: [''],
+      notifications: [''],
+      id: ['']
     });
   }
 

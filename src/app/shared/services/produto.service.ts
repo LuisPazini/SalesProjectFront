@@ -20,7 +20,7 @@ export class ProdutoService {
   getByName(name: string): Promise<Product[]> {
     if(this.authService.isUserCustomer()) {
       let clienteId = this.authService.user.customerId;
-      return this.httpClient.get<Product[]>(`${this.produtoUrl}/customer/${clienteId}`).toPromise();
+      return this.getByCliente(clienteId);
     }
     return this.httpClient.get<Product[]>(`${this.produtoUrl}/name/${name}`).toPromise();
   }
