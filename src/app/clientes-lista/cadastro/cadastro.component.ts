@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment';
 import { Customer } from 'src/app/shared/models/customer';
 import { ClienteService } from 'src/app/shared/services/cliente.service';
 import { EnderecoService } from 'src/app/shared/services/endereco.service';
@@ -13,24 +14,30 @@ import { EnderecoService } from 'src/app/shared/services/endereco.service';
 export class CadastroComponent implements OnInit {
 
   @ViewChild('formulario') form: any;
-  edicao: boolean = false;
-
+  @Output('cadastrado') cadastrado: EventEmitter<void> = new EventEmitter<void>();
+  
+  tiposEndereco = [
+    { id: 1, tipo: 'Cobrança' },
+    { id: 2, tipo: 'Entrega' },
+    { id: 3, tipo: 'Outro' }
+  ]
+  
   cliente = this.formBuilder.group({
-    id: [''],
     cnpj: [''],
     companyName: [''],
     stateRegistration: [''],
+    email: [''],
     opening: [''],
     phone: [''],
     clientSince: [''],
     municipalRegistration: [''],
-    addresses: this.formBuilder.array([ this.novoEndereco() ]),
+    adresses: this.formBuilder.array([ this.novoEndereco() ]),
     contacts: this.formBuilder.array([ this.novoContato() ]),
     products: [this.formBuilder.array([])],
-    user: [''],
-    valid: [''],
-    notifications: ['']
+    id: [''],
   });
+  
+  edicao: boolean = false;
 
   constructor(
     private clienteService: ClienteService,
@@ -43,7 +50,7 @@ export class CadastroComponent implements OnInit {
   }
 
   get addresses() {
-    return this.cliente.get('addresses') as FormArray;
+    return this.cliente.get('adresses') as FormArray;
   }
 
   get contacts() {
@@ -53,9 +60,9 @@ export class CadastroComponent implements OnInit {
   salvar(cliente: Customer): void {
     this.clienteService.salvar(cliente).then(
       res => {
-
         alert("Cliente cadastrado com sucesso!");
-        console.log(res.id);
+        this.modalService.dismissAll();
+        this.cadastrado.emit();
       },
       error => {
         this.exibirErro(error);
@@ -92,7 +99,21 @@ export class CadastroComponent implements OnInit {
     this.contacts.removeAt(index);
   }
 
-  pesquisarEndereco(index: number): void {
+  helloWorld(): void {
+    console.log('Olá')
+    console.log(this.cliente.get('opening').value)
+  }
+
+  consultarCNPJ(): void {
+    let cnpj = this.cliente.get('cnpj').value;
+    this.clienteService.getClienteByCNPJ(cnpj).then(empresa => {
+      this.cliente.get('companyName').setValue(empresa.nome);
+      this.cliente.get('opening').setValue(moment(empresa.abertura, 'DD/MM/YYYY').format('YYYY-MM-DD'));
+      this.cliente.get('phone').setValue(empresa.telefone);
+    })
+  }
+
+  consultarEndereco(index: number): void {
     let endereco = this.addresses.at(index);
     this.enderecoService.getEnderecoCompleto(endereco.get('zipCode').value).then(zip => {
       endereco.get('neighborhood').setValue(zip.district);

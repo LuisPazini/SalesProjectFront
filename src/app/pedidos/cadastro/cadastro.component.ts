@@ -30,7 +30,6 @@ export class CadastroComponent implements OnInit {
     totalOrder: [''],
     observation: [''],
     orderLines: this.formBuilder.array([ this.novoItem() ]),
-    customer: [''],
     customerId: [''],
     valid: [''],
     notifications: [''],
@@ -61,10 +60,12 @@ export class CadastroComponent implements OnInit {
   }
 
   salvar(pedido: Order): void {
+    this.converterCamposNumber();
     if(this.isNovoPedido()) {
       this.pedidoService.salvar(pedido).then(
         res => {
           alert("Pedido cadastrado com sucesso!");
+          this.modalService.dismissAll();
         },
         error => {
           this.exibirErro(error);
@@ -74,6 +75,7 @@ export class CadastroComponent implements OnInit {
       this.pedidoService.aprovar(pedido).then(
         res => {
           alert("Pedido aprovado com sucesso!");
+          this.modalService.dismissAll();
         },
         error => {
           this.exibirErro(error);
@@ -92,6 +94,8 @@ export class CadastroComponent implements OnInit {
       this.pedido.setValue(pedido);
     }
     this.modalService.open(this.form, { size: 'lg' });
+    this.orderLines.clear();
+    this.adicionarItem();
     this.desabilitarCampos();
   }
 
@@ -106,8 +110,11 @@ export class CadastroComponent implements OnInit {
     this.itens.removeAt(index);
   }
 
-  exibirPrecosDeItem(produto: any): void {
-    console.log(produto);
+  exibirPrecosDeItem(produtoId: string, index: number): void {
+    let produto = this.produtos.find(produto => produto.id == produtoId);
+    let item = this.orderLines.at(index);
+    item.get('unitaryPrice').setValue(produto.combinedPrice);
+    item.get('additionalCosts').setValue(produto.additionalCosts);
   }
 
   isNovoPedido(): boolean {
@@ -132,7 +139,6 @@ export class CadastroComponent implements OnInit {
       additionalCosts: [''],
       totalPrice: [''],
       productId: [''],
-      product: [''],
       valid: [''],
       notifications: [''],
       id: ['']
@@ -155,12 +161,18 @@ export class CadastroComponent implements OnInit {
     } else {
       this.pedido.enable();
       this.pedido.get('postingDate').disable();
-      this.pedido.get('deliveryDate').disable();
     }
   }
 
   private limparListaProdutos(): void {
     this.produtos = [] as Product[];
+  }
+
+  private converterCamposNumber(): void {
+    for(let i = 0; i < this.orderLines.length; i++){
+      let item = this.orderLines.at(i);
+      item.get('quantity').patchValue(Number.parseInt(item.get('quantity').value));
+    };
   }
 
   private exibirErro(error: any): void {

@@ -6,7 +6,7 @@
     <button class="btn btn-primary ml-1" (click)="formulario.open(undefined, true)" ><span>+</span> Novo </button>
 </div>
 
-<app-cadastro #formulario ></app-cadastro>
+<app-cadastro #formulario (cadastrado)="filtrarProdutos(inpNomeProduto.value)" ></app-cadastro>
     
 <table class="table table-hover">
     <thead class="text-center thead-cinza">
@@ -20,7 +20,7 @@
         </tr>
     </thead>
     <tbody *ngIf="produtosFiltrados.length">
-        <tr *ngFor="let produto of produtosFiltrados | slice: (page-1) * pageSize : page * pageSize">
+        <tr class="text-center" *ngFor="let produto of produtosFiltrados | slice: (page-1) * pageSize : page * pageSize">
             <td>{{ produto.ncmCode }}</td>
             <td>{{ produto.name }}</td>
             <td>{{ produto.customerId | cliente: clientes }}</td>

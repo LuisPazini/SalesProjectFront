@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { MenuComponent } from '../menu/menu.component';
 
 @Component({
   selector: 'app-not-found',
@@ -15,6 +16,7 @@ export class NotFoundComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    MenuComponent.toggleExibirMenu.next(true);
   }
 
   redirecionar(): string {

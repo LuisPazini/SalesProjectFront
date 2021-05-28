@@ -14,6 +14,7 @@ export class AuthService {
 
   key = 'Authorization';
 
+  token: string;
   user: Usuario = {} as Usuario;
 
   sessaoExpiradaSubject: Subject<void> = new Subject<void>();
@@ -21,7 +22,12 @@ export class AuthService {
   constructor(
     private contaService: AccountService,
     private router: Router
-  ) { }
+  ) {
+    this.token = this.getToken();
+    if(this.token) {
+      this.setUser();
+    }
+  }
 
   async canLogin(usuario: Usuario): Promise<boolean> {
     await this.login(usuario);
@@ -98,6 +104,23 @@ export class AuthService {
         }, expTime);
       }
     });
+  }
+
+  private setUser() {
+    let decoded: any = jwt_decode(this.token);
+    this.user.name = decoded.unique_name;
+    this.user.role = this.getRole(decoded.role);
+    this.user.username = decoded.unique_name;
+  }
+
+  private getRole(roleName: string): number {
+    switch(roleName) {
+      case 'Administrator': return Role.ADMINISTRADOR;
+      case 'It': return Role.TI;
+      case 'Seller': return Role.VENDEDOR; 
+      case 'Customer': return Role.CLIENTE;
+      default: return 0;
+    }
   }
 
 }

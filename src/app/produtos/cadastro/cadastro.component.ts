@@ -1,6 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 import { Customer } from 'src/app/shared/models/customer';
 import { Product } from 'src/app/shared/models/product';
 import { ClienteService } from 'src/app/shared/services/cliente.service';
@@ -14,6 +16,7 @@ import { ProdutoService } from 'src/app/shared/services/produto.service';
 export class CadastroComponent implements OnInit {
 
   @ViewChild('formulario') form: any;
+  @Output('cadastrado') cadastrado: EventEmitter<void> = new EventEmitter<void>();
 
   clientes: Customer[] = [] as Customer[];
   edicao: boolean = false;
@@ -27,6 +30,8 @@ export class CadastroComponent implements OnInit {
     combinedQuantity: [''],
     details: [''],
     customerId: [''],
+    valid: [''],
+    notifications: ['']
   });
 
   constructor(
@@ -46,6 +51,7 @@ export class CadastroComponent implements OnInit {
       res => {
         alert("Produto cadastrado com sucesso!");
         this.modalService.dismissAll();
+        this.cadastrado.emit();
       },
       error => {
         console.error("Erro ao criar cadastro de produto:\n"

@@ -5,12 +5,13 @@
     </div>
 
     <div class="modal-body w-100">
-        <form class="needs-validation" [formGroup]="cliente" (ngSubmit)="salvar(cliente.value)" novalidate>
+        <form class="needs-validation" [formGroup]="cliente" (ngSubmit)="salvar(cliente.getRawValue())" novalidate>
             
             <div class="form-row">
                 <div class="form-group col-md-5">
                     <label class="col-form-label" for="cnpj">CNPJ*: </label>
-                    <input class="form-control" name="cnpj" type="text" formControlName="cnpj" mask="00.000.000/0000-00">
+                    <input class="form-control" name="cnpj" type="text"
+                    (change)="consultarCNPJ()" formControlName="cnpj" mask="00.000.000/0000-00">
                 </div>
                 <div class="form-group col">
                     <label class="col-form-label" for="nome">Nome Cliente*:</label>
@@ -18,13 +19,17 @@
                 </div>
             </div>
             <div class="form-row">
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label class="col-form-label" for="data-abertura">Data Abertura*: </label>
-                    <input class="form-control" name="data-abertura" type="date" formControlName="opening">
+                    <input class="form-control" (change)="helloWorld()" name="data-abertura" type="date" formControlName="opening">
                 </div>
-                <div class="form-group col">
+                <div class="form-group col-md-4">
                     <label class="col-form-label" for="telefone">Telefone*: </label>
                     <input class="form-control" name="telefone" type="tel" formControlName="phone" mask="(00) 0000-0000 || (00) 0 0000-0000">
+                </div>
+                <div class="form-group col-md-5">
+                    <label class="col-form-label" for="email">E-mail*: </label>
+                    <input class="form-control" name="email" type="email" formControlName="email">
                 </div>
             </div>
             <div class="form-row">
@@ -43,7 +48,7 @@
             <div class="form-group">
                 <label for="enderecos">Endereços: </label>
 
-                <div formArrayName="addresses"
+                <div formArrayName="adresses"
                 *ngFor="let endereco of addresses.controls; let i=index" name="enderecos">
                     <div [formGroupName]="i" class="border border-secondary rounded-top px-2 my-2 align-items-center justify-content-center">
                         <label class="col text-center" for="endereco">
@@ -60,14 +65,18 @@
                                     <div class="form-group col-md-4">
                                         <label class="col-form-label" for="cep">CEP: </label>
                                         <input class="form-control" name="cep" type="text" mask="00.000-000"
-                                        (change)="pesquisarEndereco(i)" 
+                                        (change)="consultarEndereco(i)" 
                                         formControlName="zipCode">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-3">
                                         <label class="col-form-label" for="tipo">Tipo: </label>
-                                        <input class="form-control" name="tipo" type="text" formControlName="type">
+                                        <ng-select name="tipo" formControlName="type">
+                                            <ng-option *ngFor="let tipoEndereco of tiposEndereco" [value]="tipoEndereco.id">
+                                                {{ tipoEndereco.tipo }}
+                                            </ng-option>
+                                        </ng-select>
                                     </div>
                                     <div class="form-group col-md-7">
                                         <label class="col-form-label" for="rua">Rua: </label>
@@ -75,7 +84,7 @@
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="col-form-label" for="numero">Número: </label>
-                                        <input class="form-control" name="numero" type="text" formControlName="number">
+                                        <input class="form-control" name="numero" type="number" formControlName="number">
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -130,16 +139,18 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
-                                        <label class="col-form-label" for="email">Email: </label>
+                                        <label class="col-form-label" for="email">E-mail: </label>
                                         <input class="form-control" name="email" type="email" formControlName="email">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="col-form-label" for="whatsapp">WhatsApp: </label>
-                                        <input class="form-control" name="whatsapp" type="tel" formControlName="whatsApp">
+                                        <input class="form-control" name="whatsapp" type="tel"  mask="(00) 0000-0000 || (00) 0 0000-0000"
+                                         formControlName="whatsApp">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="col-form-label" for="telefone">Telefone: </label>
-                                        <input class="form-control" name="telefone" type="tel" formControlName="phone">
+                                        <input class="form-control" name="telefone" type="tel"  mask="(00) 0000-0000 || (00) 0 0000-0000"
+                                        formControlName="phone">
                                     </div>
                                 </div>
                             </div>

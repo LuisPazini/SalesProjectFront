@@ -15,13 +15,13 @@
     </div>
 
     <div class="container-fluid d-flex flex-wrap mx-auto mt-1 w-75 justify-content-center">
-        <app-card header="Pedidos em Aberto" [body]="dashboard.openOrders"></app-card>
-        <app-card header="Pedidos Aprovados" [body]="dashboard.approvedOrders"></app-card>
-        <app-card header="Pedidos Cancelados" [body]="dashboard.canceledOrders"></app-card>
-        <app-card header="Pedidos Faturados" [body]="dashboard.billedOrders"></app-card>
-        <app-card header="Maior Pedido" [body]="dashboard.biggestOrder | currency"></app-card>
-        <app-card header="Menor Pedido" [body]="dashboard.lowestOrder | currency"></app-card>
-        <app-card header="Pedido Médio" [body]="dashboard.averageOrders | currency"></app-card>
-        <app-card header="Vendas Totais" [body]="dashboard.totalSales | currency"></app-card>
+        <app-card header="Pedidos em Aberto" [body]="dashboard.openOrders || 0"></app-card>
+        <app-card header="Pedidos Aprovados" [body]="dashboard.approvedOrders || 0"></app-card>
+        <app-card header="Pedidos Cancelados" [body]="dashboard.canceledOrders || 0"></app-card>
+        <app-card header="Pedidos Faturados" [body]="dashboard.billedOrders || 0"></app-card>
+        <app-card header="Maior Pedido" [body]="dashboard.biggestOrder  || 0 | currency"></app-card>
+        <app-card header="Menor Pedido" [body]="dashboard.lowestOrder || 0 | currency"></app-card>
+        <app-card header="Pedido Médio" [body]="dashboard.averageOrders || 0 | currency"></app-card>
+        <app-card header="Vendas Totais" [body]="dashboard.totalSales || 0 | currency"></app-card>
     </div>
 </div>

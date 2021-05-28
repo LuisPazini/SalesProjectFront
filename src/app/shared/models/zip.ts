@@ -1,5 +1,5 @@
+// retorno da ApiCep
 export interface Zip {
-    status: number,
     code: string,
     state: string,
     city: string,

@@ -5,16 +5,16 @@
     </div>
 
     <div class="modal-body w-100">
-        <form class="needs-validation" [formGroup]="produto" (ngSubmit)="salvar(produto.value)" novalidate>
+        <form class="needs-validation" [formGroup]="produto" (ngSubmit)="salvar(produto.getRawValue())" novalidate>
             
             <div class="form-row">
-                <div class="form-group col-md-5">
-                    <label class="col-form-label" for="codigo">Código: </label>
-                    <input class="form-control" name="codigo" type="text" formControlName="ncmCode" mask="00.0000-0">
-                </div>
-                <div class="form-group col">
+                <div class="form-group col-md-7">
                     <label class="col-form-label" for="nome">Nome Produto:</label>
                     <input class="form-control" name="nome" type="text" formControlName="name">
+                </div>
+                <div class="form-group col-md-5">
+                    <label class="col-form-label" for="codigo">Código NCM: </label>
+                    <input class="form-control" name="codigo" type="text" formControlName="ncmCode" mask="0000.00.00">
                 </div>
             </div>
             <div class="form-row">

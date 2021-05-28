@@ -5,7 +5,7 @@
     </div>
 
     <div class="modal-body w-100">
-        <form class="needs-validation" [formGroup]="pedido" (ngSubmit)="salvar(pedido.value)" novalidate>
+        <form class="needs-validation" [formGroup]="pedido" (ngSubmit)="salvar(pedido.getRawValue())" novalidate>
             
             <div class="form-row">
                 <div class="form-group col-md-6">
@@ -24,8 +24,8 @@
                     [value]="hoje">
                 </div>
                 <div class="form-group col-md-4">
-                    <label class="col-form-label" for="data-envio">Data de Envio: </label>
-                    <input class="form-control" name="data-envio" type="date" formControlName="deliveryDate">
+                    <label class="col-form-label" for="data-entrega">Data de Entrega: </label>
+                    <input class="form-control" name="data-entrega" type="date" formControlName="deliveryDate">
                 </div>
             </div>
 
@@ -35,7 +35,7 @@
                 <div formArrayName="orderLines"
                 *ngFor="let item of orderLines.controls; let i=index" name="itens">
                     <div [formGroupName]="i" 
-                    class="border border-secondary rounded-top px-2 my-2 align-items-end justify-content-center">
+                    class="border border-secondary rounded-top px-2 my-2 pb-1 align-items-end justify-content-center">
                         <label class="col text-center" for="endereco">
                             <span class="badge badge-warning">Item {{ i+1 }}:</span>
                         </label>
@@ -44,7 +44,7 @@
                                 <div class="form-row align-items-baseline">
                                     <div class="form-group col-md-5">
                                         <label for="produto">Produto</label>
-                                        <ng-select name="produto" formControlName="productId" (change)="exibirPrecosDeItem">
+                                        <ng-select name="produto" formControlName="productId" (change)="exibirPrecosDeItem($event, i)">
                                             <ng-option *ngFor="let produto of produtos" [value]="produto.id">
                                                 {{ produto.name }}
                                             </ng-option>
@@ -52,8 +52,7 @@
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="col-form-label" for="qtde">Qtde</label>
-                                        <input class="form-control" name="qtde" type="text" thousandSeparator="." mask="separador.0"
-                                        suffix=" unidades" formControlName="quantity">
+                                        <input class="form-control" name="qtde" type="number" formControlName="quantity">
                                     </div>
                                     <div class="form-group col">
                                         <label class="col-form-label" for="valor-unitario">Valor Unitário</label>
@@ -67,7 +66,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-1 align-self-center mt-4">
+                            <div class="col-md-1 align-self-center text-center mt-4">
                                 <button class="btn btn-danger" type="button" 
                                 *ngIf="isNovoPedido()" (click)="removerItem(i)" ><span>x</span></button>
                             </div>
