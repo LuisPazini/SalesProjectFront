@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
@@ -17,6 +17,7 @@ import { ProdutoService } from 'src/app/shared/services/produto.service';
 export class CadastroComponent implements OnInit {
 
   @ViewChild('formulario') form: any;
+  @Output('cadastrado') cadastrado: EventEmitter<void> = new EventEmitter<void>();
 
   clientes: Customer[] = [] as Customer[];
   produtos: Product[] = [] as Product[];
@@ -66,6 +67,7 @@ export class CadastroComponent implements OnInit {
         res => {
           alert("Pedido cadastrado com sucesso!");
           this.modalService.dismissAll();
+          this.cadastrado.emit();
         },
         error => {
           this.exibirErro(error);
@@ -91,7 +93,14 @@ export class CadastroComponent implements OnInit {
   open(pedido?: Order, edicao: boolean = false): void {
     this.edicao = edicao;
     if(pedido) {
-      this.pedido.setValue(pedido);
+      this.pedido.patchValue(pedido);
+      debugger
+      this.pedido.patchValue(
+        {
+          postingDate: moment(pedido.postingDate).format('YYYY-MM-DD'),
+          deliveryDate: moment(pedido.deliveryDate).format('YYYY-MM-DD')
+        }
+      );
     }
     this.modalService.open(this.form, { size: 'lg' });
     this.orderLines.clear();
@@ -157,6 +166,7 @@ export class CadastroComponent implements OnInit {
       if(this.edicao) {
         this.pedido.get('deliveryDate').enable();
         this.pedido.get('observation').enable();
+        this.pedido.get('orderLines').enable();
       }
     } else {
       this.pedido.enable();
