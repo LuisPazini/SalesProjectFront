@@ -33,7 +33,7 @@ export class CadastroComponent implements OnInit {
     municipalRegistration: [''],
     adresses: this.formBuilder.array([ this.novoEndereco() ]),
     contacts: this.formBuilder.array([ this.novoContato() ]),
-    products: [this.formBuilder.array([])],
+    products: this.formBuilder.array([]),
     id: [''],
   });
   
@@ -58,6 +58,7 @@ export class CadastroComponent implements OnInit {
   }
 
   salvar(cliente: Customer): void {
+    debugger
     this.clienteService.salvar(cliente).then(
       res => {
         alert("Cliente cadastrado com sucesso!");
@@ -77,7 +78,14 @@ export class CadastroComponent implements OnInit {
   open(cliente?: Customer, edicao: boolean = false): void {
     this.edicao = edicao;
     if(cliente) {
-      this.cliente.setValue(cliente);
+      this.cliente.patchValue(cliente);
+      this.cliente.patchValue(
+        {
+          opening: moment(cliente.opening).format('YYYY-MM-DD'),
+          adresses: cliente.adresses,
+          contacts: cliente.contacts
+        }
+      );
     }
     this.modalService.open(this.form, { size: 'lg' });
     this.desabilitarCampos();
@@ -99,17 +107,12 @@ export class CadastroComponent implements OnInit {
     this.contacts.removeAt(index);
   }
 
-  helloWorld(): void {
-    console.log('Olá')
-    console.log(this.cliente.get('opening').value)
-  }
-
   consultarCNPJ(): void {
     let cnpj = this.cliente.get('cnpj').value;
     this.clienteService.getClienteByCNPJ(cnpj).then(empresa => {
       this.cliente.get('companyName').setValue(empresa.nome);
       this.cliente.get('opening').setValue(moment(empresa.abertura, 'DD/MM/YYYY').format('YYYY-MM-DD'));
-      this.cliente.get('phone').setValue(empresa.telefone);
+      this.cliente.get('phone').setValue(empresa.telefone.split('/')[0]);
     })
   }
 
