@@ -22,6 +22,10 @@ export class ClienteService {
     return this.httpClient.get<Empresa>(`${this.clienteUrl}/cnpj/${cnpj}`).toPromise();
   }
 
+  getCliente(cliente: Customer): Promise<Customer> {
+    return this.httpClient.get<Customer>(`${this.clienteCompletoUrl}/${cliente.id}`).toPromise();
+  }
+
   salvar(cliente: Customer): Promise<Customer> {
     if(cliente.id) {
       return this.httpClient.patch<Customer>(`${this.clienteCompletoUrl}/${cliente.id}`, cliente).toPromise();

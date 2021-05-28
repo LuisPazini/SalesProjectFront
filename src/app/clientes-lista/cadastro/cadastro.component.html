@@ -104,13 +104,18 @@
                             </div>
                             <div class="col-md-1 text-center align-self-center">
                                 <button class="btn btn-danger" type="button" 
-                                (click)="removerEndereco(i)" >Remover Endereço</button>
+                                (click)="removerEndereco(i)" [disabled]="!edicao" >
+                                    Remover Endereço
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="form-row justify-content-center">
-                    <button class="btn btn-primary" type="button" (click)="adicionarEndereco()"><span>+ </span>Novo Endereco</button>
+                    <button class="btn btn-primary" type="button" 
+                    (click)="adicionarEndereco()" [disabled]="!edicao">
+                        <span>+ </span>Novo Endereco
+                    </button>
                 </div>
             </div>
 
@@ -156,13 +161,18 @@
                             </div>
                             <div class="col-md-1 text-center align-self-center">
                                 <button class="btn btn-danger" type="button" 
-                                (click)="removerContato(i)" >Remover Contato</button>
+                                (click)="removerContato(i)" [disabled]="!edicao">
+                                    Remover Contato
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="form-row justify-content-center">
-                    <button class="btn btn-primary" type="button" (click)="adicionarContato()"><span>+ </span>Novo Contato</button>
+                    <button class="btn btn-primary" type="button" 
+                    (click)="adicionarContato()" [disabled]="!edicao">
+                        <span>+ </span>Novo Contato
+                    </button>
                 </div>
             </div>
 
@@ -172,11 +182,11 @@
                     Salvar
                 </button>
                 <button class="btn btn-danger" type="reset" (click)="remover(cliente.value)"
-                [disabled]="!edicao || !cliente.get('id')?.value">
+                [disabled]="!edicao || !cliente.get('id').value">
                     Remover
                 </button>
                 <button class="btn btn-warning" type="reset"
-                [disabled]="!cliente.dirty || cliente.get('cnpj')?.disabled">
+                [disabled]="!cliente.dirty || cliente.get('cnpj').disabled">
                     Limpar
                 </button>
                 <button class="btn btn-secondary" type="reset" (click)="modal.dismiss()">Cancelar</button>

@@ -58,7 +58,6 @@ export class CadastroComponent implements OnInit {
   }
 
   salvar(cliente: Customer): void {
-    debugger
     this.clienteService.salvar(cliente).then(
       res => {
         alert("Cliente cadastrado com sucesso!");
@@ -75,17 +74,14 @@ export class CadastroComponent implements OnInit {
     this.clienteService.remover(cliente);
   }
 
-  open(cliente?: Customer, edicao: boolean = false): void {
+  open(clienteSelecionado?: Customer, edicao: boolean = false): void {
     this.edicao = edicao;
-    if(cliente) {
-      this.cliente.patchValue(cliente);
-      this.cliente.patchValue(
-        {
-          opening: moment(cliente.opening).format('YYYY-MM-DD'),
-          adresses: cliente.adresses,
-          contacts: cliente.contacts
-        }
-      );
+    if(clienteSelecionado) {
+      this.clienteService.getCliente(clienteSelecionado).then(cliente => {
+        this.cliente.patchValue(cliente);
+        this.cliente.patchValue({ opening: moment(cliente.opening).format('YYYY-MM-DD') });
+        this.desabilitarCampos();
+      });
     }
     this.modalService.open(this.form, { size: 'lg' });
     this.desabilitarCampos();
@@ -152,12 +148,14 @@ export class CadastroComponent implements OnInit {
   }
 
   private desabilitarCampos(): void {
-    if(this.cliente.get('id')?.value) {
+    if(this.cliente.get('id').value) {
       this.cliente.disable();
       if(this.edicao) {
-        this.cliente.get('phone')?.enable();
-        this.cliente.get('stateRegistration')?.enable();
-        this.cliente.get('municipalRegistration')?.enable();
+        this.cliente.get('phone').enable();
+        this.cliente.get('email').enable();
+        this.cliente.get('municipalRegistration').enable();
+        this.cliente.get('adresses').enable();
+        this.cliente.get('contacts').enable();
       }
     } else {
       this.cliente.enable();
