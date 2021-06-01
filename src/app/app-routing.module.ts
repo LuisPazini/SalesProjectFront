@@ -8,6 +8,7 @@ import { ProdutosComponent } from './produtos/produtos.component';
 import { PedidosComponent } from './pedidos/pedidos.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { AuthorizationGuard } from './core/guards/authorization.guard';
+import { UsuariosComponent } from './usuarios/usuarios.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'clientes', component: ClientesListaComponent, pathMatch: 'full', canActivate: [AuthGuard, AuthorizationGuard] },
   { path: 'produtos', component: ProdutosComponent, pathMatch: 'full', canActivate: [AuthGuard] },
   { path: 'pedidos', component: PedidosComponent, pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: 'usuarios', component: UsuariosComponent, pathMatch: 'full', canActivate: [AuthGuard, AuthorizationGuard] },
   { path: '**', component: NotFoundComponent, pathMatch: 'full' }
 ];
 

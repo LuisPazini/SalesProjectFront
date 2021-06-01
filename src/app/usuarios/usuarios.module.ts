@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProdutosComponent } from './produtos.component';
+import { UsuariosComponent } from './usuarios.component';
 import { CadastroComponent } from './cadastro/cadastro.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -8,9 +8,11 @@ import { NgxMaskModule } from 'ngx-mask';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PipesModule } from '../shared/pipes/pipes.module';
 
+
+
 @NgModule({
   declarations: [
-    ProdutosComponent,
+    UsuariosComponent,
     CadastroComponent
   ],
   imports: [
@@ -22,4 +24,4 @@ import { PipesModule } from '../shared/pipes/pipes.module';
     PipesModule
   ]
 })
-export class ProdutosModule { }
+export class UsuariosModule { }

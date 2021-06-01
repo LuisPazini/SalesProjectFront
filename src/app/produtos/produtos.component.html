@@ -21,7 +21,7 @@
     </thead>
     <tbody *ngIf="produtosFiltrados.length">
         <tr class="text-center" *ngFor="let produto of produtosFiltrados | slice: (page-1) * pageSize : page * pageSize">
-            <td>{{ produto.ncmCode }}</td>
+            <td>{{ produto.ncmCode | mask: '0000.00.00' }}</td>
             <td>{{ produto.name }}</td>
             <td>{{ produto.customerId | cliente: clientes }}</td>
             <td>{{ produto.combinedQuantity }}</td>

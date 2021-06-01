@@ -94,11 +94,12 @@ export class CadastroComponent implements OnInit {
     this.edicao = edicao;
     if(pedido) {
       this.pedido.patchValue(pedido);
-      debugger
+      this.popularListaProdutos();
       this.pedido.patchValue(
         {
           postingDate: moment(pedido.postingDate).format('YYYY-MM-DD'),
-          deliveryDate: moment(pedido.deliveryDate).format('YYYY-MM-DD')
+          deliveryDate: moment(pedido.deliveryDate).format('YYYY-MM-DD'),
+          orderLines: pedido.orderLines
         }
       );
     }

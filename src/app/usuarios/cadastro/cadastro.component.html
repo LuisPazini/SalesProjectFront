@@ -1,0 +1,78 @@
+<ng-template #formulario let-modal class="vw-50">
+
+    <div class="moda-header">
+        <h1 class="modal-title display-4 text-muted text-center">Cadastro de Usuário</h1>
+    </div>
+
+    <div class="modal-body w-100">
+        <form class="needs-validation" [formGroup]="usuario" (ngSubmit)="cadastrar(usuario.getRawValue())" novalidate>
+            
+            <div class="form-row">
+                <div class="form-group col">
+                    <label class="col-form-label" for="role">Tipo Usuário: </label>
+                    <ng-select name="role" formControlName="role">
+                        <ng-option *ngFor="let role of roles" [value]="role.id">
+                            {{ role.descricao }}
+                        </ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div *ngIf="usuario.get('role').value == 1" class="form-group col">
+                    <label class="col-form-label" for="cliente">Cliente: </label>
+                    <ng-select name="cliente" formControlName="customerId">
+                        <ng-option *ngFor="let cliente of clientes" [value]="cliente.id">
+                            {{ cliente.companyName }}
+                        </ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+                    <label class="col-form-label" for="nome">Nome:</label>
+                    <input class="form-control" name="nome" type="text" formControlName="name">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+                    <label class="col-form-label" for="email">E-mail: </label>
+                    <input class="form-control" name="email" type="email" formControlName="email">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+                    <label class="col-form-label" for="username">Usuário: </label>
+                    <input class="form-control" name="username" type="text" formControlName="username" autocomplete="new-username" >
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+                    <label class="col-form-label" for="senha">Senha: </label>
+                    <input class="form-control" name="senha" type="password" formControlName="password" autocomplete="new-password" >
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+                    <label class="col-form-label" for="confirmar-senha">Confirmar Senha: </label>
+                    <input class="form-control" name="confirmar-senha" type="password" formControlName="confirmPassword" autocomplete="new-password" >
+                </div>
+            </div>
+
+            <div class="modal-footer mt-2 justify-content-center">
+                <button class="btn btn-success" type="submit"
+                [disabled]="!edicao">
+                    Cadastrar
+                </button>
+                <button class="btn btn-danger" type="reset" (click)="remover(usuario.value)"
+                [disabled]="!edicao || !usuario.get('id').value">
+                    Remover
+                </button>
+                <button class="btn btn-warning" type="reset"
+                [disabled]="!usuario.dirty">
+                    Limpar
+                </button>
+                <button class="btn btn-secondary" type="reset" (click)="modal.dismiss()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</ng-template>

@@ -18,20 +18,24 @@ import { ProdutosModule } from './produtos/produtos.module';
 import { PedidosModule } from './pedidos/pedidos.module';
 import { httpInterceptorProviders } from './core/http-interceptors';
 import { LandingModule } from './shared/components/login/landing.module';
+import { UsuariosComponent } from './usuarios/usuarios.component';
+import { CadastroComponent } from './usuarios/cadastro/cadastro.component';
+import { UsuariosModule } from './usuarios/usuarios.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     NotFoundComponent,
-    DashboardComponent,
     MenuComponent,
-    CardComponent
   ],
   imports: [
     LandingModule,
+    DashboardModule,
     ClientesModule,
     ProdutosModule,
     PedidosModule,
+    UsuariosModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

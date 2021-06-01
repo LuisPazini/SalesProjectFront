@@ -51,7 +51,7 @@ export class PedidosComponent implements OnInit {
 
   popularListaPedidos(): void {
     this.getPedidos().then((pedidos) => {
-      if(pedidos.length) {
+      if(pedidos) {
         this.pedidos = pedidos;
       } else {
         this.limparListaPedidos();
