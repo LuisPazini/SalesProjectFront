@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 
 import { MenuComponent } from '../shared/components/menu/menu.component';
+import { STATUS_PEDIDO } from '../shared/consts/status-pedido.const';
 import { StatusPedido } from '../shared/enums/status-pedido.enum';
 import { Customer } from '../shared/models/customer';
 import { Order } from '../shared/models/order';
@@ -18,12 +19,7 @@ export class PedidosComponent implements OnInit {
 
   pedidos: Order[] = [] as Order[];
   clientes: Customer[] = [] as Customer[];
-  statuses = [
-    { id: 1, nome: 'ABERTO' },
-    { id: 2, nome: 'APROVADO' },
-    { id: 3, nome: 'FATURADO' },
-    { id: 4, nome: 'CANCELADO' }
-  ];
+  statuses = STATUS_PEDIDO;
 
   hoje: string = moment().format('YYYY-MM-DD');
 
@@ -34,6 +30,9 @@ export class PedidosComponent implements OnInit {
 
   page: number = 1;
   pageSize: number = 5;
+
+  pageMobile: number = 1;
+  pageSizeMobile: number = 5;
 
   notFoundText: string = 'Não foram encontrados pedidos com os parâmetros informados...';
 

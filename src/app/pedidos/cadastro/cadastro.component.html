@@ -1,4 +1,4 @@
-<ng-template #formulario let-modal class="vw-50">
+<ng-template #formulario let-modal class="vw-100">
 
     <div class="moda-header">
         <h1 class="modal-title display-4 text-muted text-center">Cadastro de Pedido</h1>
@@ -7,25 +7,44 @@
     <div class="modal-body w-100">
         <form class="needs-validation" [formGroup]="pedido" (ngSubmit)="salvar(pedido.getRawValue())" novalidate>
             
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label class="col-form-label" for="cliente">Cliente:</label>
-                    <ng-select name="cliente" (change)="popularListaProdutos()" formControlName="customerId">
+            <div class="form-row justify-content-around align-items-baseline">
+                <div class="form-group col-lg-4">
+                    <label class="col-form-label" for="cliente">Cliente*:</label>
+                    <ng-select name="cliente" (change)="popularListaProdutos()" formControlName="customerId"
+                    [class.is-invalid]="pedido.get('customerId').touched && pedido.get('customerId').invalid">
                         <ng-option *ngFor="let cliente of clientes" [value]="cliente.id">
                             {{ cliente.companyName }}
                         </ng-option>
                     </ng-select>
+                    <div *ngIf="pedido.get('customerId').errors" class="invalid-feedback">
+                        <div *ngIf="pedido.get('customerId').errors.required" >Este campo é obrigatório</div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
+                <div class="form-group col-lg-2">
                     <label class="col-form-label" for="data-emissao">Data de Emissão: </label>
-                    <input class="form-control" name="data-emissao" type="date" formControlName="postingDate"
+                    <input class="form-control text-center" name="data-emissao" type="date" formControlName="postingDate"
                     [value]="hoje">
                 </div>
-                <div class="form-group col-md-4">
-                    <label class="col-form-label" for="data-entrega">Data de Entrega: </label>
-                    <input class="form-control" name="data-entrega" type="date" formControlName="deliveryDate">
+                <div class="form-group col-lg-2">
+                    <label class="col-form-label" for="data-entrega">Data de Entrega*: </label>
+                    <input class="form-control text-center" name="data-entrega" type="date" formControlName="deliveryDate"
+                    [class.is-invalid]="pedido.get('deliveryDate').touched && pedido.get('deliveryDate').invalid" >
+                    <div *ngIf="pedido.get('deliveryDate').errors" class="invalid-feedback">
+                        <div *ngIf="pedido.get('deliveryDate').errors.required" >Este campo é obrigatório</div>
+                    </div>
+                </div>
+                <div class="form-group col-lg-4 text-center align-items-center">
+                    <label class="col-form-label" for="status" >Status: </label>
+                    <div class="form-control border-0" name="status">
+                        <label class="lead text-light rounded px-3 py-1"
+                        [class.bg-primary]="isNovoPedido()"
+                        [class.bg-warning]="isPedidoAberto()"
+                        [class.bg-success]="isPedidoAprovado()"
+                        [class.bg-info]="isPedidoFaturado()"
+                        [class.bg-secondary]="isPedidoCancelado()">
+                            {{ pedido.get('status').value | statusPedido | uppercase }}
+                        </label>
+                    </div>
                 </div>
             </div>
 
@@ -43,16 +62,24 @@
                             <div class="col-md-11">
                                 <div class="form-row align-items-baseline">
                                     <div class="form-group col-md-5">
-                                        <label for="produto">Produto</label>
-                                        <ng-select name="produto" formControlName="productId" (change)="exibirPrecosDeItem($event, i)">
+                                        <label for="produto">Produto*</label>
+                                        <ng-select name="produto" formControlName="productId" (change)="exibirPrecosDeItem($event, i)"
+                                        [class.is-invalid]="item.get('productId').touched && item.get('productId').invalid">
                                             <ng-option *ngFor="let produto of produtos" [value]="produto.id">
                                                 {{ produto.name }}
                                             </ng-option>
                                         </ng-select>
+                                        <div *ngIf="item.get('productId').errors" class="invalid-feedback">
+                                            <div *ngIf="item.get('productId').errors.required" >Este campo é obrigatório</div>
+                                        </div>
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label class="col-form-label" for="qtde">Qtde</label>
-                                        <input class="form-control" name="qtde" type="number" formControlName="quantity">
+                                        <label class="col-form-label" for="qtde">Qtde*</label>
+                                        <input class="form-control" name="qtde" type="number" formControlName="quantity"
+                                        [class.is-invalid]="item.get('quantity').touched && item.get('quantity').invalid">
+                                        <div *ngIf="item.get('quantity').errors" class="invalid-feedback">
+                                            <div *ngIf="item.get('quantity').errors.required" >Este campo é obrigatório</div>
+                                        </div>
                                     </div>
                                     <div class="form-group col">
                                         <label class="col-form-label" for="valor-unitario">Valor Unitário</label>
@@ -90,11 +117,15 @@
             <div class="modal-footer mt-2 justify-content-center">
                 <button class="btn btn-primary" *ngIf="isNovoPedido()" type="submit"
                 [disabled]="!edicao">
-                    Emitir
+                    Cadastrar Pedido
                 </button>
-                <button class="btn btn-success" *ngIf="!isNovoPedido()" type="submit"
+                <button class="btn btn-success" *ngIf="isPedidoAberto()" type="submit"
                 [disabled]="!edicao">
                     Aprovar
+                </button>
+                <button class="btn btn-success" *ngIf="isPedidoAprovado()" type="submit"
+                [disabled]="!isPedidoAprovado()">
+                    Emitir Nota Fiscal
                 </button>
                 <button class="btn btn-danger" type="reset" (click)="cancelar(pedido.value)"
                 [disabled]="!edicao || isNovoPedido()">

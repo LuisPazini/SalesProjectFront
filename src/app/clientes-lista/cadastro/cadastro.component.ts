@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/cor
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
+import { TIPOS_ENDERECO } from 'src/app/shared/consts/tipos-endereco.const';
 import { Customer } from 'src/app/shared/models/customer';
 import { ClienteService } from 'src/app/shared/services/cliente.service';
 import { EnderecoService } from 'src/app/shared/services/endereco.service';
@@ -16,23 +17,19 @@ export class CadastroComponent implements OnInit {
   @ViewChild('formulario') form: any;
   @Output('cadastrado') cadastrado: EventEmitter<void> = new EventEmitter<void>();
   
-  tiposEndereco = [
-    { id: 1, tipo: 'Cobrança' },
-    { id: 2, tipo: 'Entrega' },
-    { id: 3, tipo: 'Outro' }
-  ]
+  tiposEndereco = TIPOS_ENDERECO;
   
   cliente = this.formBuilder.group({
-    cnpj: [''],
-    companyName: [''],
-    stateRegistration: [''],
-    email: [''],
-    opening: [''],
-    phone: [''],
+    cnpj: ['', Validators.required],
+    companyName: ['', Validators.required],
+    stateRegistration: ['', Validators.required],
+    email: ['', Validators.required],
+    opening: ['', Validators.required],
+    phone: ['', Validators.required],
     clientSince: [''],
     municipalRegistration: [''],
-    adresses: this.formBuilder.array([ this.novoEndereco() ]),
-    contacts: this.formBuilder.array([ this.novoContato() ]),
+    adresses: this.formBuilder.array([]),
+    contacts: this.formBuilder.array([]),
     products: this.formBuilder.array([]),
     id: [''],
   });
@@ -58,10 +55,15 @@ export class CadastroComponent implements OnInit {
   }
 
   salvar(cliente: Customer): void {
+    if(this.cliente.invalid) {
+      alert('Um ou mais campos de Cliente estão inválidos. Favor verifique e tente novamente.');
+      return;
+    };
     this.clienteService.salvar(cliente).then(
       res => {
         alert("Cliente cadastrado com sucesso!");
         this.modalService.dismissAll();
+        this.cliente.reset();
         this.cadastrado.emit();
       },
       error => {
@@ -76,8 +78,12 @@ export class CadastroComponent implements OnInit {
 
   open(clienteSelecionado?: Customer, edicao: boolean = false): void {
     this.edicao = edicao;
+    this.addresses.clear();
+    this.contacts.clear();
     if(clienteSelecionado) {
       this.clienteService.getCliente(clienteSelecionado).then(cliente => {
+        cliente.adresses.forEach(() => this.adicionarEndereco());
+        cliente.contacts.forEach(() => this.adicionarContato());
         this.cliente.patchValue(cliente);
         this.cliente.patchValue({ opening: moment(cliente.opening).format('YYYY-MM-DD') });
         this.desabilitarCampos();
@@ -96,6 +102,10 @@ export class CadastroComponent implements OnInit {
   }
 
   removerEndereco(index: number): void {
+    if(this.addresses.length == 1) {
+      alert('É preciso ter pelo menos 1 endereço de cliente cadastrado.');
+      return;
+    }
     this.addresses.removeAt(index);
   }
 
@@ -169,4 +179,5 @@ export class CadastroComponent implements OnInit {
         + `${JSON.stringify(error.error, null, 2)}`
       );
   }
+
 }

@@ -7,41 +7,64 @@
     <div class="modal-body w-100">
         <form class="needs-validation" [formGroup]="cliente" (ngSubmit)="salvar(cliente.getRawValue())" novalidate>
             
-            <div class="form-row">
+            <div class="form-row align-items-baseline">
                 <div class="form-group col-md-5">
                     <label class="col-form-label" for="cnpj">CNPJ*: </label>
-                    <input class="form-control" name="cnpj" type="text"
-                    (change)="consultarCNPJ()" formControlName="cnpj" mask="00.000.000/0000-00">
+                    <input class="form-control" 
+                    name="cnpj" type="text" (change)="consultarCNPJ()" formControlName="cnpj" mask="00.000.000/0000-00"
+                    [class.is-invalid]="cliente.get('cnpj').touched && cliente.get('cnpj').invalid" >
+                    <div *ngIf="cliente.get('cnpj').errors" class="invalid-feedback">
+                        <div *ngIf="cliente.get('cnpj').errors.required" >Este campo é obrigatório</div>
+                    </div>
                 </div>
                 <div class="form-group col">
                     <label class="col-form-label" for="nome">Nome Cliente*:</label>
-                    <input class="form-control" name="nome" type="text" formControlName="companyName">
+                    <input class="form-control" name="nome" type="text" formControlName="companyName"
+                    [class.is-invalid]="cliente.get('companyName').touched && cliente.get('companyName').invalid">
+                    <div *ngIf="cliente.get('companyName').errors" class="invalid-feedback">
+                        <div *ngIf="cliente.get('companyName').errors.required" >Este campo é obrigatório</div>
+                    </div>
                 </div>
             </div>
-            <div class="form-row">
+            <div class="form-row align-items-baseline">
                 <div class="form-group col-md-3">
                     <label class="col-form-label" for="data-abertura">Data Abertura*: </label>
-                    <input class="form-control" name="data-abertura" type="date" formControlName="opening">
+                    <input class="form-control" name="data-abertura" type="date" formControlName="opening"
+                    [class.is-invalid]="cliente.get('opening').touched && cliente.get('opening').invalid">
+                    <div *ngIf="cliente.get('opening').errors" class="invalid-feedback">
+                        <div *ngIf="cliente.get('opening').errors.required" >Este campo é obrigatório</div>
+                    </div>
                 </div>
                 <div class="form-group col-md-4">
                     <label class="col-form-label" for="telefone">Telefone*: </label>
-                    <input class="form-control" name="telefone" type="tel" formControlName="phone" mask="(00) 0000-0000 || (00) 0 0000-0000">
+                    <input class="form-control" name="telefone" type="tel" formControlName="phone" 
+                    mask="(00) 0000-0000 || (00) 0 0000-0000"
+                    [class.is-invalid]="cliente.get('phone').touched && cliente.get('phone').invalid">
+                    <div *ngIf="cliente.get('phone').errors" class="invalid-feedback">
+                        <div *ngIf="cliente.get('phone').errors.required" >Este campo é obrigatório</div>
+                    </div>
                 </div>
                 <div class="form-group col-md-5">
                     <label class="col-form-label" for="email">E-mail*: </label>
-                    <input class="form-control" name="email" type="email" formControlName="email">
+                    <input class="form-control" name="email" type="email" formControlName="email"
+                    [class.is-invalid]="cliente.get('email').touched && cliente.get('email').invalid">
+                    <div *ngIf="cliente.get('email').errors" class="invalid-feedback">
+                        <div *ngIf="cliente.get('email').errors.required" >Este campo é obrigatório</div>
+                    </div>
                 </div>
             </div>
-            <div class="form-row">
+            <div class="form-row align-items-baseline">
                 <div class="form-group col-md-6">
                     <label class="col-form-label" for="registro-estadual">Inscrição Estadual*: </label>
-                    <input class="form-control" name="registro-estadual" type="text"
-                    formControlName="stateRegistration" >
+                    <input class="form-control" name="registro-estadual" type="text" formControlName="stateRegistration"
+                    [class.is-invalid]="cliente.get('stateRegistration').touched && cliente.get('stateRegistration').invalid">
+                    <div *ngIf="cliente.get('stateRegistration').errors" class="invalid-feedback">
+                        <div *ngIf="cliente.get('stateRegistration').errors.required" >Este campo é obrigatório</div>
+                    </div>
                 </div>
                 <div class="form-group col-md-6">
                     <label class="col-form-label" for="registro-municipal">Inscrição Municipal: </label>
-                    <input class="form-control" name="registro-municipal" type="text"
-                    formControlName="municipalRegistration">
+                    <input class="form-control" name="registro-municipal" type="text" formControlName="municipalRegistration">
                 </div>
             </div>
 
@@ -122,6 +145,7 @@
             <div class="form-group">
                 <label for="enderecos">Contatos: </label>
 
+                <p *ngIf="contacts.length == 0" class="col text-center my-5">Nenhum contato cadastrado</p>
                 <div formArrayName="contacts"
                 *ngFor="let contato of contacts.controls; let i=index" name="contatos">
                     <div [formGroupName]="i" class="border border-secondary rounded-top px-2 my-2 align-items-center justify-content-center">

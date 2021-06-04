@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -23,13 +23,13 @@ export class CadastroComponent implements OnInit {
 
   produto = this.formBuilder.group({
     id: [''],
-    name: [''],
-    ncmCode: [''],
-    combinedPrice: [''],
+    name: ['', Validators.required],
+    ncmCode: ['', Validators.required],
+    combinedPrice: ['', Validators.required],
     additionalCosts: [''],
-    combinedQuantity: [''],
+    combinedQuantity: ['', Validators.required],
     details: [''],
-    customerId: [''],
+    customerId: ['', Validators.required],
     valid: [''],
     notifications: ['']
   });
@@ -51,6 +51,7 @@ export class CadastroComponent implements OnInit {
       res => {
         alert("Produto cadastrado com sucesso!");
         this.modalService.dismissAll();
+        this.produto.reset();
         this.cadastrado.emit();
       },
       error => {
@@ -100,7 +101,7 @@ export class CadastroComponent implements OnInit {
 
   private converterCamposNumber(produto: Product): void {
     produto.combinedPrice = Number.parseFloat(produto.combinedPrice.toString());
-    produto.additionalCosts = Number.parseFloat(produto.additionalCosts.toString());
+    produto.additionalCosts = Number.parseFloat(produto.additionalCosts.toString()) || 0;
     produto.combinedQuantity = Number.parseFloat(produto.combinedQuantity.toString());
   }
 

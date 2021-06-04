@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { Customer } from 'src/app/shared/models/customer';
 import { Usuario } from 'src/app/shared/models/usuario';
 import { AccountService } from 'src/app/shared/services/account.service';
@@ -20,8 +21,7 @@ export class CadastroComponent implements OnInit {
   roles = [
     { id: 1, descricao: 'Cliente' },
     { id: 2, descricao: 'Vendedor' },
-    { id: 3, descricao: 'TI' },
-    { id: 4, descricao: 'Administrador' }
+    { id: 3, descricao: 'TI' }
   ]
 
   edicao: boolean = false;
@@ -42,10 +42,16 @@ export class CadastroComponent implements OnInit {
     private contaService: AccountService,
     private clienteService: ClienteService,
     private formBuilder: FormBuilder,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
+    if(this.authService.isUserAdministrator()) {
+      this.roles.push(
+        { id: 4, descricao: 'Administrador' }
+      );
+    }
     this.listarClientes();
   }
 
@@ -54,6 +60,7 @@ export class CadastroComponent implements OnInit {
       res => {
         alert("Usuário cadastrado com sucesso!");
         this.modalService.dismissAll();
+        this.usuario.reset();
         this.cadastrado.emit();
       },
       error => {

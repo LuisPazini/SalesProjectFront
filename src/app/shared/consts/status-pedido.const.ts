@@ -1,4 +1,4 @@
-export const STATUSPEDIDO = [
+export const STATUS_PEDIDO = [
     { id: 1, nome: 'ABERTO' },
     { id: 2, nome: 'APROVADO' },
     { id: 3, nome: 'FATURADO' },

@@ -1,7 +1,8 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
+import { StatusPedido } from 'src/app/shared/enums/status-pedido.enum';
 import { Customer } from 'src/app/shared/models/customer';
 import { Order } from 'src/app/shared/models/order';
 import { Product } from 'src/app/shared/models/product';
@@ -25,13 +26,13 @@ export class CadastroComponent implements OnInit {
   hoje: string = moment().format('YYYY-MM-DD');
 
   pedido = this.formBuilder.group({
-    postingDate: [this.hoje],
-    deliveryDate: [''],
+    postingDate: [''],
+    deliveryDate: ['', Validators.required],
     status: [''],
     totalOrder: [''],
     observation: [''],
-    orderLines: this.formBuilder.array([ this.novoItem() ]),
-    customerId: [''],
+    orderLines: this.formBuilder.array([]),
+    customerId: ['', Validators.required],
     valid: [''],
     notifications: [''],
     id: [''],
@@ -61,6 +62,12 @@ export class CadastroComponent implements OnInit {
   }
 
   salvar(pedido: Order): void {
+    this.pedido.markAllAsTouched();
+    if(this.pedido.invalid) {
+      debugger
+      alert('Um ou mais campos de Pedido estão inválidos. Favor verifique e tente novamente.');
+      return;
+    }
     this.converterCamposNumber();
     if(this.isNovoPedido()) {
       this.pedidoService.salvar(pedido).then(
@@ -73,16 +80,20 @@ export class CadastroComponent implements OnInit {
           this.exibirErro(error);
         }
       );
-    } else {
+    } else if(this.isPedidoAberto()) {
       this.pedidoService.aprovar(pedido).then(
         res => {
           alert("Pedido aprovado com sucesso!");
           this.modalService.dismissAll();
+          this.pedido.reset();
+          this.cadastrado.emit();
         },
         error => {
           this.exibirErro(error);
         }
       )
+    } else if(this.isPedidoAprovado()) {
+
     }
   }
 
@@ -92,20 +103,25 @@ export class CadastroComponent implements OnInit {
 
   open(pedido?: Order, edicao: boolean = false): void {
     this.edicao = edicao;
+    this.orderLines.clear();
     if(pedido) {
+      pedido.orderLines.forEach(() => this.adicionarItem());
       this.pedido.patchValue(pedido);
       this.popularListaProdutos();
       this.pedido.patchValue(
         {
           postingDate: moment(pedido.postingDate).format('YYYY-MM-DD'),
           deliveryDate: moment(pedido.deliveryDate).format('YYYY-MM-DD'),
-          orderLines: pedido.orderLines
         }
       );
+    } else {
+      this.pedido.get('postingDate').setValue(this.hoje);
+      this.adicionarItem();
     }
-    this.modalService.open(this.form, { size: 'lg' });
-    this.orderLines.clear();
-    this.adicionarItem();
+    if(this.isPedidoAprovado() || this.isPedidoFaturado()) {
+      this.edicao = false;
+    }
+    this.modalService.open(this.form, { size: 'xl' });
     this.desabilitarCampos();
   }
 
@@ -115,7 +131,8 @@ export class CadastroComponent implements OnInit {
 
   removerItem(index: number): void {
     if(this.itens.length == 1) {
-      alert('Não é possível ter 0 itens no pedido'); return;
+      alert('Não é possível ter 0 itens no pedido');
+      return;
     }
     this.itens.removeAt(index);
   }
@@ -125,10 +142,6 @@ export class CadastroComponent implements OnInit {
     let item = this.orderLines.at(index);
     item.get('unitaryPrice').setValue(produto.combinedPrice);
     item.get('additionalCosts').setValue(produto.additionalCosts);
-  }
-
-  isNovoPedido(): boolean {
-    return !this.pedido.get('id')?.value;
   }
 
   popularListaProdutos(): void {
@@ -141,14 +154,34 @@ export class CadastroComponent implements OnInit {
     });
   }
 
+  isNovoPedido(): boolean {
+    return !this.pedido.get('id').value;
+  }
+
+  isPedidoAberto(): boolean {
+    return this.pedido.get('status').value == StatusPedido.ABERTO;
+  }
+
+  isPedidoAprovado(): boolean {
+    return this.pedido.get('status').value == StatusPedido.APROVADO;
+  }
+
+  isPedidoFaturado(): boolean {
+    return this.pedido.get('status').value == StatusPedido.FATURADO;
+  }
+
+  isPedidoCancelado(): boolean {
+    return this.pedido.get('status').value == StatusPedido.CANCELADO;
+  }
+
   private novoItem(): FormGroup {
     return this.formBuilder.group({
       orderId: [''],
-      quantity: [''],
-      unitaryPrice: [''],
-      additionalCosts: [''],
+      quantity: ['', Validators.required],
+      unitaryPrice: ['', Validators.required],
+      additionalCosts: ['', Validators.required],
       totalPrice: [''],
-      productId: [''],
+      productId: ['', Validators.required],
       valid: [''],
       notifications: [''],
       id: ['']

@@ -9,34 +9,54 @@
             
             <div class="form-row">
                 <div class="form-group col-md-7">
-                    <label class="col-form-label" for="nome">Nome Produto:</label>
-                    <input class="form-control" name="nome" type="text" formControlName="name">
+                    <label class="col-form-label" for="nome">Nome Produto*:</label>
+                    <input class="form-control" name="nome" type="text" formControlName="name"
+                    [class.is-invalid]="produto.get('name').touched && produto.get('name').invalid">
+                    <div *ngIf="produto.get('name').errors" class="invalid-feedback">
+                        <div *ngIf="produto.get('name').errors.required" >Este campo é obrigatório</div>
+                    </div>
                 </div>
                 <div class="form-group col-md-5">
-                    <label class="col-form-label" for="codigo">Código NCM: </label>
-                    <input class="form-control" name="codigo" type="text" formControlName="ncmCode" mask="0000.00.00">
+                    <label class="col-form-label" for="codigo">Código NCM*: </label>
+                    <input class="form-control" name="codigo" type="text" formControlName="ncmCode" mask="0000.00.00"
+                    [class.is-invalid]="produto.get('ncmCode').touched && produto.get('ncmCode').invalid" >
+                    <div *ngIf="produto.get('ncmCode').errors" class="invalid-feedback">
+                        <div *ngIf="produto.get('ncmCode').errors.required" >Este campo é obrigatório</div>
+                    </div>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col">
-                    <label class="col-form-label" for="cliente">Cliente: </label>
-                    <ng-select name="cliente" formControlName="customerId">
+                    <label class="col-form-label" for="cliente">Cliente*: </label>
+                    <ng-select name="cliente" formControlName="customerId" 
+                    [class.is-invalid]="produto.get('customerId').touched && produto.get('customerId').invalid">
                         <ng-option *ngFor="let cliente of clientes" [value]="cliente.id">
                             {{ cliente.companyName }}
                         </ng-option>
                     </ng-select>
+                    <div *ngIf="produto.get('customerId').errors" class="invalid-feedback">
+                        <div *ngIf="produto.get('customerId').errors.required" >Este campo é obrigatório</div>
+                    </div>
                 </div>
                 <div class="form-group col">
-                    <label class="col-form-label" for="consumo-mensal">Consumo Mensal: </label>
+                    <label class="col-form-label" for="consumo-mensal">Consumo Mensal*: </label>
                     <input class="form-control" name="consumo-mensal" type="text" formControlName="combinedQuantity"
-                    mask="separator.0" thousandSeparator="." suffix=" unidades">
+                    mask="separator.0" thousandSeparator="." suffix=" unidades"
+                    [class.is-invalid]="produto.get('combinedQuantity').touched && produto.get('combinedQuantity').invalid" >
+                    <div *ngIf="produto.get('combinedQuantity').errors" class="invalid-feedback">
+                        <div *ngIf="produto.get('combinedQuantity').errors.required" >Este campo é obrigatório</div>
+                    </div>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label class="col-form-label" for="valor">Valor: </label>
+                    <label class="col-form-label" for="valor">Valor*: </label>
                     <input class="form-control" name="valor" type="text"
-                    formControlName="combinedPrice" prefix="R$ " mask="separator,4" thousandSeparator="." >
+                    formControlName="combinedPrice" prefix="R$ " mask="separator,4" thousandSeparator="." 
+                    [class.is-invalid]="produto.get('combinedPrice').touched && produto.get('combinedPrice').invalid" >
+                    <div *ngIf="produto.get('combinedPrice').errors" class="invalid-feedback">
+                        <div *ngIf="produto.get('combinedPrice').errors.required" >Este campo é obrigatório</div>
+                    </div>
                 </div>
                 <div class="form-group col-md-6">
                     <label class="col-form-label" for="custos-adicionais">Custos Adicionais: </label>

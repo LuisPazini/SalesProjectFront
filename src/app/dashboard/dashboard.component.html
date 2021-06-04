@@ -5,22 +5,26 @@
     </div>
 
     <div class="form-row align-items-center justify-content-center mt-5">
-        <div class="form-group col-sm-2">
-            <input class="form-control text-center" name="de" type="date" 
-            (change)="listarDadosDeDashboard()"
+        <div class="form-group">
+            <input class="form-control text-center" name="de" type="date"
             [(ngModel)]="dataInicial"
             [value]="dataInicial | date: 'yyyy-MM-dd'"
             [max]="dataFinal">
         </div>
         <label class="mx-2" for="a">até</label>
-        <div class="form-group col-sm-2">
-            <input class="form-control text-center" name="a" type="date" 
-            (change)="listarDadosDeDashboard()" 
+        <div class="form-group">
+            <input class="form-control text-center" name="a" type="date"
             [(ngModel)]="dataFinal"
             [value]="dataFinal | date: 'yyyy-MM-dd'"
             [min]="dataInicial">
         </div>
     </div>
+    <div class="form-row col justify-content-center align-items-center">
+        <button (click)="listarDadosDeDashboard()" class="btn btn-outline-secondary">
+            Pesquisar
+        </button>
+    </div>
+    
 
     <div class="container-fluid d-flex flex-wrap mx-auto mt-1 w-75 justify-content-center">
         <app-card header="Pedidos em Aberto" [body]="dashboard.openOrders || 0"></app-card>
