@@ -7,8 +7,10 @@ import { Customer } from 'src/app/shared/models/customer';
 import { Order } from 'src/app/shared/models/order';
 import { Product } from 'src/app/shared/models/product';
 import { ClienteService } from 'src/app/shared/services/cliente.service';
+import { NotaFiscalService } from 'src/app/shared/services/nota-fiscal.service';
 import { PedidoService } from 'src/app/shared/services/pedido.service';
 import { ProdutoService } from 'src/app/shared/services/produto.service';
+import { NotaFiscalComponent } from './nota-fiscal/nota-fiscal.component';
 
 @Component({
   selector: 'app-cadastro',
@@ -18,6 +20,7 @@ import { ProdutoService } from 'src/app/shared/services/produto.service';
 export class CadastroComponent implements OnInit {
 
   @ViewChild('formulario') form: any;
+  @ViewChild('notaFiscal') notaFiscalModal: NotaFiscalComponent;
   @Output('cadastrado') cadastrado: EventEmitter<void> = new EventEmitter<void>();
 
   clientes: Customer[] = [] as Customer[];
@@ -46,6 +49,7 @@ export class CadastroComponent implements OnInit {
     private pedidoService: PedidoService,
     private clienteService: ClienteService,
     private produtoService: ProdutoService,
+    private notaFiscalService: NotaFiscalService,
     private formBuilder: FormBuilder,
     private modalService: NgbModal
   ) { }
@@ -69,32 +73,58 @@ export class CadastroComponent implements OnInit {
       return;
     }
     this.converterCamposNumber();
-    if(this.isNovoPedido()) {
-      this.pedidoService.salvar(pedido).then(
-        res => {
-          alert("Pedido cadastrado com sucesso!");
-          this.modalService.dismissAll();
-          this.cadastrado.emit();
-        },
-        error => {
-          this.exibirErro(error);
-        }
-      );
-    } else if(this.isPedidoAberto()) {
-      this.pedidoService.aprovar(pedido).then(
-        res => {
-          alert("Pedido aprovado com sucesso!");
-          this.modalService.dismissAll();
-          this.pedido.reset();
-          this.cadastrado.emit();
-        },
-        error => {
-          this.exibirErro(error);
-        }
-      )
-    } else if(this.isPedidoAprovado()) {
+    this.pedidoService.salvar(pedido).then(
+      res => {
+        alert("Pedido cadastrado com sucesso!");
+        this.modalService.dismissAll();
+        this.cadastrado.emit();
+      },
+      error => {
+        this.exibirErro(error);
+      }
+    );
+      
+  }
 
-    }
+  aprovarPedido(pedido: Order): void {
+    this.pedidoService.aprovar(pedido).then(
+      res => {
+        alert("Pedido aprovado com sucesso!");
+        this.modalService.dismissAll();
+        this.pedido.reset();
+        this.cadastrado.emit();
+      },
+      error => {
+        this.exibirErro(error);
+      }
+    );
+  }
+
+  emitirNotaFiscal(pedido: Order): void {
+    this.notaFiscalService.gerarNotaFiscal(pedido).then(
+      notaFiscal => {
+        this.notaFiscalService.emitirNotaFiscal(notaFiscal).then(
+          res => {
+            console.log(notaFiscal.id);
+            alert("Nota Fiscal emitida com sucesso!");
+            this.modalService.dismissAll();
+            this.pedido.reset();
+            this.cadastrado.emit();
+          },
+          error => {
+            this.exibirErro(error);
+          }
+        );
+      },
+      error => {
+        this.exibirErro(error);
+      }
+    );
+  }
+
+  async baixarNotaFiscal(pedido: Order): Promise<void> {
+    let idNotaFiscal = await this.notaFiscalService.getIdNotaFiscal(pedido);
+    this.notaFiscalModal.open(idNotaFiscal.idPlugNotasIntegration);
   }
 
   cancelar(pedido: Order): void {

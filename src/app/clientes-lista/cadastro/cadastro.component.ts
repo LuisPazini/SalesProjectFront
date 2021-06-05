@@ -88,6 +88,9 @@ export class CadastroComponent implements OnInit {
         this.cliente.patchValue({ opening: moment(cliente.opening).format('YYYY-MM-DD') });
         this.desabilitarCampos();
       });
+    } else {
+      this.adicionarEndereco();
+      this.adicionarContato();
     }
     this.modalService.open(this.form, { size: 'lg' });
     this.desabilitarCampos();

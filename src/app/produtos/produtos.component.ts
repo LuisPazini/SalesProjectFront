@@ -17,10 +17,12 @@ export class ProdutosComponent implements OnInit {
 
   clientes: Customer[] = [] as Customer[];
 
+  clienteSelecionado: Customer;
+
   page: number = 1;
   pageSize: number = 7;
 
-  notFoundText: string = 'Digite ao menos 3 caracteres do nome de produto';
+  notFoundText: string = 'Digite ao menos 3 caracteres do nome de produto ou selecione um cliente';
 
   constructor(
     private produtoService: ProdutoService,
@@ -34,12 +36,12 @@ export class ProdutosComponent implements OnInit {
   }
 
   filtrarProdutos(termo: string): void {
-    if(termo.length < 3) {
+    if(termo.length < 3 && !this.clienteSelecionado) {
       this.limparListaProdutos();
-      this.notFoundText = "Digite ao menos 3 caracteres do nome de produto";
+      this.notFoundText = "Digite ao menos 3 caracteres do nome de produto ou selecione um cliente";
     } else {
-      if(termo.length == 3) {
-        this.popularListaProdutos(termo).then(() => 
+      if(termo.length == 3 && !this.clienteSelecionado) {
+        this.popularListaProdutosByName(termo).then(() => 
           this.popularListaProdutosFiltrados(termo)
         );
       }
@@ -48,7 +50,19 @@ export class ProdutosComponent implements OnInit {
     }
   }
 
-  private async popularListaProdutos(name: string): Promise<void> {
+  popularListaProdutosByCliente(): void {
+    if(this.clienteSelecionado) {
+      this.produtoService.getByCliente(this.clienteSelecionado.id).then(produtos => {
+        this.produtos = produtos;
+        this.produtosFiltrados = produtos;
+      })
+    } else {
+      this.limparListaProdutos();
+      this.notFoundText = "Digite ao menos 3 caracteres do nome de produto ou selecione um cliente";
+    }
+  }
+
+  private async popularListaProdutosByName(name: string): Promise<void> {
     this.produtos = await this.produtoService.getByName(name);
   }
 

@@ -46,7 +46,9 @@ export class CadastroComponent implements OnInit {
   }
 
   salvar(produto: Product): void {
+    console.log(produto.combinedPrice)
     this.converterCamposNumber(produto);
+    console.log(produto.combinedPrice)
     this.produtoService.salvar(produto).then(
       res => {
         alert("Produto cadastrado com sucesso!");

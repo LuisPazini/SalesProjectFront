@@ -9,7 +9,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { PedidosComponent } from './pedidos.component';
 import { CadastroComponent } from './cadastro/cadastro.component';
 import { PipesModule } from '../shared/pipes/pipes.module';
-import { NotaFiscalComponent } from './nota-fiscal/nota-fiscal.component';
+import { NotaFiscalComponent } from './cadastro/nota-fiscal/nota-fiscal.component';
 
 @NgModule({
   declarations: [

@@ -1,6 +1,6 @@
-<ng-template #formulario let-modal class="vw-100">
+<ng-template #formulario let-modal >
 
-    <div class="moda-header">
+    <div>
         <h1 class="modal-title display-4 text-muted text-center">Cadastro de Pedido</h1>
     </div>
 
@@ -84,12 +84,12 @@
                                     <div class="form-group col">
                                         <label class="col-form-label" for="valor-unitario">Valor Unitário</label>
                                         <input class="form-control" name="valor-unitario" type="text" prefix="R$ " thousandSeparator="."
-                                        mask="separator.2" formControlName="unitaryPrice">
+                                        mask="separator.2" decimalMarker="," formControlName="unitaryPrice">
                                     </div>
                                     <div class="form-group col">
                                         <label class="col-form-label" for="custos-adicionais">Custos Adicionais</label>
                                         <input class="form-control" name="custos-adicionais" type="text" prefix="R$ " thousandSeparator="."
-                                        mask="separator.2" formControlName="additionalCosts" >
+                                        mask="separator.2" decimalMarker="," formControlName="additionalCosts" >
                                     </div>
                                 </div>
                             </div>
@@ -119,15 +119,19 @@
                 [disabled]="!edicao">
                     Cadastrar Pedido
                 </button>
-                <button class="btn btn-success" *ngIf="isPedidoAberto()" type="submit"
-                [disabled]="!edicao">
+                <button class="btn btn-success" *ngIf="isPedidoAberto()" type="button"
+                (click)="aprovarPedido(pedido.getRawValue())" [disabled]="!edicao">
                     Aprovar
                 </button>
-                <button class="btn btn-success" *ngIf="isPedidoAprovado()" type="submit"
-                [disabled]="!isPedidoAprovado()">
+                <button class="btn btn-success" *ngIf="isPedidoAprovado()" type="button"
+                (click)="emitirNotaFiscal(pedido.getRawValue())" [disabled]="!isPedidoAprovado()">
                     Emitir Nota Fiscal
                 </button>
-                <button class="btn btn-danger" type="reset" (click)="cancelar(pedido.value)"
+                <button class="btn btn-info" *ngIf="isPedidoFaturado()" type="button"
+                (click)="baixarNotaFiscal(pedido.getRawValue())">
+                    Baixar Nota Fiscal
+                </button>
+                <button class="btn btn-danger" type="reset" (click)="cancelar(pedido.getRawValue())"
                 [disabled]="!edicao || isNovoPedido()">
                     Remover
                 </button>
@@ -140,3 +144,5 @@
         </form>
     </div>
 </ng-template>
+
+<app-nota-fiscal #notaFiscal ></app-nota-fiscal>

@@ -1,9 +1,25 @@
 <div class="form-row justify-content-center align-items-baseline mx-4 mt-5 mb-4">
-    <input #inpNomeProduto class="form-control col-md-7 mx-3 mb-3" name="pesquisa-produto" type="text"
-    placeholder="Pesquisar Produto" 
-    (input)="filtrarProdutos(inpNomeProduto.value)" >
-    <button class="btn btn-secondary" (click)="filtrarProdutos(inpNomeProduto.value)" >Pesquisar</button>
-    <button class="btn btn-primary ml-1" (click)="formulario.open(undefined, true)" ><span>+</span> Novo </button>
+    <div class="form-row col-md-8 align-items-center justify-content-center mt-3 text-center">
+        <div class="form-group col-md-8">
+            <input #inpNomeProduto class="form-control" name="pesquisa-produto" type="text"
+            placeholder="Pesquisar Produto"
+            (input)="filtrarProdutos(inpNomeProduto.value)" >
+        </div>
+
+        <div class="form-group col-md-8">
+            <ng-select class="text-center" [(ngModel)]="clienteSelecionado" (change)="popularListaProdutosByCliente()"
+            placeholder="Selecione um Cliente...">
+                <ng-option *ngFor="let cliente of clientes" [value]="cliente">
+                    {{ cliente.companyName }}
+                </ng-option>
+            </ng-select>
+        </div>
+    </div>
+
+    <div class="col-md-3 justify-content-center text-center">
+        <button class="btn btn-secondary" (click)="filtrarProdutos(inpNomeProduto.value)" >Pesquisar</button>
+        <button class="btn btn-primary ml-1" (click)="formulario.open(undefined, true)" ><span>+</span> Novo </button>
+    </div>
 </div>
 
 <app-cadastro #formulario (cadastrado)="filtrarProdutos(inpNomeProduto.value)" ></app-cadastro>
@@ -25,7 +41,7 @@
             <td>{{ produto.name }}</td>
             <td>{{ produto.customerId | cliente: clientes }}</td>
             <td>{{ produto.combinedQuantity }}</td>
-            <td>{{ produto.combinedPrice }}</td>
+            <td>R$ {{ produto.combinedPrice | moedaBr }}</td>
             <td>{{ produto.details }}</td>
             <td><button class="btn btn-info" (click)="formulario.open(produto)" >Visualizar</button>
             <button class="btn btn-warning" (click)="formulario.open(produto, true); formulario.edicao = true" >Editar</button></td>

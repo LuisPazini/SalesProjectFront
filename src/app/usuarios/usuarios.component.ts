@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuComponent } from '../shared/components/menu/menu.component';
+import { Customer } from '../shared/models/customer';
 import { Usuario } from '../shared/models/usuario';
 import { AccountService } from '../shared/services/account.service';
+import { ClienteService } from '../shared/services/cliente.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -13,6 +15,8 @@ export class UsuariosComponent implements OnInit {
   usuarios: Usuario[] = [] as Usuario[];
   usuariosFiltrados: Usuario[] = [] as Usuario[];
 
+  clientes: Customer[] = [] as Customer[];
+
   page: number = 1;
   pageSize: number = 7;
 
@@ -20,12 +24,16 @@ export class UsuariosComponent implements OnInit {
 
   constructor(
     private usuarioService: AccountService,
+    private clienteService: ClienteService
   ) { 
     MenuComponent.toggleExibirMenu.next(true);
   }
 
   ngOnInit(): void {
     this.popularListaUsuarios();
+    this.clienteService.getAll().then(clientes => 
+      this.clientes = clientes
+    );
   }
 
   filtrarUsuarios(termo: string): void {
