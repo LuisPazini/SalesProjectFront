@@ -20,6 +20,9 @@ export class UsuariosComponent implements OnInit {
   page: number = 1;
   pageSize: number = 7;
 
+  pageMobile: number = 1;
+  pageSizeMobile: number = 5;
+
   notFoundText: string = 'Digite ao menos 3 caracteres do nome de usuário';
 
   constructor(

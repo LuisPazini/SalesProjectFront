@@ -122,6 +122,7 @@ export class CadastroComponent implements OnInit {
       this.cliente.get('companyName').setValue(empresa.nome);
       this.cliente.get('opening').setValue(moment(empresa.abertura, 'DD/MM/YYYY').format('YYYY-MM-DD'));
       this.cliente.get('phone').setValue(empresa.telefone.split('/')[0]);
+      this.cliente.get('email').setValue(empresa.email);
     })
   }
 

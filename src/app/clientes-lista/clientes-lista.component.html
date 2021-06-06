@@ -26,7 +26,7 @@
             <td>{{ cliente.companyName }}</td>
             <td>{{ cliente.opening | date: 'dd/MM/yyyy' }}</td>
             <td>{{ cliente.phone | mask: '(00) 0 0000-0000 || (00) 0000-0000' }}</td>
-            <td>{{ cliente.municipalRegistration }}</td>
+            <td>{{ cliente.municipalRegistration || '-' }}</td>
             <td>{{ cliente.stateRegistration }}</td>
             <td class="align-content-around">
                 <button class="btn btn-info" (click)="formulario.open(cliente)" >Visualizar</button>

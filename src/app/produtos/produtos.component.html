@@ -27,12 +27,13 @@
 <table class="table table-hover">
     <thead class="text-center thead-cinza">
         <tr>
-            <th>Código</th>
+            <th>Código NCM</th>
             <th>Produto</th>
             <th>Cliente</th>
             <th>Consumo Mensal</th>
             <th>Valor</th>
             <th>Detalhes</th>
+            <th></th>
         </tr>
     </thead>
     <tbody *ngIf="produtosFiltrados.length">
@@ -50,5 +51,29 @@
         </ngb-pagination>
     </tbody>
 </table>
+
+<div class="cards container-fluid text-center"
+*ngIf="produtosFiltrados.length">
+    <div class="card mx-3 my-2" 
+    *ngFor="let produto of produtosFiltrados | slice: (pageMobile-1) * pageSizeMobile : pageMobile * pageSizeMobile">
+        <div class="card-header text-center">{{ produto.name }}</div>
+        <div class="card-body card-text px-5">
+            <p class="font-weight-bold mb-0">Código NCM: </p><p>{{ produto.ncmCode | mask: '0000.00.00' }}</p>
+            <p class="font-weight-bold mb-0">Cliente: </p><p>{{ produto.customerId | cliente: clientes }}</p>
+            <p class="font-weight-bold mb-0">Consumo Mensal: </p><p>{{ produto.combinedQuantity }}</p>
+            <p class="font-weight-bold mb-0">Valor: </p><p>{{ produto.combinedPrice  | moedaBr }}</p>
+            <p class="font-weight-bold mb-0">Detalhes: </p><p>{{ produto.details }}</p>
+        </div>
+        <div class="card-footer align-content-around">
+            <button class="btn btn-info" (click)="formulario.open(produto)" >Visualizar</button>
+            <button class="btn btn-warning" (click)="formulario.open(produto, true); formulario.edicao = true" >Editar</button>
+        </div>
+    </div>
+    <div class="w-100 justify-content-center text-center">
+        <ngb-pagination class="justify-content-center"
+        *ngIf="produtosFiltrados.length" [(page)]="page" [pageSize]="pageSize" [collectionSize]="produtosFiltrados.length">
+        </ngb-pagination>
+    </div>
+</div>
 
 <p *ngIf="!produtosFiltrados.length" class="text-center mt-5">{{ notFoundText }}</p>

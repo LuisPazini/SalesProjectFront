@@ -3,5 +3,6 @@ export interface Empresa {
     cnpj: string,
     nome: string,
     telefone: string,
-    abertura: string
+    email: string
+    abertura: string,
 }

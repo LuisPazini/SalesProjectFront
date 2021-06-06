@@ -24,7 +24,7 @@
             <td>{{ usuario.username }}</td>
             <td>{{ usuario.name }}</td>
             <td>{{ usuario.email }}</td>
-            <td>{{ usuario.customerId || '-' | cliente: clientes }}</td>
+            <td>{{ usuario.customerId | cliente: clientes }}</td>
             <td>{{ usuario.role | role }}</td>
             <td><button class="btn btn-info" (click)="formulario.open(usuario)" >Visualizar</button>
             <button class="btn btn-warning" (click)="formulario.open(usuario, true); formulario.edicao = true" >Editar</button></td>
@@ -33,5 +33,28 @@
         </ngb-pagination>
     </tbody>
 </table>
+
+<div class="cards container-fluid text-center"
+*ngIf="usuariosFiltrados.length">
+    <div class="card mx-3 my-2" 
+    *ngFor="let usuario of usuariosFiltrados | slice: (pageMobile-1) * pageSizeMobile : pageMobile * pageSizeMobile">
+        <div class="card-header text-center">{{ usuario.name }}</div>
+        <div class="card-body card-text px-5">
+            <p class="font-weight-bold mb-0">Usuário: </p><p>{{ usuario.username }}</p>
+            <p class="font-weight-bold mb-0">E-mail: </p><p>{{ usuario.email }}</p>
+            <p class="font-weight-bold mb-0">Cliente: </p><p>{{ usuario.customerId | cliente: clientes }}</p>
+            <p class="font-weight-bold mb-0">Tipo Usuário: </p><p>{{ usuario.role | role }}</p>
+        </div>
+        <div class="card-footer align-content-around">
+            <button class="btn btn-info" (click)="formulario.open(usuario)" >Visualizar</button>
+            <button class="btn btn-warning" (click)="formulario.open(usuario, true); formulario.edicao = true" >Editar</button>
+        </div>
+    </div>
+    <div class="w-100 justify-content-center text-center">
+        <ngb-pagination class="justify-content-center"
+        *ngIf="usuariosFiltrados.length" [(page)]="page" [pageSize]="pageSize" [collectionSize]="usuariosFiltrados.length">
+        </ngb-pagination>
+    </div>
+</div>
 
 <p *ngIf="!usuariosFiltrados.length" class="text-center mt-5">{{ notFoundText }}</p>
