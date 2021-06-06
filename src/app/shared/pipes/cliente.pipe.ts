@@ -11,7 +11,7 @@ export class ClientePipe implements PipeTransform {
     if(clienteEncontrado) {
       return clienteEncontrado.companyName;
     }
-    return '<Not Found>';
+    return '-';
   }
 
 }

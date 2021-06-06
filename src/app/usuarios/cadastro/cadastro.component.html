@@ -45,16 +45,18 @@
                     <input class="form-control" name="username" type="text" formControlName="username" autocomplete="new-username" >
                 </div>
             </div>
-            <div class="form-row">
-                <div class="form-group col">
-                    <label class="col-form-label" for="senha">Senha: </label>
-                    <input class="form-control" name="senha" type="password" formControlName="password" autocomplete="new-password" >
+            <div *ngIf="!usuario.get('id').value">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label class="col-form-label" for="senha">Senha: </label>
+                        <input class="form-control" name="senha" type="password" formControlName="password" autocomplete="new-password" >
+                    </div>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col">
-                    <label class="col-form-label" for="confirmar-senha">Confirmar Senha: </label>
-                    <input class="form-control" name="confirmar-senha" type="password" formControlName="confirmPassword" autocomplete="new-password" >
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label class="col-form-label" for="confirmar-senha">Confirmar Senha: </label>
+                        <input class="form-control" name="confirmar-senha" type="password" formControlName="confirmPassword" autocomplete="new-password" >
+                    </div>
                 </div>
             </div>
 
