@@ -99,8 +99,6 @@ export class CadastroComponent implements OnInit {
 
   private habilitarCamposEdicao(): void {
     this.usuario.get('name').enable();
-    this.usuario.get('email').enable();
-    this.usuario.get('senha').enable();
     this.usuario.get('role').enable();
   }
 

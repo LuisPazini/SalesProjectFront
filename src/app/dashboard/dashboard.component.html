@@ -8,14 +8,12 @@
         <div class="form-group">
             <input class="form-control text-center" name="de" type="date"
             [(ngModel)]="dataInicial"
-            [value]="dataInicial | date: 'yyyy-MM-dd'"
             [max]="dataFinal">
         </div>
         <label class="mx-2" for="a">até</label>
         <div class="form-group">
             <input class="form-control text-center" name="a" type="date"
             [(ngModel)]="dataFinal"
-            [value]="dataFinal | date: 'yyyy-MM-dd'"
             [min]="dataInicial">
         </div>
     </div>

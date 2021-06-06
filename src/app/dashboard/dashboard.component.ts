@@ -21,9 +21,9 @@ export class DashboardComponent implements OnInit {
   
   dashboard: Dashboard = {} as Dashboard;
 
-  hoje: string = moment().format('L');
+  hoje: string = moment().format('YYYY-MM-DD');
 
-  dataInicial: string = moment(this.hoje).subtract(30, 'days').format('L');
+  dataInicial: string = moment(this.hoje).subtract(30, 'days').format('YYYY-MM-DD');
   dataFinal: string = this.hoje;
 
   constructor(
@@ -31,6 +31,8 @@ export class DashboardComponent implements OnInit {
     private dashboardService: DashboardService
   ) { 
     MenuComponent.toggleExibirMenu.next(true);
+    console.log(this.dataInicial)
+    console.log(this.dataFinal)
   }
 
   ngOnInit(): void {
