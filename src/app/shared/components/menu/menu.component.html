@@ -1,4 +1,4 @@
-<nav *ngIf="exibirMenu" id="menu" class="navbar navbar-expand-lg navbar-dark bg-primary d-flex">
+<nav *ngIf="exibirMenu" id="menu" class="navbar navbar-expand-lg navbar-dark bg-primary d-flex container-fluid">
     <a class="navbar-brand text-uppercase text-bold text-center" routerLink="/dashboard" >ZP Metais</a>
     <button class="navbar-toggler" (click)="isMenuCollapsed = !isMenuCollapsed" type="button">
         <span class="navbar-toggler-icon"></span>
@@ -23,12 +23,26 @@
             </li>
             <li class="nav-item text-center">
                 <a class="nav-link" routerLink="/usuarios" *ngIf="isITOrHigher()"
-                (click)="isMenuCollapsed = true">Usuário</a>
+                (click)="isMenuCollapsed = true">Usuários</a>
             </li>
-            <li class="nav-item text-center">
-                <a class="nav-link" routerLink="/login"
-                (click)="isMenuCollapsed = true">Logoff</a>
-            </li>
+            <ul ngbDropdown class="nav-item px-0 d-inline-block text-center bg-primary" placement="bottom">
+                <a class="nav-link" ngbDropdownToggle>Minha Conta</a>
+                <div ngbDropdownMenu class="dropdown-menu bg-light text-center">
+                    
+                    <li>
+                        <a class="nav-link text-muted"
+                        (click)="isMenuCollapsed = true; alterarSenha.open(username)">
+                            Alterar Senha
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link text-muted" routerLink="/login"
+                        (click)="isMenuCollapsed = true">Logoff</a>
+                    </li>
+                </div>
+            </ul>
         </ul>
     </div>
 </nav>
+
+<app-alterar-senha #alterarSenha></app-alterar-senha>

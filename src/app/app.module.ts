@@ -22,12 +22,14 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { CadastroComponent } from './usuarios/cadastro/cadastro.component';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { AlterarSenhaComponent } from './shared/components/menu/alterar-senha/alterar-senha.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NotFoundComponent,
     MenuComponent,
+    AlterarSenhaComponent,
   ],
   imports: [
     LandingModule,

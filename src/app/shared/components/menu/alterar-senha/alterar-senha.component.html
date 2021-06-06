@@ -1,0 +1,58 @@
+<ng-template #formulario let-modal class="vw-50">
+
+    <div class="moda-header">
+        <h1 class="modal-title display-4 text-muted text-center">Alterar Senha</h1>
+    </div>
+
+    <div class="modal-body w-100">
+        <form class="needs-validation" [formGroup]="usuario" (ngSubmit)="alterarSenha(usuario.getRawValue())" novalidate>
+            
+            <div class="form-row">
+                <div class="form-group col">
+                    <label class="col-form-label" for="username">Usuário: </label>
+                    <input class="form-control text-center" name="username" type="text" formControlName="username" >
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+                    <label class="col-form-label" for="senha">Senha Atual: </label>
+                    <input class="form-control text-center" name="senha" type="password" 
+                    formControlName="currentPassword" autocomplete="new-password" 
+                    [class.is-invalid]="usuario.get('currentPassword').touched && usuario.get('currentPassword').invalid">
+                    <div *ngIf="usuario.get('currentPassword').errors" class="invalid-feedback">
+                        <div *ngIf="usuario.get('currentPassword').errors.required" >Este campo é obrigatório</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+                    <label class="col-form-label" for="senha">Nova Senha: </label>
+                    <input class="form-control text-center" name="senha" type="password" 
+                    formControlName="newPassword" autocomplete="new-password" 
+                    [class.is-invalid]="usuario.get('newPassword').touched && usuario.get('newPassword').invalid">
+                    <div *ngIf="usuario.get('newPassword').errors" class="invalid-feedback">
+                        <div *ngIf="usuario.get('newPassword').errors.required" >Este campo é obrigatório</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+                    <label class="col-form-label" for="confirmar-senha">Confirmar Senha: </label>
+                    <input class="form-control text-center" name="confirmar-senha" type="password" 
+                    formControlName="confirmPassword" autocomplete="new-password" 
+                    [class.is-invalid]="usuario.get('confirmPassword').touched && usuario.get('confirmPassword').invalid">
+                    <div *ngIf="usuario.get('confirmPassword').errors" class="invalid-feedback">
+                        <div *ngIf="usuario.get('confirmPassword').errors.required" >Este campo é obrigatório</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer mt-2 justify-content-center">
+                <button class="btn btn-success" type="submit">
+                    Salvar  
+                </button>
+                <button class="btn btn-secondary" type="reset" (click)="modal.dismiss()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</ng-template>

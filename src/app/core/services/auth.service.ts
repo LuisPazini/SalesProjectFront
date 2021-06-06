@@ -73,6 +73,10 @@ export class AuthService {
     return this.user.role == Role.TI;
   }
 
+  getUser(): string {
+    return this.user.username;
+  }
+
   private async login(usuario: Usuario): Promise<string> {
     let _token: string;
     await this.contaService.login(usuario).then((response) => {
@@ -84,9 +88,10 @@ export class AuthService {
   }
 
   private getExpirationToken(token: string): Date {
+    debugger
     let _decoded: JwtPayload = jwt_decode(token);
     let _tempo = _decoded.exp!;
-    let _expiracao = new Date(_tempo * 1000);
+    let _expiracao = new Date(_tempo * 1000); // -3597000 para 5segundos de sessão
     
     return _expiracao;
   }
@@ -104,6 +109,8 @@ export class AuthService {
         }, expTime);
       }
     });
+
+    this.sessaoExpiradaSubject.next();
   }
 
   private setUser() {

@@ -23,6 +23,10 @@ export class MenuComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  get username() {
+    return this.authService.getUser();
+  }
+
   isAdministrator(): boolean {
     return this.authService.isUserAdministrator();
   }
