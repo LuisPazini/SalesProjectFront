@@ -28,13 +28,15 @@ export class AlterarSenhaComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  open(username): void {
+  open(username: string): void {
+    this.usuario.reset();
     this.usuario.get('username').setValue(username);
     this.desabilitarCampos();
     this.modalService.open(this.form); 
   }
 
   alterarSenha(usuario): void {
+    this.usuario.markAllAsTouched();
     if(this.usuario.invalid) {
       alert('Um ou mais campos estão inválidos. Favor verifique e tente novamente.');
       return;
