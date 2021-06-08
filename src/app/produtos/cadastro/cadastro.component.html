@@ -77,7 +77,7 @@
                 [disabled]="!edicao">
                     Salvar
                 </button>
-                <button class="btn btn-danger" type="reset" (click)="remover(produto.value)"
+                <button class="btn btn-danger" type="reset" (click)="remover(produto.getRawValue())"
                 [disabled]="!edicao || !produto.get('id')?.value">
                     Remover
                 </button>

@@ -73,7 +73,18 @@ export class CadastroComponent implements OnInit {
   }
 
   remover(cliente: Customer): void {
-    this.clienteService.remover(cliente);
+    debugger
+    this.clienteService.remover(cliente).then(
+      res => {
+        alert("Cliente removido com sucesso!");
+        this.modalService.dismissAll();
+        this.cliente.reset();
+        this.cadastrado.emit();
+      },
+      error => {
+        this.exibirErro(error);
+      }
+    );
   }
 
   open(clienteSelecionado?: Customer, edicao: boolean = false): void {
@@ -84,6 +95,7 @@ export class CadastroComponent implements OnInit {
       this.clienteService.getCliente(clienteSelecionado).then(cliente => {
         cliente.adresses.forEach(() => this.adicionarEndereco());
         cliente.contacts.forEach(() => this.adicionarContato());
+        debugger
         this.cliente.patchValue(cliente);
         this.cliente.patchValue({ opening: moment(cliente.opening).format('YYYY-MM-DD') });
         this.desabilitarCampos();

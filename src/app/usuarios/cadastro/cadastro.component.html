@@ -9,53 +9,82 @@
             
             <div class="form-row">
                 <div class="form-group col">
-                    <label class="col-form-label" for="role">Tipo Usuário: </label>
-                    <ng-select name="role" formControlName="role">
+                    <label class="col-form-label" for="role">Tipo Usuário*: </label>
+                    <ng-select name="role" formControlName="role"
+                    [class.is-invalid]="usuario.get('role').touched && usuario.get('role').invalid">
                         <ng-option *ngFor="let role of roles" [value]="role.id">
                             {{ role.descricao }}
                         </ng-option>
                     </ng-select>
+                    <div *ngIf="usuario.get('role').errors" class="invalid-feedback">
+                        <div *ngIf="usuario.get('role').errors.required" >Este campo é obrigatório</div>
+                    </div>
                 </div>
             </div>
             <div class="form-row">
                 <div *ngIf="usuario.get('role').value == 1" class="form-group col">
-                    <label class="col-form-label" for="cliente">Cliente: </label>
-                    <ng-select name="cliente" formControlName="customerId">
+                    <label class="col-form-label" for="cliente">Cliente*: </label>
+                    <ng-select name="cliente" formControlName="customerId"
+                    [class.is-invalid]="usuario.get('customerId').touched && usuario.get('customerId').invalid">
                         <ng-option *ngFor="let cliente of clientes" [value]="cliente.id">
                             {{ cliente.companyName }}
                         </ng-option>
                     </ng-select>
+                    <div *ngIf="usuario.get('customerId').errors" class="invalid-feedback">
+                        <div *ngIf="usuario.get('customerId').errors.required" >Este campo é obrigatório</div>
+                    </div>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col">
-                    <label class="col-form-label" for="nome">Nome:</label>
-                    <input class="form-control" name="nome" type="text" formControlName="name">
+                    <label class="col-form-label" for="nome">Nome*:</label>
+                    <input class="form-control" name="nome" type="text" formControlName="name"
+                    [class.is-invalid]="usuario.get('name').touched && usuario.get('name').invalid">
+                    <div *ngIf="usuario.get('name').errors" class="invalid-feedback">
+                        <div *ngIf="usuario.get('name').errors.required" >Este campo é obrigatório</div>
+                    </div>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col">
-                    <label class="col-form-label" for="email">E-mail: </label>
-                    <input class="form-control" name="email" type="email" formControlName="email">
+                    <label class="col-form-label" for="email">E-mail*: </label>
+                    <input class="form-control" name="email" type="email" formControlName="email"
+                    [class.is-invalid]="usuario.get('email').touched && usuario.get('email').invalid">
+                    <div *ngIf="usuario.get('email').errors" class="invalid-feedback">
+                        <div *ngIf="usuario.get('email').errors.required" >Este campo é obrigatório</div>
+                    </div>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col">
-                    <label class="col-form-label" for="username">Usuário: </label>
-                    <input class="form-control" name="username" type="text" formControlName="username" autocomplete="new-username" >
+                    <label class="col-form-label" for="username">Usuário*: </label>
+                    <input class="form-control" name="username" type="text" formControlName="username" autocomplete="new-username"
+                    [class.is-invalid]="usuario.get('username').touched && usuario.get('username').invalid">
+                    <div *ngIf="usuario.get('username').errors" class="invalid-feedback">
+                        <div *ngIf="usuario.get('username').errors.required" >Este campo é obrigatório</div>
+                    </div>
                 </div>
             </div>
             <div *ngIf="!usuario.get('id').value">
                 <div class="form-row">
                     <div class="form-group col">
-                        <label class="col-form-label" for="senha">Senha: </label>
-                        <input class="form-control" name="senha" type="password" formControlName="password" autocomplete="new-password" >
+                        <label class="col-form-label" for="senha">Senha*: </label>
+                        <input class="form-control" name="senha" type="password" formControlName="password" autocomplete="new-password"
+                        [class.is-invalid]="usuario.get('password').touched && usuario.get('password').invalid">
+                        <div *ngIf="usuario.get('password').errors" class="invalid-feedback">
+                            <div *ngIf="usuario.get('password').errors.required" >Este campo é obrigatório</div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col">
-                        <label class="col-form-label" for="confirmar-senha">Confirmar Senha: </label>
-                        <input class="form-control" name="confirmar-senha" type="password" formControlName="confirmPassword" autocomplete="new-password" >
+                        <label class="col-form-label" for="confirmar-senha">Confirmar Senha*: </label>
+                        <input class="form-control" name="confirmar-senha" type="password" 
+                        formControlName="confirmPassword" autocomplete="new-password" 
+                        [class.is-invalid]="usuario.get('confirmPassword').touched && usuario.get('confirmPassword').invalid">
+                        <div *ngIf="usuario.get('confirmPassword').errors" class="invalid-feedback">
+                            <div *ngIf="usuario.get('confirmPassword').errors.required" >Este campo é obrigatório</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -65,7 +94,7 @@
                 [disabled]="!edicao">
                     Salvar
                 </button>
-                <button class="btn btn-danger" type="reset" (click)="remover(usuario.value)"
+                <button class="btn btn-danger" type="reset" (click)="remover(usuario.getRawValue())"
                 [disabled]="!edicao || !usuario.get('id').value">
                     Remover
                 </button>

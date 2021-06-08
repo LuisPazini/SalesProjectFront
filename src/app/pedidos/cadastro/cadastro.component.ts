@@ -68,7 +68,6 @@ export class CadastroComponent implements OnInit {
   salvar(pedido: Order): void {
     this.pedido.markAllAsTouched();
     if(this.pedido.invalid) {
-      debugger
       alert('Um ou mais campos de Pedido estão inválidos. Favor verifique e tente novamente.');
       return;
     }
@@ -128,7 +127,16 @@ export class CadastroComponent implements OnInit {
   }
 
   cancelar(pedido: Order): void {
-    this.pedidoService.cancelar(pedido);
+    this.pedidoService.cancelar(pedido).then(
+      res => {
+        alert("Pedido cancelado com sucesso!");
+        this.modalService.dismissAll();
+        this.cadastrado.emit();
+      },
+      error => {
+        this.exibirErro(error);
+      }
+    );
   }
 
   open(pedido?: Order, edicao: boolean = false): void {

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Customer } from 'src/app/shared/models/customer';
@@ -27,11 +27,11 @@ export class CadastroComponent implements OnInit {
   edicao: boolean = false;
 
   usuario = this.formBuilder.group({
-    username: [''],
-    name: [''],
-    email: [''],
-    password: [''],
-    confirmPassword: [''],
+    username: ['', Validators.required],
+    name: ['', Validators.required],
+    email: ['', Validators.required],
+    password: ['', Validators.required],
+    confirmPassword: ['', Validators.required],
     passwordHash: [''],
     role: [''],
     customerId: [''],
@@ -56,6 +56,11 @@ export class CadastroComponent implements OnInit {
   }
 
   cadastrar(usuario: Usuario): void {
+    this.usuario.markAllAsTouched();
+    if(this.usuario.invalid) {
+      alert('Um ou mais campos de Usuário estão inválidos. Favor verifique e tente novamente.');
+      return;
+    }
     this.contaService.cadastrar(usuario).then(
       res => {
         alert("Usuário cadastrado com sucesso!");
@@ -74,7 +79,21 @@ export class CadastroComponent implements OnInit {
   }
 
   remover(usuario: Usuario): void {
-    this.contaService.deletar(usuario);
+    this.contaService.deletar(usuario).then(
+      res => {
+        alert("Usuário removido com sucesso!");
+        this.modalService.dismissAll();
+        this.usuario.reset();
+        this.cadastrado.emit();
+      },
+      error => {
+        console.error("Erro ao remover usuario:\n"
+        + `Status: ${error.error.status}\n` 
+        + `Erro: ${error.error.title} \n`
+        + `${JSON.stringify(error.error, null, 2)}`);
+        alert("Ocorreu um erro ao remover usuario");
+      }
+    );
   }
 
   open(usuario?: Usuario, edicao: boolean = false): void {

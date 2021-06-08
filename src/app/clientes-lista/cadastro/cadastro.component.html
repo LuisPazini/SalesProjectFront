@@ -205,7 +205,7 @@
                 [disabled]="!edicao">
                     Salvar
                 </button>
-                <button class="btn btn-danger" type="reset" (click)="remover(cliente.value)"
+                <button class="btn btn-danger" type="reset" (click)="remover(cliente.getRawValue())"
                 [disabled]="!edicao || !cliente.get('id').value">
                     Remover
                 </button>

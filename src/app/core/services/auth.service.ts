@@ -88,7 +88,6 @@ export class AuthService {
   }
 
   private getExpirationToken(token: string): Date {
-    debugger
     let _decoded: JwtPayload = jwt_decode(token);
     let _tempo = _decoded.exp!;
     let _expiracao = new Date(_tempo * 1000); // -3597000 para 5segundos de sessão

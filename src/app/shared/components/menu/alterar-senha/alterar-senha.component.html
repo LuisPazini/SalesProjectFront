@@ -15,7 +15,7 @@
             </div>
             <div class="form-row">
                 <div class="form-group col">
-                    <label class="col-form-label" for="senha">Senha Atual: </label>
+                    <label class="col-form-label" for="senha">Senha Atual*: </label>
                     <input class="form-control text-center" name="senha" type="password" 
                     formControlName="currentPassword" autocomplete="new-password" 
                     [class.is-invalid]="usuario.get('currentPassword').touched && usuario.get('currentPassword').invalid">
@@ -26,7 +26,7 @@
             </div>
             <div class="form-row">
                 <div class="form-group col">
-                    <label class="col-form-label" for="senha">Nova Senha: </label>
+                    <label class="col-form-label" for="senha">Nova Senha*: </label>
                     <input class="form-control text-center" name="senha" type="password" 
                     formControlName="newPassword" autocomplete="new-password" 
                     [class.is-invalid]="usuario.get('newPassword').touched && usuario.get('newPassword').invalid">
@@ -37,7 +37,7 @@
             </div>
             <div class="form-row">
                 <div class="form-group col">
-                    <label class="col-form-label" for="confirmar-senha">Confirmar Senha: </label>
+                    <label class="col-form-label" for="confirmar-senha">Confirmar Senha*: </label>
                     <input class="form-control text-center" name="confirmar-senha" type="password" 
                     formControlName="confirmPassword" autocomplete="new-password" 
                     [class.is-invalid]="usuario.get('confirmPassword').touched && usuario.get('confirmPassword').invalid">
