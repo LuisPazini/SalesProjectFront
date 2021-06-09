@@ -55,6 +55,7 @@ export class CadastroComponent implements OnInit {
   }
 
   salvar(cliente: Customer): void {
+    this.cliente.markAllAsTouched();
     if(this.cliente.invalid) {
       alert('Um ou mais campos de Cliente estão inválidos. Favor verifique e tente novamente.');
       return;
@@ -67,13 +68,13 @@ export class CadastroComponent implements OnInit {
         this.cadastrado.emit();
       },
       error => {
+        alert("Ocorreu um erro ao cadastrar Cliente. Tente novamente mais tarde.");
         this.exibirErro(error);
       }
     );
   }
 
   remover(cliente: Customer): void {
-    debugger
     this.clienteService.remover(cliente).then(
       res => {
         alert("Cliente removido com sucesso!");
@@ -82,6 +83,7 @@ export class CadastroComponent implements OnInit {
         this.cadastrado.emit();
       },
       error => {
+        alert("Ocorreu um erro ao remover Cliente. Tente novamente mais tarde.");
         this.exibirErro(error);
       }
     );
@@ -95,7 +97,6 @@ export class CadastroComponent implements OnInit {
       this.clienteService.getCliente(clienteSelecionado).then(cliente => {
         cliente.adresses.forEach(() => this.adicionarEndereco());
         cliente.contacts.forEach(() => this.adicionarContato());
-        debugger
         this.cliente.patchValue(cliente);
         this.cliente.patchValue({ opening: moment(cliente.opening).format('YYYY-MM-DD') });
         this.desabilitarCampos();
@@ -130,46 +131,60 @@ export class CadastroComponent implements OnInit {
 
   consultarCNPJ(): void {
     let cnpj = this.cliente.get('cnpj').value;
-    this.clienteService.getClienteByCNPJ(cnpj).then(empresa => {
-      this.cliente.get('companyName').setValue(empresa.nome);
-      this.cliente.get('opening').setValue(moment(empresa.abertura, 'DD/MM/YYYY').format('YYYY-MM-DD'));
-      this.cliente.get('phone').setValue(empresa.telefone.split('/')[0]);
-      this.cliente.get('email').setValue(empresa.email);
-    })
+    this.clienteService.getClienteByCNPJ(cnpj).then(
+      empresa => {
+        this.cliente.get('companyName').setValue(empresa.nome);
+        this.cliente.get('opening').setValue(moment(empresa.abertura, 'DD/MM/YYYY').format('YYYY-MM-DD'));
+        this.cliente.get('phone').setValue(empresa.telefone.split('/')[0]);
+        this.cliente.get('email').setValue(empresa.email);
+      },
+      error => {
+        if(error.status == 404) {
+          alert('Nenhuma empresa encontrada com o CNPJ informado.');
+        }
+      }
+    )
   }
 
   consultarEndereco(index: number): void {
     let endereco = this.addresses.at(index);
-    this.enderecoService.getEnderecoCompleto(endereco.get('zipCode').value).then(zip => {
-      endereco.get('neighborhood').setValue(zip.district);
-      endereco.get('street').setValue(zip.address);
-      endereco.get('city').setValue(zip.city);
-      endereco.get('state').setValue(zip.state);
-    });
+    this.enderecoService.getEnderecoCompleto(endereco.get('zipCode').value).then(
+      zip => {
+        endereco.get('neighborhood').setValue(zip.district);
+        endereco.get('street').setValue(zip.address);
+        endereco.get('city').setValue(zip.city);
+        endereco.get('state').setValue(zip.state);
+      },
+      error => {
+        if(error.status == 404) {
+          alert('Nenhuma endereço encontrado com o CEP informado.');
+        }
+      }
+    );
   }
 
   private novoEndereco(): FormGroup {
     return this.formBuilder.group({
       id: [''],
-      description: [''],
-      zipCode: [''],
-      type: [''],
-      street: [''],
-      number: [''],
-      neighborhood: [''],
-      city: [''],
-      state: ['']
+      description: ['', Validators.required],
+      zipCode: ['', Validators.required],
+      type: ['', Validators.required],
+      street: ['', Validators.required],
+      number: ['', Validators.required],
+      neighborhood: ['', Validators.required],
+      city: ['', Validators.required],
+      state: ['', Validators.required]
     })
   }
 
   private novoContato(): FormGroup {
     return this.formBuilder.group({
       id: [''],
-      firstName: [''],
-      lastName: [''],
-      email: [''],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', Validators.required],
       whatsApp: [''],
-      phone: ['']
+      phone: ['', Validators.required]
     })
   }
 

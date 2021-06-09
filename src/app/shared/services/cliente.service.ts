@@ -34,7 +34,6 @@ export class ClienteService {
   }
 
   remover(cliente: Customer): Promise<void> {
-    debugger
     return this.httpClient.delete<void>(`${this.clienteUrl}/${cliente.id}`).toPromise();
   }
 

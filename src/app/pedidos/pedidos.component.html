@@ -83,7 +83,7 @@
         <div class="card-body card-text px-5">
             <p class="font-weight-bold mb-0">Data de Emissão: </p><p>{{ pedido.postingDate | date: 'dd/MM/yyyy' }}</p>
             <p class="font-weight-bold mb-0">Data de Entrega: </p><p>{{ pedido.deliveryDate | date: 'dd/MM/yyyy' }}</p>
-            <p class="font-weight-bold mb-0">Qtde Itens: </p><p>{{ pedido.orderLines.length }}</p>
+            <p class="font-weight-bold mb-0">Qtde Itens: </p><p>{{ pedido.orderLines.length | number }}</p>
             <p class="font-weight-bold mb-0">Status: </p>
             <p class="badge"
             [class.badge-warning]="pedido.status == 1"

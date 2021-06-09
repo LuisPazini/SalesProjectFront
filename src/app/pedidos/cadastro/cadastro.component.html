@@ -23,7 +23,7 @@
                 <div class="form-group col-lg-2">
                     <label class="col-form-label" for="data-emissao">Data de Emissão: </label>
                     <input class="form-control text-center" name="data-emissao" type="date" formControlName="postingDate"
-                    [value]="hoje">
+                    [value]="hoje" [attr.disabled]="true">
                 </div>
                 <div class="form-group col-lg-2">
                     <label class="col-form-label" for="data-entrega">Data de Entrega*: </label>
@@ -84,12 +84,12 @@
                                     <div class="form-group col">
                                         <label class="col-form-label" for="valor-unitario">Valor Unitário</label>
                                         <input class="form-control" name="valor-unitario" type="text" prefix="R$ " thousandSeparator="."
-                                        mask="separator.2" decimalMarker="," formControlName="unitaryPrice">
+                                        mask="separator" decimalMarker="," formControlName="unitaryPrice" [attr.disabled]="true">
                                     </div>
                                     <div class="form-group col">
                                         <label class="col-form-label" for="custos-adicionais">Custos Adicionais</label>
                                         <input class="form-control" name="custos-adicionais" type="text" prefix="R$ " thousandSeparator="."
-                                        mask="separator.2" decimalMarker="," formControlName="additionalCosts" >
+                                        mask="separator" decimalMarker="," formControlName="additionalCosts" [attr.disabled]="true">
                                     </div>
                                 </div>
                             </div>
@@ -132,8 +132,8 @@
                     Baixar Nota Fiscal
                 </button>
                 <button class="btn btn-danger" type="reset" (click)="cancelar(pedido.getRawValue())"
-                [disabled]="!edicao || isNovoPedido()">
-                    Remover
+                [disabled]="!edicao || isNovoPedido() || isPedidoCancelado()">
+                    Cancelar
                 </button>
                 <button class="btn btn-warning" type="reset"
                 [disabled]="!pedido.dirty || pedido.get('cnpj')?.disabled">

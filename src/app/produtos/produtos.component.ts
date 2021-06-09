@@ -55,10 +55,18 @@ export class ProdutosComponent implements OnInit {
 
   popularListaProdutosByCliente(): void {
     if(this.clienteSelecionado) {
-      this.produtoService.getByCliente(this.clienteSelecionado.id).then(produtos => {
-        this.produtos = produtos;
-        this.produtosFiltrados = produtos;
-      })
+      this.produtoService.getByCliente(this.clienteSelecionado.id).then(
+        produtos => {
+          this.produtos = produtos;
+          this.produtosFiltrados = produtos;
+        },
+        error => {
+          if(error.status == 404) {
+            this.notFoundText = `Não foram encontrador produtos para o cliente "${this.clienteSelecionado.companyName}"`;
+            this.limparListaProdutos();
+          }
+        }
+      )
     } else {
       this.limparListaProdutos();
       this.notFoundText = "Digite ao menos 3 caracteres do nome de produto ou selecione um cliente";

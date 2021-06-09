@@ -22,7 +22,7 @@
     </div>
 </div>
 
-<app-cadastro #formulario (cadastrado)="filtrarProdutos(inpNomeProduto.value)" ></app-cadastro>
+<app-cadastro #formulario (cadastrado)="popularListaProdutosByCliente(); filtrarProdutos(inpNomeProduto.value)" ></app-cadastro>
     
 <table class="table table-hover">
     <thead class="text-center thead-cinza">
@@ -41,8 +41,8 @@
             <td>{{ produto.ncmCode | mask: '0000.00.00' }}</td>
             <td>{{ produto.name }}</td>
             <td>{{ produto.customerId | cliente: clientes }}</td>
-            <td>{{ produto.combinedQuantity }}</td>
-            <td>R$ {{ produto.combinedPrice | moedaBr }}</td>
+            <td>{{ produto.combinedQuantity | number }} un.</td>
+            <td>{{ produto.combinedPrice | currency: undefined:undefined:'.2-4' }}</td>
             <td>{{ produto.details }}</td>
             <td><button class="btn btn-info" (click)="formulario.open(produto)" >Visualizar</button>
             <button class="btn btn-warning" (click)="formulario.open(produto, true); formulario.edicao = true" >Editar</button></td>
@@ -60,8 +60,8 @@
         <div class="card-body card-text px-5">
             <p class="font-weight-bold mb-0">Código NCM: </p><p>{{ produto.ncmCode | mask: '0000.00.00' }}</p>
             <p class="font-weight-bold mb-0">Cliente: </p><p>{{ produto.customerId | cliente: clientes }}</p>
-            <p class="font-weight-bold mb-0">Consumo Mensal: </p><p>{{ produto.combinedQuantity }}</p>
-            <p class="font-weight-bold mb-0">Valor: </p><p>{{ produto.combinedPrice  | moedaBr }}</p>
+            <p class="font-weight-bold mb-0">Consumo Mensal: </p><p>{{ produto.combinedQuantity | number }}</p>
+            <p class="font-weight-bold mb-0">Valor: </p><p>{{ produto.combinedPrice | currency: undefined:undefined:'.2-4' }}</p>
             <p class="font-weight-bold mb-0">Detalhes: </p><p>{{ produto.details }}</p>
         </div>
         <div class="card-footer align-content-around">

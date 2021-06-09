@@ -79,6 +79,7 @@ export class CadastroComponent implements OnInit {
         this.cadastrado.emit();
       },
       error => {
+        alert("Ocorreu um erro ao cadastrar Pedido. Tente novamente mais tarde.");
         this.exibirErro(error);
       }
     );
@@ -94,6 +95,7 @@ export class CadastroComponent implements OnInit {
         this.cadastrado.emit();
       },
       error => {
+        alert("Ocorreu um erro ao aprovar Pedido. Tente novamente mais tarde.");
         this.exibirErro(error);
       }
     );
@@ -111,11 +113,13 @@ export class CadastroComponent implements OnInit {
             this.cadastrado.emit();
           },
           error => {
+            alert("Ocorreu um erro ao emitir Nota Fiscal. Tente novamente mais tarde.");
             this.exibirErro(error);
           }
         );
       },
       error => {
+        alert("Ocorreu um erro ao gerar Nota Fiscal. Tente novamente mais tarde.");
         this.exibirErro(error);
       }
     );
@@ -134,6 +138,7 @@ export class CadastroComponent implements OnInit {
         this.cadastrado.emit();
       },
       error => {
+        alert("Ocorreu um erro ao cancelar Pedido. Tente novamente mais tarde.");
         this.exibirErro(error);
       }
     );
@@ -242,7 +247,6 @@ export class CadastroComponent implements OnInit {
       }
     } else {
       this.pedido.enable();
-      this.pedido.get('postingDate').disable();
     }
   }
 

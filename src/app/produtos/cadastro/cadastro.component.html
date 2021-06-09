@@ -52,7 +52,7 @@
                 <div class="form-group col-md-6">
                     <label class="col-form-label" for="valor">Valor*: </label>
                     <input class="form-control" name="valor" type="text"
-                    formControlName="combinedPrice" prefix="R$ " mask="0*,0*" thousandSeparator="." decimalMarker=","
+                    formControlName="combinedPrice" prefix="R$ " mask="separator" thousandSeparator="." decimalMarker=','
                     [class.is-invalid]="produto.get('combinedPrice').touched && produto.get('combinedPrice').invalid" >
                     <div *ngIf="produto.get('combinedPrice').errors" class="invalid-feedback">
                         <div *ngIf="produto.get('combinedPrice').errors.required" >Este campo é obrigatório</div>
@@ -61,7 +61,7 @@
                 <div class="form-group col-md-6">
                     <label class="col-form-label" for="custos-adicionais">Custos Adicionais: </label>
                     <input class="form-control" name="custos-adicionais" type="text"
-                    formControlName="additionalCosts" prefix="R$ " mask="0*,0*" thousandSeparator="." decimalMarker="," >
+                    formControlName="additionalCosts" prefix="R$ " mask="separator" thousandSeparator="." decimalMarker="," >
                 </div>
             </div>
             <div class="form-row">
