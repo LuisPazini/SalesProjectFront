@@ -21,6 +21,7 @@ import { LandingModule } from './shared/components/login/landing.module';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { AlterarSenhaComponent } from './shared/components/menu/alterar-senha/alterar-senha.component';
+import { AjudaComponent } from './shared/components/ajuda/ajuda.component';
 
 registerLocaleData(localePt, 'pt-BR');
 @NgModule({

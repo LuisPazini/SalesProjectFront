@@ -7,5 +7,7 @@
 
     <!-- <div class="mt-3 text-center ml-3"><a href="#">Esqueci minha senha</a></div>
     <div class="mt-1 text-center ml-3"><a class="link-primary" (click)="irParaCadastro()" >Cadastre-se</a></div> -->
-    <div class="mt-3 text-center ml-3"><a href="#">Ajuda</a></div>
+    <div class="mt-3 text-center ml-3"><a (click)="ajuda.open()">Ajuda</a></div>
 </form>
+
+<app-ajuda #ajuda ></app-ajuda>
