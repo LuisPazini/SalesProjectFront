@@ -76,12 +76,12 @@ export class CadastroComponent implements OnInit {
     this.converterCamposNumber();
     this.pedidoService.salvar(pedido).then(
       res => {
-        alert("Pedido salvo com sucesso!");
+        alert(`Pedido ${this.isNovoPedido() ? 'cadastrado' : 'editado'} com sucesso!`);
         this.modalService.dismissAll();
         this.cadastrado.emit();
       },
       error => {
-        alert("Ocorreu um erro ao salvar Pedido. Tente novamente mais tarde.");
+        alert(`Ocorreu um erro ao ${this.isNovoPedido() ? 'cadastrar' : 'editar'} Pedido. Tente novamente mais tarde.`);
         this.exibirErro(error);
       }
     );
@@ -163,7 +163,7 @@ export class CadastroComponent implements OnInit {
       this.pedido.get('postingDate').setValue(this.hoje);
       this.adicionarItem();
     }
-    if(this.isPedidoAprovado() || this.isPedidoFaturado()) {
+    if(this.isPedidoAprovado() || this.isPedidoFaturado() || this.isPedidoCancelado()) {
       this.edicao = false;
     }
     if(this.authService.isUserCustomer()) {
@@ -220,6 +220,10 @@ export class CadastroComponent implements OnInit {
 
   isPedidoCancelado(): boolean {
     return this.pedido.get('status').value == StatusPedido.CANCELADO;
+  }
+
+  totalPedido(): number {
+    return 1000;
   }
 
   private novoItem(): FormGroup {
