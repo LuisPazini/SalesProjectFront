@@ -76,12 +76,12 @@ export class CadastroComponent implements OnInit {
     this.converterCamposNumber();
     this.pedidoService.salvar(pedido).then(
       res => {
-        alert("Pedido cadastrado com sucesso!");
+        alert("Pedido salvo com sucesso!");
         this.modalService.dismissAll();
         this.cadastrado.emit();
       },
       error => {
-        alert("Ocorreu um erro ao cadastrar Pedido. Tente novamente mais tarde.");
+        alert("Ocorreu um erro ao salvar Pedido. Tente novamente mais tarde.");
         this.exibirErro(error);
       }
     );

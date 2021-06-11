@@ -115,9 +115,9 @@
             </div>
 
             <div class="modal-footer mt-2 justify-content-center">
-                <button class="btn btn-primary" *ngIf="isNovoPedido()" type="submit"
-                [disabled]="!edicao">
-                    Cadastrar Pedido
+                <button class="btn btn-primary" *ngIf="isNovoPedido() || isPedidoAberto()" type="submit"
+                [disabled]="!edicao && !isNovoPedido() && !isPedidoAberto()">
+                    {{ isNovoPedido()? 'Cadastrar':'Salvar' }} Pedido
                 </button>
                 <button class="btn btn-success" *ngIf="isPedidoAberto()" type="button"
                 (click)="aprovarPedido(pedido.getRawValue())" [disabled]="!edicao">
