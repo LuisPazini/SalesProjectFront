@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import * as moment from 'moment';
+import { AuthService } from '../core/services/auth.service';
 
 import { MenuComponent } from '../shared/components/menu/menu.component';
 import { STATUS_PEDIDO } from '../shared/consts/status-pedido.const';
@@ -38,7 +39,8 @@ export class PedidosComponent implements OnInit {
 
   constructor(
     private pedidoService: PedidoService,
-    private clienteService: ClienteService
+    private clienteService: ClienteService,
+    private authService: AuthService
   ) { 
     MenuComponent.toggleExibirMenu.next(true);
   }
@@ -46,7 +48,10 @@ export class PedidosComponent implements OnInit {
   ngOnInit(): void {
     this.popularListaPedidos();
     this.popularListaClientes();
-    console.log('a')
+    if(this.authService.isUserCustomer()) {
+      this.cliente.id = this.authService.getCustomer();
+      console.log(this.cliente)
+    }
   }
 
   popularListaPedidos(): void {

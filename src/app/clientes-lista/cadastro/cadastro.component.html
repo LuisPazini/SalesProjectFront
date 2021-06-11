@@ -81,47 +81,79 @@
                             <div class="col-md-10" [class.col-md-12]="!edicao">
                                 <div class="form-row">
                                     <div class="form-group col-md-8">
-                                        <label class="col-form-label" for="descricao">Descrição: </label>
+                                        <label class="col-form-label" for="descricao">Descrição*: </label>
                                         <input class="form-control" name="descricao" type="text"
-                                        formControlName="description" maxlength="100">
+                                        formControlName="description" maxlength="100"
+                                        [class.is-invalid]="endereco.get('description').touched && endereco.get('description').invalid">
+                                        <div *ngIf="endereco.get('description').errors" class="invalid-feedback">
+                                            <div *ngIf="endereco.get('description').errors.required" >Este campo é obrigatório</div>
+                                        </div>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label class="col-form-label" for="cep">CEP: </label>
+                                        <label class="col-form-label" for="cep">CEP*: </label>
                                         <input class="form-control" name="cep" type="text" mask="00.000-000"
                                         (change)="consultarEndereco(i)" 
-                                        formControlName="zipCode">
+                                        formControlName="zipCode"
+                                        [class.is-invalid]="endereco.get('zipCode').touched && endereco.get('zipCode').invalid">
+                                        <div *ngIf="endereco.get('zipCode').errors" class="invalid-feedback">
+                                            <div *ngIf="endereco.get('zipCode').errors.required" >Este campo é obrigatório</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-3">
-                                        <label class="col-form-label" for="tipo">Tipo: </label>
-                                        <ng-select name="tipo" formControlName="type">
+                                        <label class="col-form-label" for="tipo">Tipo*: </label>
+                                        <ng-select name="tipo" formControlName="type"
+                                        [class.is-invalid]="endereco.get('type').touched && endereco.get('type').invalid">
                                             <ng-option *ngFor="let tipoEndereco of tiposEndereco" [value]="tipoEndereco.id">
                                                 {{ tipoEndereco.tipo }}
                                             </ng-option>
                                         </ng-select>
+                                        <div *ngIf="endereco.get('type').errors" class="invalid-feedback">
+                                            <div *ngIf="endereco.get('type').errors.required" >Este campo é obrigatório</div>
+                                        </div>
                                     </div>
                                     <div class="form-group col-md-7">
-                                        <label class="col-form-label" for="rua">Rua: </label>
-                                        <input class="form-control" name="rua" type="text" formControlName="street" maxlength="120">
+                                        <label class="col-form-label" for="rua">Rua*: </label>
+                                        <input class="form-control" name="rua" type="text" formControlName="street" maxlength="120"
+                                        [class.is-invalid]="endereco.get('street').touched && endereco.get('street').invalid">
+                                        <div *ngIf="endereco.get('street').errors" class="invalid-feedback">
+                                            <div *ngIf="endereco.get('street').errors.required" >Este campo é obrigatório</div>
+                                        </div>
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label class="col-form-label" for="numero">Número: </label>
-                                        <input class="form-control" name="numero" type="number" formControlName="number">
+                                        <label class="col-form-label" for="numero">Número*: </label>
+                                        <input class="form-control" name="numero" type="number" formControlName="number"
+                                        [class.is-invalid]="endereco.get('number').touched && endereco.get('number').invalid">
+                                        <div *ngIf="endereco.get('number').errors" class="invalid-feedback">
+                                            <div *ngIf="endereco.get('number').errors.required" >Este campo é obrigatório</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-5">
-                                        <label class="col-form-label" for="bairro">Bairro: </label>
-                                        <input class="form-control" name="bairro" type="text" formControlName="neighborhood" maxlength="30">
+                                        <label class="col-form-label" for="bairro">Bairro*: </label>
+                                        <input class="form-control" name="bairro" type="text" formControlName="neighborhood" maxlength="30"
+                                        [class.is-invalid]="endereco.get('neighborhood').touched && endereco.get('neighborhood').invalid">
+                                        <div *ngIf="endereco.get('neighborhood').errors" class="invalid-feedback">
+                                            <div *ngIf="endereco.get('neighborhood').errors.required" >Este campo é obrigatório</div>
+                                        </div>
                                     </div>
                                     <div class="form-group col-md-5">
-                                        <label class="col-form-label" for="cidade">Cidade: </label>
-                                        <input class="form-control" name="cidade" type="text" formControlName="city" maxlength="20">
+                                        <label class="col-form-label" for="cidade">Cidade*: </label>
+                                        <input class="form-control" name="cidade" type="text" formControlName="city" maxlength="20"
+                                        [class.is-invalid]="endereco.get('city').touched && endereco.get('city').invalid">
+                                        <div *ngIf="endereco.get('city').errors" class="invalid-feedback">
+                                            <div *ngIf="endereco.get('city').errors.required" >Este campo é obrigatório</div>
+                                        </div>
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label class="col-form-label" for="estado">Estado: </label>
-                                        <input class="form-control" name="estado" type="text" formControlName="state" maxlength="2">
+                                        <label class="col-form-label" for="estado">Estado*: </label>
+                                        <input class="form-control" name="estado" type="text" formControlName="state" maxlength="2"
+                                        [class.is-invalid]="endereco.get('state').touched && endereco.get('state').invalid">
+                                        <div *ngIf="endereco.get('state').errors" class="invalid-feedback">
+                                            <div *ngIf="endereco.get('state').errors.required" >Este campo é obrigatório</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -156,21 +188,33 @@
                             <div class="col-md-10" [class.col-md-12]="!edicao">
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label class="col-form-label" for="nome">Nome: </label>
+                                        <label class="col-form-label" for="nome">Nome*: </label>
                                         <input class="form-control" name="nome" type="text"
-                                        formControlName="firstName" maxlength="20">
+                                        formControlName="firstName" maxlength="20"
+                                        [class.is-invalid]="contato.get('firstName').touched && contato.get('firstName').invalid">
+                                        <div *ngIf="contato.get('firstName').errors" class="invalid-feedback">
+                                            <div *ngIf="contato.get('firstName').errors.required" >Este campo é obrigatório</div>
+                                        </div>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label class="col-form-label" for="sobrenome">Sobrenome: </label>
+                                        <label class="col-form-label" for="sobrenome">Sobrenome*: </label>
                                         <input class="form-control" name="sobrenome" type="text"
-                                        formControlName="lastName" maxlength="20">
+                                        formControlName="lastName" maxlength="20"
+                                        [class.is-invalid]="contato.get('lastName').touched && contato.get('lastName').invalid">
+                                        <div *ngIf="contato.get('lastName').errors" class="invalid-feedback">
+                                            <div *ngIf="contato.get('lastName').errors.required" >Este campo é obrigatório</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
-                                        <label class="col-form-label" for="email">E-mail: </label>
+                                        <label class="col-form-label" for="email">E-mail*: </label>
                                         <input class="form-control" name="email" type="email" formControlName="email"
-                                        maxlength="50">
+                                        maxlength="50"
+                                        [class.is-invalid]="contato.get('email').touched && contato.get('email').invalid">
+                                        <div *ngIf="contato.get('email').errors" class="invalid-feedback">
+                                            <div *ngIf="contato.get('email').errors.required" >Este campo é obrigatório</div>
+                                        </div>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="col-form-label" for="whatsapp">WhatsApp: </label>
@@ -178,9 +222,13 @@
                                          formControlName="whatsApp">
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label class="col-form-label" for="telefone">Telefone: </label>
+                                        <label class="col-form-label" for="telefone">Telefone*: </label>
                                         <input class="form-control" name="telefone" type="tel"  mask="(00) 0000-0000 || (00) 0 0000-0000"
-                                        formControlName="phone">
+                                        formControlName="phone"
+                                        [class.is-invalid]="contato.get('phone').touched && contato.get('phone').invalid">
+                                        <div *ngIf="contato.get('phone').errors" class="invalid-feedback">
+                                            <div *ngIf="contato.get('phone').errors.required" >Este campo é obrigatório</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

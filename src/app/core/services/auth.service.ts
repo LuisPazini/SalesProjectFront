@@ -13,6 +13,7 @@ import { AccountService } from 'src/app/shared/services/account.service';
 export class AuthService {
 
   key = 'Authorization';
+  clientekey = 'user'
 
   token: string;
   user: Usuario = {} as Usuario;
@@ -42,6 +43,10 @@ export class AuthService {
 
   getToken(): string | null {
     return sessionStorage.getItem(this.key);
+  }
+
+  getCustomer(): string | null {
+    return sessionStorage.getItem('user');
   }
 
   removerToken(): void {
@@ -79,11 +84,16 @@ export class AuthService {
 
   private async login(usuario: Usuario): Promise<string> {
     let _token: string;
+    let cliente: string;
     await this.contaService.login(usuario).then((response) => {
       _token = response.token;
       this.user = response.user;
+      cliente = response.user.customerId;
     });
     sessionStorage.setItem(this.key, _token);
+    if(cliente) {
+      sessionStorage.setItem(this.clientekey, cliente);
+    }
     return _token;
   }
 

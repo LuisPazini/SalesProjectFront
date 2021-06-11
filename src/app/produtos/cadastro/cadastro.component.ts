@@ -46,9 +46,7 @@ export class CadastroComponent implements OnInit {
   }
 
   salvar(produto: Product): void {
-    console.log(produto.combinedPrice)
     this.converterCamposNumber(produto);
-    console.log(produto.combinedPrice)
     this.produtoService.salvar(produto).then(
       res => {
         alert("Produto cadastrado com sucesso!");
@@ -87,7 +85,7 @@ export class CadastroComponent implements OnInit {
   open(produto?: Product, edicao: boolean = false): void {
     this.edicao = edicao;
     if(produto) {
-      this.produto.setValue(produto);
+      this.produto.patchValue(produto);
     }
     this.modalService.open(this.form, { size: 'lg' });
     this.desabilitarCampos();
