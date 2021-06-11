@@ -20,7 +20,7 @@
                 <div class="form-group col">
                     <label class="col-form-label" for="nome">Nome Cliente*:</label>
                     <input class="form-control" name="nome" type="text" formControlName="companyName"
-                    [class.is-invalid]="cliente.get('companyName').touched && cliente.get('companyName').invalid">
+                    [class.is-invalid]="cliente.get('companyName').touched && cliente.get('companyName').invalid" maxlength="100">
                     <div *ngIf="cliente.get('companyName').errors" class="invalid-feedback">
                         <div *ngIf="cliente.get('companyName').errors.required" >Este campo é obrigatório</div>
                     </div>
@@ -47,7 +47,7 @@
                 <div class="form-group col-md-5">
                     <label class="col-form-label" for="email">E-mail*: </label>
                     <input class="form-control" name="email" type="email" formControlName="email"
-                    [class.is-invalid]="cliente.get('email').touched && cliente.get('email').invalid">
+                    [class.is-invalid]="cliente.get('email').touched && cliente.get('email').invalid" maxlength="50">
                     <div *ngIf="cliente.get('email').errors" class="invalid-feedback">
                         <div *ngIf="cliente.get('email').errors.required" >Este campo é obrigatório</div>
                     </div>
@@ -57,14 +57,14 @@
                 <div class="form-group col-md-6">
                     <label class="col-form-label" for="registro-estadual">Inscrição Estadual*: </label>
                     <input class="form-control" name="registro-estadual" type="text" formControlName="stateRegistration"
-                    [class.is-invalid]="cliente.get('stateRegistration').touched && cliente.get('stateRegistration').invalid">
+                    [class.is-invalid]="cliente.get('stateRegistration').touched && cliente.get('stateRegistration').invalid" maxlength="30">
                     <div *ngIf="cliente.get('stateRegistration').errors" class="invalid-feedback">
                         <div *ngIf="cliente.get('stateRegistration').errors.required" >Este campo é obrigatório</div>
                     </div>
                 </div>
                 <div class="form-group col-md-6">
                     <label class="col-form-label" for="registro-municipal">Inscrição Municipal: </label>
-                    <input class="form-control" name="registro-municipal" type="text" formControlName="municipalRegistration">
+                    <input class="form-control" name="registro-municipal" type="text" formControlName="municipalRegistration" maxlength="30">
                 </div>
             </div>
 
@@ -83,7 +83,7 @@
                                     <div class="form-group col-md-8">
                                         <label class="col-form-label" for="descricao">Descrição: </label>
                                         <input class="form-control" name="descricao" type="text"
-                                        formControlName="description">
+                                        formControlName="description" maxlength="100">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="col-form-label" for="cep">CEP: </label>
@@ -103,7 +103,7 @@
                                     </div>
                                     <div class="form-group col-md-7">
                                         <label class="col-form-label" for="rua">Rua: </label>
-                                        <input class="form-control" name="rua" type="text" formControlName="street">
+                                        <input class="form-control" name="rua" type="text" formControlName="street" maxlength="120">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="col-form-label" for="numero">Número: </label>
@@ -113,15 +113,15 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-5">
                                         <label class="col-form-label" for="bairro">Bairro: </label>
-                                        <input class="form-control" name="bairro" type="text" formControlName="neighborhood">
+                                        <input class="form-control" name="bairro" type="text" formControlName="neighborhood" maxlength="30">
                                     </div>
                                     <div class="form-group col-md-5">
                                         <label class="col-form-label" for="cidade">Cidade: </label>
-                                        <input class="form-control" name="cidade" type="text" formControlName="city">
+                                        <input class="form-control" name="cidade" type="text" formControlName="city" maxlength="20">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label class="col-form-label" for="estado">Estado: </label>
-                                        <input class="form-control" name="estado" type="text" formControlName="state">
+                                        <input class="form-control" name="estado" type="text" formControlName="state" maxlength="2">
                                     </div>
                                 </div>
                             </div>
@@ -158,18 +158,19 @@
                                     <div class="form-group col-md-6">
                                         <label class="col-form-label" for="nome">Nome: </label>
                                         <input class="form-control" name="nome" type="text"
-                                        formControlName="firstName">
+                                        formControlName="firstName" maxlength="20">
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="col-form-label" for="sobrenome">Sobrenome: </label>
                                         <input class="form-control" name="sobrenome" type="text"
-                                        formControlName="lastName">
+                                        formControlName="lastName" maxlength="20">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label class="col-form-label" for="email">E-mail: </label>
-                                        <input class="form-control" name="email" type="email" formControlName="email">
+                                        <input class="form-control" name="email" type="email" formControlName="email"
+                                        maxlength="50">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="col-form-label" for="whatsapp">WhatsApp: </label>

@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/cor
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { StatusPedido } from 'src/app/shared/enums/status-pedido.enum';
 import { Customer } from 'src/app/shared/models/customer';
 import { Order } from 'src/app/shared/models/order';
@@ -51,7 +52,8 @@ export class CadastroComponent implements OnInit {
     private produtoService: ProdutoService,
     private notaFiscalService: NotaFiscalService,
     private formBuilder: FormBuilder,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -163,6 +165,9 @@ export class CadastroComponent implements OnInit {
     }
     if(this.isPedidoAprovado() || this.isPedidoFaturado()) {
       this.edicao = false;
+    }
+    if(this.authService.isUserCustomer()) {
+      this.pedido.get('customerId').disable();
     }
     this.modalService.open(this.form, { size: 'xl' });
     this.desabilitarCampos();

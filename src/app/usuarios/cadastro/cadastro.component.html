@@ -5,7 +5,7 @@
     </div>
 
     <div class="modal-body w-100">
-        <form class="needs-validation" [formGroup]="usuario" (ngSubmit)="cadastrar(usuario.getRawValue())" novalidate>
+        <form class="needs-validation" [formGroup]="usuario" (ngSubmit)="cadastrar(usuario.getRawValue())" autocomplete="off" novalidate>
             
             <div class="form-row">
                 <div class="form-group col">
@@ -39,7 +39,7 @@
                 <div class="form-group col">
                     <label class="col-form-label" for="nome">Nome*:</label>
                     <input class="form-control" name="nome" type="text" formControlName="name"
-                    [class.is-invalid]="usuario.get('name').touched && usuario.get('name').invalid">
+                    [class.is-invalid]="usuario.get('name').touched && usuario.get('name').invalid" maxlength="50">
                     <div *ngIf="usuario.get('name').errors" class="invalid-feedback">
                         <div *ngIf="usuario.get('name').errors.required" >Este campo é obrigatório</div>
                     </div>
@@ -49,7 +49,7 @@
                 <div class="form-group col">
                     <label class="col-form-label" for="email">E-mail*: </label>
                     <input class="form-control" name="email" type="email" formControlName="email"
-                    [class.is-invalid]="usuario.get('email').touched && usuario.get('email').invalid">
+                    [class.is-invalid]="usuario.get('email').touched && usuario.get('email').invalid" maxlength="50">
                     <div *ngIf="usuario.get('email').errors" class="invalid-feedback">
                         <div *ngIf="usuario.get('email').errors.required" >Este campo é obrigatório</div>
                     </div>
@@ -59,7 +59,7 @@
                 <div class="form-group col">
                     <label class="col-form-label" for="username">Usuário*: </label>
                     <input class="form-control" name="username" type="text" formControlName="username" autocomplete="new-username"
-                    [class.is-invalid]="usuario.get('username').touched && usuario.get('username').invalid">
+                    [class.is-invalid]="usuario.get('username').touched && usuario.get('username').invalid" maxlength="50">
                     <div *ngIf="usuario.get('username').errors" class="invalid-feedback">
                         <div *ngIf="usuario.get('username').errors.required" >Este campo é obrigatório</div>
                     </div>
@@ -70,7 +70,7 @@
                     <div class="form-group col">
                         <label class="col-form-label" for="senha">Senha*: </label>
                         <input class="form-control" name="senha" type="password" formControlName="password" autocomplete="new-password"
-                        [class.is-invalid]="usuario.get('password').touched && usuario.get('password').invalid">
+                        [class.is-invalid]="usuario.get('password').touched && usuario.get('password').invalid" maxlength="20">
                         <div *ngIf="usuario.get('password').errors" class="invalid-feedback">
                             <div *ngIf="usuario.get('password').errors.required" >Este campo é obrigatório</div>
                         </div>
@@ -82,7 +82,7 @@
                         <input class="form-control" name="confirmar-senha" type="password" 
                         formControlName="confirmPassword" autocomplete="new-password" 
                         [class.is-invalid]="usuario.get('confirmPassword').touched && usuario.get('confirmPassword').invalid">
-                        <div *ngIf="usuario.get('confirmPassword').errors" class="invalid-feedback">
+                        <div *ngIf="usuario.get('confirmPassword').errors" class="invalid-feedback" maxlength="20">
                             <div *ngIf="usuario.get('confirmPassword').errors.required" >Este campo é obrigatório</div>
                         </div>
                     </div>

@@ -1,8 +1,9 @@
 // retorno da ApiCep
 export interface Zip {
-    code: string,
-    state: string,
-    city: string,
-    district: string,
-    address: string
+    cep: string,
+    logradouro: string,
+    bairro: string,
+    localidade: string,
+    uf: string,
+    ibge: string
 }

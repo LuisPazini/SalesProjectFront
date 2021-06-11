@@ -46,6 +46,7 @@ export class PedidosComponent implements OnInit {
   ngOnInit(): void {
     this.popularListaPedidos();
     this.popularListaClientes();
+    console.log('a')
   }
 
   popularListaPedidos(): void {

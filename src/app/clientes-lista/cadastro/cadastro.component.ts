@@ -60,6 +60,7 @@ export class CadastroComponent implements OnInit {
       alert('Um ou mais campos de Cliente estão inválidos. Favor verifique e tente novamente.');
       return;
     };
+    console.log(cliente)
     this.clienteService.salvar(cliente).then(
       res => {
         alert("Cliente cadastrado com sucesso!");
@@ -141,6 +142,8 @@ export class CadastroComponent implements OnInit {
       error => {
         if(error.status == 404) {
           alert('Nenhuma empresa encontrada com o CNPJ informado.');
+        } else {
+          alert('Ocorreu um erro ao consultar CNPJ');
         }
       }
     )
@@ -150,14 +153,18 @@ export class CadastroComponent implements OnInit {
     let endereco = this.addresses.at(index);
     this.enderecoService.getEnderecoCompleto(endereco.get('zipCode').value).then(
       zip => {
-        endereco.get('neighborhood').setValue(zip.district);
-        endereco.get('street').setValue(zip.address);
-        endereco.get('city').setValue(zip.city);
-        endereco.get('state').setValue(zip.state);
+        endereco.get('neighborhood').setValue(zip.bairro);
+        endereco.get('street').setValue(zip.logradouro);
+        endereco.get('city').setValue(zip.localidade);
+        endereco.get('state').setValue(zip.uf);
+        endereco.get('codeCity').setValue(zip.ibge);
+        console.log(zip.ibge)
       },
       error => {
         if(error.status == 404) {
           alert('Nenhuma endereço encontrado com o CEP informado.');
+        } else {
+          alert('Ocorreu um erro ao consultar CEP');
         }
       }
     );
@@ -173,7 +180,8 @@ export class CadastroComponent implements OnInit {
       number: ['', Validators.required],
       neighborhood: ['', Validators.required],
       city: ['', Validators.required],
-      state: ['', Validators.required]
+      state: ['', Validators.required],
+      codeCity: ['']
     })
   }
 

@@ -12,7 +12,7 @@
                     <label class="col-form-label" for="nome">Nome Produto*:</label>
                     <input class="form-control" name="nome" type="text" formControlName="name"
                     [class.is-invalid]="produto.get('name').touched && produto.get('name').invalid">
-                    <div *ngIf="produto.get('name').errors" class="invalid-feedback">
+                    <div *ngIf="produto.get('name').errors" class="invalid-feedback" maxlength="50">
                         <div *ngIf="produto.get('name').errors.required" >Este campo é obrigatório</div>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
             <div class="form-row">
                 <div class="form-group col">
                     <label class="col-form-label" for="detalhes">Detalhes: </label>
-                    <textarea class="form-control" name="detalhes" type="text" rows="2"
+                    <textarea class="form-control" name="detalhes" type="text" rows="2" maxlength="500"
                     formControlName="details"></textarea>
                 </div>
             </div>
