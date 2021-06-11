@@ -148,6 +148,7 @@ export class CadastroComponent implements OnInit {
 
   open(pedido?: Order, edicao: boolean = false): void {
     this.edicao = edicao;
+    this.pedido.reset();
     this.orderLines.clear();
     if(pedido) {
       pedido.orderLines.forEach(() => this.adicionarItem());
@@ -223,7 +224,11 @@ export class CadastroComponent implements OnInit {
   }
 
   totalPedido(): number {
-    return 1000;
+    let value = 0;
+    this.orderLines.value.forEach(item => {
+      value += (item.unitaryPrice + item.additionalCosts) * item.quantity;
+    });
+    return value;
   }
 
   private novoItem(): FormGroup {

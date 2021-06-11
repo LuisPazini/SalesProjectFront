@@ -120,7 +120,7 @@
 
             <div class="modal-footer mt-2 justify-content-center">
                 <button class="btn btn-primary" *ngIf="isNovoPedido() || isPedidoAberto()" type="submit"
-                [disabled]="!edicao || !isNovoPedido() || !isPedidoAberto()">
+                [disabled]="!edicao || !isNovoPedido() && !isPedidoAberto()">
                     {{ isNovoPedido()? 'Cadastrar':'Salvar' }} Pedido
                 </button>
                 <button class="btn btn-success" *ngIf="isPedidoAberto()" type="button"
