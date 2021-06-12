@@ -42,6 +42,8 @@ export class CadastroComponent implements OnInit {
     id: [''],
   });
 
+  cliente: Customer;
+
   itens = this.pedido.get('orderLines') as FormArray; 
 
   edicao: boolean = false;
@@ -57,11 +59,7 @@ export class CadastroComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.popularListaClientes().then(() => {
-      if(this.authService.isUserCustomer()) {
-        this.pedido.get('customerId').setValue(this.authService.getCustomer());
-      }
-    });
+    this.popularListaClientes();
     if(!this.isNovoPedido()) {
       this.popularListaProdutos();
     }
@@ -170,6 +168,9 @@ export class CadastroComponent implements OnInit {
     if(this.isPedidoAprovado() || this.isPedidoFaturado() || this.isPedidoCancelado()) {
       this.edicao = false;
     }
+    if(this.authService.isUserCustomer()) {
+      this.pedido.get('customerId').setValue(this.authService.getCustomer());
+    }
     this.modalService.open(this.form, { size: 'xl' });
     this.desabilitarCampos();
   }
@@ -245,8 +246,8 @@ export class CadastroComponent implements OnInit {
     });
   }
 
-  private popularListaClientes(): Promise<void | Customer[]> {
-    return this.clienteService.getAll().then(clientes => 
+  private popularListaClientes(): void {
+    this.clienteService.getAll().then(clientes => 
       this.clientes = clientes
     );
   }

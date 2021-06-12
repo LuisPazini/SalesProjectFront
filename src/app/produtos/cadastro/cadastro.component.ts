@@ -90,6 +90,9 @@ export class CadastroComponent implements OnInit {
     if(produto) {
       this.produto.patchValue(produto);
     }
+    if(this.authService.isUserCustomer()) {
+      this.produto.get('customerId').setValue(this.authService.getCustomer());
+    }
     this.modalService.open(this.form, { size: 'lg' });
     this.desabilitarCampos();
   }
@@ -115,8 +118,8 @@ export class CadastroComponent implements OnInit {
     this.produto.get('details')?.enable();
   }
 
-  private listarClientes(): Promise<void | Customer[]> {
-    return this.clienteService.getAll().then(clientes => this.clientes = clientes);
+  private listarClientes(): void {
+    this.clienteService.getAll().then(clientes => this.clientes = clientes);
   }
 
   private converterCamposNumber(produto: Product): void {
