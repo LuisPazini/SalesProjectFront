@@ -31,8 +31,6 @@ export class DashboardComponent implements OnInit {
     private dashboardService: DashboardService
   ) { 
     MenuComponent.toggleExibirMenu.next(true);
-    console.log(this.dataInicial)
-    console.log(this.dataFinal)
   }
 
   ngOnInit(): void {

@@ -7,7 +7,7 @@
         </div>
 
         <div class="form-group col-md-8">
-            <ng-select class="text-center" [(ngModel)]="clienteSelecionado" (change)="popularListaProdutosByCliente()"
+            <ng-select class="text-center" [disabled]="isUserCustomer()" [(ngModel)]="clienteSelecionado" (change)="popularListaProdutosByCliente()"
             placeholder="Selecione um Cliente...">
                 <ng-option *ngFor="let cliente of clientes" [value]="cliente">
                     {{ cliente.companyName }}

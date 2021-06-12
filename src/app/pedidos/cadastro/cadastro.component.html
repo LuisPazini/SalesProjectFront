@@ -76,7 +76,7 @@
                                     <div class="form-group col-md-2">
                                         <label class="col-form-label" for="qtde">Qtde*</label>
                                         <input class="form-control" name="qtde" type="number" formControlName="quantity"
-                                        [class.is-invalid]="item.get('quantity').touched && item.get('quantity').invalid">
+                                        [class.is-invalid]="item.get('quantity').touched && item.get('quantity').invalid"> 
                                         <div *ngIf="item.get('quantity').errors" class="invalid-feedback">
                                             <div *ngIf="item.get('quantity').errors.required" >Este campo é obrigatório</div>
                                         </div>

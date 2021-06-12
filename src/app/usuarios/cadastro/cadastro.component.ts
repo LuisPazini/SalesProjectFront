@@ -78,6 +78,29 @@ export class CadastroComponent implements OnInit {
     );
   }
 
+  alterarPermissao(usuario: Usuario): void {
+    this.usuario.markAllAsTouched();
+    if(this.usuario.invalid) {
+      alert('Um ou mais campos de Usuário estão inválidos. Favor verifique e tente novamente.');
+      return;
+    }
+    this.contaService.alterarPermissao(usuario).then(
+      res => {
+        alert("Usuário editado com sucesso!");
+        this.modalService.dismissAll();
+        this.usuario.reset();
+        this.cadastrado.emit();
+      },
+      error => {
+        console.error("Erro ao editar usuario:\n"
+        + `Status: ${error.error.status}\n` 
+        + `Erro: ${error.error.title} \n`
+        + `${JSON.stringify(error.error, null, 2)}`);
+        alert("Ocorreu um erro ao cadastrar usuario");
+      }
+    );
+  }
+
   remover(usuario: Usuario): void {
     this.contaService.deletar(usuario).then(
       res => {
@@ -98,6 +121,7 @@ export class CadastroComponent implements OnInit {
 
   open(usuario?: Usuario, edicao: boolean = false): void {
     this.edicao = edicao;
+    this.usuario.reset();
     if(usuario) {
       this.usuario.patchValue(usuario);
     }
@@ -117,7 +141,6 @@ export class CadastroComponent implements OnInit {
   }
 
   private habilitarCamposEdicao(): void {
-    this.usuario.get('name').enable();
     this.usuario.get('role').enable();
   }
 

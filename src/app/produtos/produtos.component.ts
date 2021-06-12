@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../core/services/auth.service';
 import { MenuComponent } from '../shared/components/menu/menu.component';
 import { Customer } from '../shared/models/customer';
 import { Product } from '../shared/models/product';
@@ -29,13 +30,18 @@ export class ProdutosComponent implements OnInit {
 
   constructor(
     private produtoService: ProdutoService,
-    private clienteService: ClienteService
+    private clienteService: ClienteService,
+    private authService: AuthService
   ) { 
     MenuComponent.toggleExibirMenu.next(true);
   }
 
   ngOnInit(): void {
-    this.popularListaClientes();
+    this.popularListaClientes().then(() =>{
+      if(this.isUserCustomer()) {
+        this.clienteSelecionado = this.clientes.find(cliente => cliente.id == this.authService.getCustomer());
+      }
+    });
   }
 
   filtrarProdutos(termo: string): void {
@@ -73,6 +79,10 @@ export class ProdutosComponent implements OnInit {
     }
   }
 
+  isUserCustomer(): boolean {
+    return this.authService.isUserCustomer();
+  }
+
   private async popularListaProdutosByName(name: string): Promise<void> {
     this.produtos = await this.produtoService.getByName(name);
   }
@@ -88,9 +98,9 @@ export class ProdutosComponent implements OnInit {
     this.produtosFiltrados = [] as Product[];
   }
 
-  private popularListaClientes(): void {
-    this.clienteService.getAll().then((clientes) => {
+  private popularListaClientes(): Promise<void> {
+    return this.clienteService.getAll().then((clientes) => {
       this.clientes = clientes;
-    })
+    });
   }
 }

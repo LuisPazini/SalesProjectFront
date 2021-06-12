@@ -36,9 +36,9 @@ export class AccountService {
     return this.httpClient.patch<Usuario>(`${this.accountUrl}/change-password`, alteracaoSenha).toPromise();
   }
 
-  alterarPermissao(usuario: Usuario, role: Role): Promise<Usuario> {
+  alterarPermissao(usuario: Usuario): Promise<Usuario> {
     let params = new HttpParams().set('id', `${usuario.id}`);
-    return this.httpClient.patch<Usuario>(`${this.accountUrl}/change-role`, { role: role }, { params: params }).toPromise();
+    return this.httpClient.patch<Usuario>(`${this.accountUrl}/change-role`, { role: usuario.role }, { params: params }).toPromise();
   }
 
   deletar(usuario: Usuario): Promise<void> {

@@ -57,7 +57,11 @@ export class CadastroComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.popularListaClientes();
+    this.popularListaClientes().then(() => {
+      if(this.authService.isUserCustomer()) {
+        this.pedido.get('customerId').setValue(this.authService.getCustomer());
+      }
+    });
     if(!this.isNovoPedido()) {
       this.popularListaProdutos();
     }
@@ -108,7 +112,6 @@ export class CadastroComponent implements OnInit {
       notaFiscal => {
         this.notaFiscalService.emitirNotaFiscal(notaFiscal).then(
           res => {
-            console.log(notaFiscal.id);
             alert("Nota Fiscal emitida com sucesso!");
             this.modalService.dismissAll();
             this.pedido.reset();
@@ -148,8 +151,8 @@ export class CadastroComponent implements OnInit {
 
   open(pedido?: Order, edicao: boolean = false): void {
     this.edicao = edicao;
-    this.pedido.reset();
     this.orderLines.clear();
+    this.pedido.reset();
     if(pedido) {
       pedido.orderLines.forEach(() => this.adicionarItem());
       this.pedido.patchValue(pedido);
@@ -166,9 +169,6 @@ export class CadastroComponent implements OnInit {
     }
     if(this.isPedidoAprovado() || this.isPedidoFaturado() || this.isPedidoCancelado()) {
       this.edicao = false;
-    }
-    if(this.authService.isUserCustomer()) {
-      this.pedido.get('customerId').disable();
     }
     this.modalService.open(this.form, { size: 'xl' });
     this.desabilitarCampos();
@@ -245,8 +245,8 @@ export class CadastroComponent implements OnInit {
     });
   }
 
-  private popularListaClientes(): void {
-    this.clienteService.getAll().then(clientes => 
+  private popularListaClientes(): Promise<void | Customer[]> {
+    return this.clienteService.getAll().then(clientes => 
       this.clientes = clientes
     );
   }
@@ -261,6 +261,10 @@ export class CadastroComponent implements OnInit {
       }
     } else {
       this.pedido.enable();
+      
+      if(this.authService.isUserCustomer()) {
+        this.pedido.get('customerId').disable();
+      }
     }
   }
 

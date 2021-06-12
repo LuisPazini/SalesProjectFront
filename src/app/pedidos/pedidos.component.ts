@@ -47,11 +47,11 @@ export class PedidosComponent implements OnInit {
 
   ngOnInit(): void {
     this.popularListaPedidos();
-    this.popularListaClientes();
-    if(this.authService.isUserCustomer()) {
-      this.cliente.id = this.authService.getCustomer();
-      console.log(this.cliente)
-    }
+    this.popularListaClientes().then(() => {
+      if(this.authService.isUserCustomer()) {
+        this.cliente = this.clientes.find(cliente => cliente.id == this.authService.getCustomer());
+      }
+    });
   }
 
   popularListaPedidos(): void {
@@ -68,6 +68,10 @@ export class PedidosComponent implements OnInit {
     })
   }
 
+  isUserCustomer(): boolean {
+    return this.authService.isUserCustomer();
+  }
+
   private async getPedidos(): Promise<Order[]> {
     return await this.pedidoService.getAll({ 
       dataInicial: this.dataInicial,
@@ -81,8 +85,8 @@ export class PedidosComponent implements OnInit {
     this.pedidos = [] as Order[];
   }
 
-  private popularListaClientes(): void {
-    this.clienteService.getAll().then((clientes) => {
+  private popularListaClientes(): Promise<void> {
+    return this.clienteService.getAll().then((clientes) => {
       this.clientes = clientes;
     });
   }

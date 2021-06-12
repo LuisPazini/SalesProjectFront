@@ -60,7 +60,6 @@ export class CadastroComponent implements OnInit {
       alert('Um ou mais campos de Cliente estão inválidos. Favor verifique e tente novamente.');
       return;
     };
-    console.log(cliente)
     this.clienteService.salvar(cliente).then(
       res => {
         alert("Cliente cadastrado com sucesso!");
@@ -94,6 +93,7 @@ export class CadastroComponent implements OnInit {
     this.edicao = edicao;
     this.addresses.clear();
     this.contacts.clear();
+    this.cliente.reset();
     if(clienteSelecionado) {
       this.clienteService.getCliente(clienteSelecionado).then(cliente => {
         cliente.adresses.forEach(() => this.adicionarEndereco());
@@ -158,7 +158,6 @@ export class CadastroComponent implements OnInit {
         endereco.get('city').setValue(zip.localidade);
         endereco.get('state').setValue(zip.uf);
         endereco.get('codeCity').setValue(zip.ibge);
-        console.log(zip.ibge)
       },
       error => {
         if(error.status == 404) {

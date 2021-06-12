@@ -33,7 +33,6 @@ export class CadastroComponent implements OnInit {
   }
 
   async cadastrar(usuario: Usuario): Promise<void> {
-    console.log(usuario)
     this.accountService.cadastrar(usuario).then(() =>
       alert('Cadastro realizado com sucesso!')
     ).catch(error => {

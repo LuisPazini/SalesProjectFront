@@ -20,7 +20,7 @@
         </div>
 
         <div class="form-group col-md-8 mt-2">
-            <ng-select class="text-center" [(ngModel)]="cliente" (change)="popularListaPedidos()" placeholder="Selecione um Cliente...">
+            <ng-select class="text-center" [disabled]="isUserCustomer()" [(ngModel)]="cliente" (change)="popularListaPedidos()" placeholder="Selecione um Cliente...">
                 <ng-option *ngFor="let cliente of clientes" [value]="cliente">
                     {{ cliente.companyName }}
                 </ng-option>

@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/cor
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 import { Customer } from 'src/app/shared/models/customer';
 import { Product } from 'src/app/shared/models/product';
@@ -38,7 +39,8 @@ export class CadastroComponent implements OnInit {
     private produtoService: ProdutoService,
     private clienteService: ClienteService,
     private formBuilder: FormBuilder,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -84,6 +86,7 @@ export class CadastroComponent implements OnInit {
 
   open(produto?: Product, edicao: boolean = false): void {
     this.edicao = edicao;
+    this.produto.reset();
     if(produto) {
       this.produto.patchValue(produto);
     }
@@ -99,6 +102,9 @@ export class CadastroComponent implements OnInit {
       }
     } else {
       this.produto.enable();
+      if(this.authService.isUserCustomer()) {
+        this.produto.get('customerId').disable();
+      }
     }
   }
 
@@ -109,8 +115,8 @@ export class CadastroComponent implements OnInit {
     this.produto.get('details')?.enable();
   }
 
-  private listarClientes(): void {
-    this.clienteService.getAll().then(clientes => this.clientes = clientes);
+  private listarClientes(): Promise<void | Customer[]> {
+    return this.clienteService.getAll().then(clientes => this.clientes = clientes);
   }
 
   private converterCamposNumber(produto: Product): void {
