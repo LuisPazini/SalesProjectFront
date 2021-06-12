@@ -67,21 +67,23 @@ export class CadastroComponent implements OnInit {
   }
 
   remover(produto: Product): void {
-    this.produtoService.remover(produto).then(
-      res => {
-        alert("Produto removido com sucesso!");
-        this.modalService.dismissAll();
-        this.produto.reset();
-        this.cadastrado.emit();
-      },
-      error => {
-        console.error("Erro ao remover produto:\n"
-        + `Status: ${error.error.status}\n` 
-        + `Erro: ${error.error.title} \n`
-        + `${JSON.stringify(error.error, null, 2)}`);
-        alert("Ocorreu um erro ao remover produto");
-      }
-    );
+    if(confirm('Tem certeza de que deseja remover este Produto?')) {
+      this.produtoService.remover(produto).then(
+        res => {
+          alert("Produto removido com sucesso!");
+          this.modalService.dismissAll();
+          this.produto.reset();
+          this.cadastrado.emit();
+        },
+        error => {
+          console.error("Erro ao remover produto:\n"
+          + `Status: ${error.error.status}\n` 
+          + `Erro: ${error.error.title} \n`
+          + `${JSON.stringify(error.error, null, 2)}`);
+          alert("Ocorreu um erro ao remover produto");
+        }
+      );
+    }
   }
 
   open(produto?: Product, edicao: boolean = false): void {

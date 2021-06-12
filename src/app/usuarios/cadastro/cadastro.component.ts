@@ -102,21 +102,23 @@ export class CadastroComponent implements OnInit {
   }
 
   remover(usuario: Usuario): void {
-    this.contaService.deletar(usuario).then(
-      res => {
-        alert("Usuário removido com sucesso!");
-        this.modalService.dismissAll();
-        this.usuario.reset();
-        this.cadastrado.emit();
-      },
-      error => {
-        console.error("Erro ao remover usuario:\n"
-        + `Status: ${error.error.status}\n` 
-        + `Erro: ${error.error.title} \n`
-        + `${JSON.stringify(error.error, null, 2)}`);
-        alert("Ocorreu um erro ao remover usuario");
-      }
-    );
+    if(confirm('Tem certeza de que deseja remover este Usuário?')) {
+      this.contaService.deletar(usuario).then(
+        res => {
+          alert("Usuário removido com sucesso!");
+          this.modalService.dismissAll();
+          this.usuario.reset();
+          this.cadastrado.emit();
+        },
+        error => {
+          console.error("Erro ao remover usuario:\n"
+          + `Status: ${error.error.status}\n` 
+          + `Erro: ${error.error.title} \n`
+          + `${JSON.stringify(error.error, null, 2)}`);
+          alert("Ocorreu um erro ao remover usuario");
+        }
+      );
+    }
   }
 
   open(usuario?: Usuario, edicao: boolean = false): void {
