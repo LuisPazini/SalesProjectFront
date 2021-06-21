@@ -40,6 +40,7 @@ export class ProdutosComponent implements OnInit {
     this.popularListaClientes().then(() =>{
       if(this.isUserCustomer()) {
         this.clienteSelecionado = this.clientes.find(cliente => cliente.id == this.authService.getCustomer());
+        this.popularListaProdutosByCliente();
       }
     });
   }

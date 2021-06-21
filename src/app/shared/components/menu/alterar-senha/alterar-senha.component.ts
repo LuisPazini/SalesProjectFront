@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AccountService } from 'src/app/shared/services/account.service';
 
@@ -22,7 +23,8 @@ export class AlterarSenhaComponent implements OnInit {
   constructor(
     private contaService: AccountService,
     private formBuilder: FormBuilder,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -47,8 +49,9 @@ export class AlterarSenhaComponent implements OnInit {
     }
     this.contaService.alterarSenha(usuario).then(
       res => {
-        alert('Senha alterada com sucesso!');
+        alert(`Senha alterada com sucesso!\nFavor realize login novamente`);
         this.modalService.dismissAll();
+        this.router.navigate(['login']);
       },
       error => {
         console.error("Erro ao criar cadastro de pedido:\n"

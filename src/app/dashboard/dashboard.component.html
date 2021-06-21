@@ -1,17 +1,19 @@
 <div class="align-items-center justify-content-center w-100">
     <div class="text-center my-4">
-        <h1 class="display-4">Bem vindo {{ usuario.name | uppercase }}!</h1>
+        <h1 class="display-4 text-break">Bem vindo {{ usuario.name | uppercase }}!</h1>
         <h6 class="block font-weight-normal">Hoje: {{ hoje | date: 'dd/MM/yyyy' }}</h6>
     </div>
 
-    <div class="form-row align-items-center justify-content-center mt-5">
-        <div class="form-group">
+    <div class="form-row align-items-center text-center justify-content-center mt-5">
+        <div class="form-group col-md-2">
             <input class="form-control text-center" name="de" type="date"
             [(ngModel)]="dataInicial"
             [max]="dataFinal">
         </div>
-        <label class="mx-2" for="a">até</label>
-        <div class="form-group">
+        <div class="form-group col-md-1">
+            <label class="mx-1" for="a">até</label>
+        </div>
+        <div class="form-group col-md-2">
             <input class="form-control text-center" name="a" type="date"
             [(ngModel)]="dataFinal"
             [min]="dataInicial">

@@ -48,6 +48,10 @@ export class CadastroComponent implements OnInit {
   }
 
   salvar(produto: Product): void {
+    if(this.produto.invalid) {
+      alert('Um ou mais campos de Produto estão inválidos. Favor verifique e tente novamente.');
+      return;
+    }
     this.converterCamposNumber(produto);
     this.produtoService.salvar(produto).then(
       res => {
@@ -58,8 +62,8 @@ export class CadastroComponent implements OnInit {
       },
       error => {
         console.error("Erro ao criar cadastro de produto:\n"
-        + `Status: ${error.error.status}\n` 
-        + `Erro: ${error.error.title} \n`
+        + `Status: ${error.error?.status}\n` 
+        + `Erro: ${error.error?.title} \n`
         + `${JSON.stringify(error.error, null, 2)}`);
         alert("Ocorreu um erro ao cadastrar produto");
       }
@@ -67,21 +71,23 @@ export class CadastroComponent implements OnInit {
   }
 
   remover(produto: Product): void {
-    this.produtoService.remover(produto).then(
-      res => {
-        alert("Produto removido com sucesso!");
-        this.modalService.dismissAll();
-        this.produto.reset();
-        this.cadastrado.emit();
-      },
-      error => {
-        console.error("Erro ao remover produto:\n"
-        + `Status: ${error.error.status}\n` 
-        + `Erro: ${error.error.title} \n`
-        + `${JSON.stringify(error.error, null, 2)}`);
-        alert("Ocorreu um erro ao remover produto");
-      }
-    );
+    if(confirm('Tem certeza de que deseja remover este Produto?')) {
+      this.produtoService.remover(produto).then(
+        res => {
+          alert("Produto removido com sucesso!");
+          this.modalService.dismissAll();
+          this.produto.reset();
+          this.cadastrado.emit();
+        },
+        error => {
+          console.error("Erro ao remover produto:\n"
+          + `Status: ${error.error?.status}\n` 
+          + `Erro: ${error.error?.title} \n`
+          + `${JSON.stringify(error.error, null, 2)}`);
+          alert("Ocorreu um erro ao remover produto");
+        }
+      );
+    }
   }
 
   open(produto?: Product, edicao: boolean = false): void {
@@ -123,9 +129,13 @@ export class CadastroComponent implements OnInit {
   }
 
   private converterCamposNumber(produto: Product): void {
-    produto.combinedPrice = Number.parseFloat(produto.combinedPrice.toString());
-    produto.additionalCosts = Number.parseFloat(produto.additionalCosts.toString()) || 0;
     produto.combinedQuantity = Number.parseFloat(produto.combinedQuantity.toString());
+    produto.combinedPrice = Number.parseFloat(produto.combinedPrice.toString());
+    if(produto.additionalCosts) {
+      produto.additionalCosts = Number.parseFloat(produto.additionalCosts.toString());
+    } else {
+      produto.additionalCosts = 0;
+    }
   }
 
 }

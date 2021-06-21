@@ -20,7 +20,7 @@ export class PedidoService {
     let params = this.montarParametrosDeListagem(filtros);
 
     if(this.authService.isUserCustomer()) {
-      params = params.append('CustomerId', this.authService.user.customerId);
+      params = params.append('CustomerId', this.authService.getCustomer());
     }
     return this.httpClient.get<Order[]>(`${this.pedidoUrl}/filter`, { params: params }).toPromise();
   }

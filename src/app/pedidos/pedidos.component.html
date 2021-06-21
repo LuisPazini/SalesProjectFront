@@ -67,7 +67,8 @@
             <td>
                 <button class="btn btn-info" (click)="formulario.open(pedido)">Visualizar</button>
                 <button class="btn btn-warning"
-                   [disabled]="pedido.status == 4" (click)="formulario.open(pedido, true)">Editar</button>
+                   [disabled]="pedido.status == 4 || isUserCustomer()" 
+                   (click)="formulario.open(pedido, true)">Editar</button>
             </td>
         </tr>
         <ngb-pagination *ngIf="pedidos.length" [(page)]="page" [pageSize]="pageSize" [collectionSize]="pedidos.length">
@@ -96,7 +97,7 @@
         </div>
         <div class="card-footer align-content-around">
             <button class="btn btn-info" (click)="formulario.open(pedido)" >Visualizar</button>
-            <button class="btn btn-warning" [disabled]="pedido.status == 4" 
+            <button class="btn btn-warning" [disabled]="pedido.status == 4 || isUserCustomer()" 
                 (click)="formulario.open(pedido, true)" >Editar</button>
         </div>
     </div>

@@ -83,7 +83,8 @@ export class CadastroComponent implements OnInit {
         this.cadastrado.emit();
       },
       error => {
-        alert(`Ocorreu um erro ao ${this.isNovoPedido() ? 'cadastrar' : 'editar'} Pedido. Tente novamente mais tarde.`);
+        alert(`Ocorreu um erro ao ${this.isNovoPedido() ? 'cadastrar' : 'editar'} Pedido.\n
+        ${error.error ? error.error.detail : 'Tente novamente mais tarde'}`);
         this.exibirErro(error);
       }
     );
@@ -134,17 +135,19 @@ export class CadastroComponent implements OnInit {
   }
 
   cancelar(pedido: Order): void {
-    this.pedidoService.cancelar(pedido).then(
-      res => {
-        alert("Pedido cancelado com sucesso!");
-        this.modalService.dismissAll();
-        this.cadastrado.emit();
-      },
-      error => {
-        alert("Ocorreu um erro ao cancelar Pedido. Tente novamente mais tarde.");
-        this.exibirErro(error);
-      }
-    );
+    if(confirm('Tem certeza de que deseja cancelar este Pedido?')) {
+      this.pedidoService.cancelar(pedido).then(
+        res => {
+          alert("Pedido cancelado com sucesso!");
+          this.modalService.dismissAll();
+          this.cadastrado.emit();
+        },
+        error => {
+          alert("Ocorreu um erro ao cancelar Pedido. Tente novamente mais tarde.");
+          this.exibirErro(error);
+        }
+      );
+    }
   }
 
   open(pedido?: Order, edicao: boolean = false): void {
@@ -170,6 +173,7 @@ export class CadastroComponent implements OnInit {
     }
     if(this.authService.isUserCustomer()) {
       this.pedido.get('customerId').setValue(this.authService.getCustomer());
+      this.popularListaProdutos();
     }
     this.modalService.open(this.form, { size: 'xl' });
     this.desabilitarCampos();
@@ -222,6 +226,10 @@ export class CadastroComponent implements OnInit {
 
   isPedidoCancelado(): boolean {
     return this.pedido.get('status').value == StatusPedido.CANCELADO;
+  }
+
+  isUserCustomer(): boolean {
+    return this.authService.isUserCustomer();
   }
 
   totalPedido(): number {

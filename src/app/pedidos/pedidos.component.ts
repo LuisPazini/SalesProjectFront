@@ -46,12 +46,12 @@ export class PedidosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.popularListaPedidos();
     this.popularListaClientes().then(() => {
       if(this.authService.isUserCustomer()) {
         this.cliente = this.clientes.find(cliente => cliente.id == this.authService.getCustomer());
       }
     });
+    this.popularListaPedidos();
   }
 
   popularListaPedidos(): void {

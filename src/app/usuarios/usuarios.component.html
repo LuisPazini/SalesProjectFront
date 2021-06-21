@@ -6,7 +6,7 @@
     <button class="btn btn-primary ml-1" (click)="formulario.open(undefined, true)" ><span>+</span> Novo </button>
 </div>
 
-<app-cadastro #formulario (cadastrado)="filtrarUsuarios(inpNomeUsuario.value)" ></app-cadastro>
+<app-cadastro #formulario (cadastrado)="popularListaUsuarios(); filtrarUsuarios(inpNomeUsuario.value)" ></app-cadastro>
 
 <table class="table table-hover text-center">
     <thead class="thead-cinza">

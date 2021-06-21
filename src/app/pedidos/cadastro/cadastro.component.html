@@ -123,11 +123,11 @@
                 [disabled]="!edicao || !isNovoPedido() && !isPedidoAberto()">
                     {{ isNovoPedido()? 'Cadastrar':'Salvar' }} Pedido
                 </button>
-                <button class="btn btn-success" *ngIf="isPedidoAberto()" type="button"
+                <button class="btn btn-success" *ngIf="isPedidoAberto() && !isUserCustomer()" type="button"
                 (click)="aprovarPedido(pedido.getRawValue())" [disabled]="!edicao">
                     Aprovar
                 </button>
-                <button class="btn btn-success" *ngIf="isPedidoAprovado()" type="button"
+                <button class="btn btn-success" *ngIf="isPedidoAprovado()  && !isUserCustomer()" type="button"
                 (click)="emitirNotaFiscal(pedido.getRawValue())" [disabled]="!isPedidoAprovado()">
                     Emitir Nota Fiscal
                 </button>

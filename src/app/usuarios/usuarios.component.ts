@@ -54,7 +54,7 @@ export class UsuariosComponent implements OnInit {
     }
   }
 
-  private async popularListaUsuarios(): Promise<void> {
+  async popularListaUsuarios(): Promise<void> {
     this.usuarios = await this.usuarioService.getAll();
   }
 

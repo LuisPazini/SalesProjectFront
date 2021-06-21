@@ -75,18 +75,20 @@ export class CadastroComponent implements OnInit {
   }
 
   remover(cliente: Customer): void {
-    this.clienteService.remover(cliente).then(
-      res => {
-        alert("Cliente removido com sucesso!");
-        this.modalService.dismissAll();
-        this.cliente.reset();
-        this.cadastrado.emit();
-      },
-      error => {
-        alert("Ocorreu um erro ao remover Cliente. Tente novamente mais tarde.");
-        this.exibirErro(error);
-      }
-    );
+    if(confirm('Tem certeza de que deseja remover este Cliente?')) {
+      this.clienteService.remover(cliente).then(
+        res => {
+          alert("Cliente removido com sucesso!");
+          this.modalService.dismissAll();
+          this.cliente.reset();
+          this.cadastrado.emit();
+        },
+        error => {
+          alert("Ocorreu um erro ao remover Cliente. Tente novamente mais tarde.");
+          this.exibirErro(error);
+        }
+      );
+    }
   }
 
   open(clienteSelecionado?: Customer, edicao: boolean = false): void {
